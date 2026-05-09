@@ -1,0 +1,95 @@
+@import url('../../tokens.css');
+
+:host { display: block; }
+
+.root {
+  display: inline-block;
+  position: relative;
+}
+
+::slotted([slot='trigger']) {
+  cursor: pointer;
+}
+
+.popover {
+  display: none;
+  position: absolute;
+  inset: unset;
+  top: calc(100% + var(--spacingVerticalS));
+  left: 50%;
+  translate: -50% 0;
+  background: var(--colorNeutralBackground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke1);
+  border-radius: var(--borderRadiusMedium);
+  box-shadow: var(--shadow16);
+  color: var(--colorNeutralForeground1);
+  font-family: var(--fontFamilyBase);
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  min-width: 120px;
+  padding: var(--spacingVerticalXS) 0;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.arrow {
+  display: none;
+  position: absolute;
+  top: calc(-1 * var(--strokeWidthThick));
+  left: 50%;
+  translate: -50% 0;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--colorNeutralStroke1);
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  top: var(--strokeWidthThin);
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--colorNeutralBackground1);
+}
+
+:host([positioning='above']) .popover {
+  top: unset;
+  bottom: calc(100% + var(--spacingVerticalS));
+}
+
+:host([positioning='above']) .arrow {
+  top: unset;
+  bottom: calc(-1 * var(--strokeWidthThick));
+  border-bottom: none;
+  border-top: 8px solid var(--colorNeutralStroke1);
+}
+
+:host([positioning='above']) .arrow::after {
+  top: calc(-1 * (var(--strokeWidthThick) + var(--strokeWidthThin)));
+  border-bottom: none;
+  border-top: 8px solid var(--colorNeutralBackground1);
+}
+
+:host([positioning='before']) .popover {
+  left: unset;
+  top: 50%;
+  right: calc(100% + var(--spacingHorizontalS));
+  translate: 0 -50%;
+}
+
+:host([positioning='after']) .popover {
+  left: calc(100% + var(--spacingHorizontalS));
+  top: 50%;
+  translate: 0 -50%;
+}
+
+@media (forced-colors: active) {
+  .popover {
+    border-color: ButtonText;
+  }
+}

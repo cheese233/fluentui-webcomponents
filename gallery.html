@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluent UI Web Components — Gallery</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body, .sidebar, .main, section, h2, h3, nav, ul, ol, li, p, span, div, a { margin: 0; padding: 0; }
+    body {
+      display: flex;
+      min-height: 100vh;
+      font-family: var(--fontFamilyBase);
+      background: var(--colorNeutralBackground1);
+      color: var(--colorNeutralForeground1);
+    }
+    .sidebar {
+      width: 280px;
+      background: var(--colorNeutralBackground3);
+      padding: var(--spacingHorizontalL);
+      border-right: 1px solid var(--colorNeutralStroke2);
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar h2 {
+      font-size: var(--fontSizeBase500);
+      font-weight: var(--fontWeightSemibold);
+      margin-bottom: var(--spacingVerticalS);
+    }
+    .sidebar h2 span {
+      font-weight: var(--fontWeightRegular);
+      color: var(--colorNeutralForeground3);
+      font-size: var(--fontSizeBase200);
+    }
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: var(--spacingVerticalM);
+    }
+    .sidebar nav a {
+      display: block;
+      padding: var(--spacingVerticalXS) var(--spacingHorizontalS);
+      border-radius: var(--borderRadiusMedium);
+      color: var(--colorNeutralForeground2);
+      text-decoration: none;
+      font-size: var(--fontSizeBase300);
+      transition: background var(--durationFaster) var(--curveDecelerateMid);
+    }
+    .sidebar nav a:hover {
+      background: var(--colorNeutralBackground4);
+      color: var(--colorNeutralForeground1);
+    }
+    .main {
+      flex: 1;
+      padding: var(--spacingHorizontalXXL) var(--spacingHorizontalXXXL);
+      overflow-y: auto;
+    }
+    .main section {
+      margin-bottom: var(--spacingVerticalXXL);
+    }
+    .main h3 {
+      font-size: var(--fontSizeBase400);
+      font-weight: var(--fontWeightSemibold);
+      margin-bottom: var(--spacingVerticalM);
+      padding-bottom: var(--spacingVerticalXS);
+      border-bottom: 1px solid var(--colorNeutralStroke2);
+    }
+    .demo-area {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--spacingHorizontalM);
+      padding: var(--spacingHorizontalXXL);
+      border: 1px dashed var(--colorNeutralStroke2);
+      border-radius: var(--borderRadiusLarge);
+      background: var(--colorNeutralBackground2);
+      min-height: 80px;
+    }
+    .demo-area.column {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .demo-label {
+      font-size: var(--fontSizeBase200);
+      color: var(--colorNeutralForeground3);
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="light">
+  <aside class="sidebar">
+    <h2>fluent-ui<span>web-components</span></h2>
+    <fluent-theme-picker></fluent-theme-picker>
+    <nav>
+      <a href="#button">Button</a>
+      <a href="#badge">Badge</a>
+      <a href="#checkbox">Checkbox</a>
+      <a href="#switch">Switch</a>
+      <a href="#radio">Radio</a>
+      <a href="#slider">Slider</a>
+      <a href="#text-input">Text Input</a>
+      <a href="#textarea">Textarea</a>
+      <a href="#select">Select</a>
+      <a href="#spinner">Spinner</a>
+      <a href="#link">Link</a>
+      <a href="#divider">Divider</a>
+      <a href="#avatar">Avatar</a>
+      <a href="#label">Label</a>
+      <a href="#card">Card</a>
+      <a href="#dialog">Dialog</a>
+      <a href="#tooltip">Tooltip</a>
+      <a href="#menu">Menu</a>
+      <a href="#tree">Tree</a>
+      <a href="#breadcrumb">Breadcrumb</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <!-- Button -->
+    <section id="button">
+      <h3>Button</h3>
+      <div class="demo-label">Default appearances (medium)</div>
+      <div class="demo-area">
+        <fluent-button>Default</fluent-button>
+        <fluent-button appearance="primary">Primary</fluent-button>
+        <fluent-button appearance="outline">Outline</fluent-button>
+        <fluent-button appearance="subtle">Subtle</fluent-button>
+        <fluent-button appearance="transparent">Transparent</fluent-button>
+      </div>
+      <div class="demo-label">Sizes</div>
+      <div class="demo-area">
+        <fluent-button size="small">Small</fluent-button>
+        <fluent-button size="medium">Medium</fluent-button>
+        <fluent-button size="large">Large</fluent-button>
+      </div>
+      <div class="demo-label">Shapes</div>
+      <div class="demo-area">
+        <fluent-button shape="rounded">Rounded</fluent-button>
+        <fluent-button shape="circular">Circular</fluent-button>
+        <fluent-button shape="square">Square</fluent-button>
+      </div>
+      <div class="demo-label">Disabled</div>
+      <div class="demo-area">
+        <fluent-button disabled>Disabled</fluent-button>
+        <fluent-button appearance="primary" disabled>Primary Disabled</fluent-button>
+      </div>
+    </section>
+
+    <!-- Badge -->
+    <section id="badge">
+      <h3>Badge</h3>
+      <div class="demo-label">Appearances (brand, medium)</div>
+      <div class="demo-area">
+        <fluent-badge appearance="filled" color="brand">Filled</fluent-badge>
+        <fluent-badge appearance="ghost" color="brand">Ghost</fluent-badge>
+        <fluent-badge appearance="outline" color="brand">Outline</fluent-badge>
+        <fluent-badge appearance="tint" color="brand">Tint</fluent-badge>
+      </div>
+      <div class="demo-label">Filled by color</div>
+      <div class="demo-area">
+        <fluent-badge>Brand</fluent-badge>
+        <fluent-badge color="danger">Danger</fluent-badge>
+        <fluent-badge color="important">Important</fluent-badge>
+        <fluent-badge color="informative">Informative</fluent-badge>
+        <fluent-badge color="severe">Severe</fluent-badge>
+        <fluent-badge color="subtle">Subtle</fluent-badge>
+        <fluent-badge color="success">Success</fluent-badge>
+        <fluent-badge color="warning">Warning</fluent-badge>
+      </div>
+      <div class="demo-label">Sizes (brand)</div>
+      <div class="demo-area">
+        <fluent-badge size="tiny">6</fluent-badge>
+        <fluent-badge size="extra-small">99</fluent-badge>
+        <fluent-badge size="small">12</fluent-badge>
+        <fluent-badge size="medium">Medium</fluent-badge>
+        <fluent-badge size="large">Large</fluent-badge>
+        <fluent-badge size="extra-large">XL</fluent-badge>
+      </div>
+      <div class="demo-label">Shapes (brand)</div>
+      <div class="demo-area">
+        <fluent-badge shape="rounded">Rounded</fluent-badge>
+        <fluent-badge shape="circular">Circular</fluent-badge>
+        <fluent-badge shape="square">Square</fluent-badge>
+      </div>
+    </section>
+
+    <!-- Checkbox -->
+    <section id="checkbox">
+      <h3>Checkbox</h3>
+      <div class="demo-area column">
+        <fluent-checkbox>Unchecked</fluent-checkbox>
+        <fluent-checkbox checked>Checked</fluent-checkbox>
+        <fluent-checkbox indeterminate>Indeterminate</fluent-checkbox>
+        <fluent-checkbox disabled>Disabled</fluent-checkbox>
+        <fluent-checkbox disabled checked>Disabled checked</fluent-checkbox>
+      </div>
+    </section>
+
+    <!-- Switch -->
+    <section id="switch">
+      <h3>Switch</h3>
+      <div class="demo-area column">
+        <fluent-switch>Off</fluent-switch>
+        <fluent-switch checked>On</fluent-switch>
+        <fluent-switch disabled>Disabled</fluent-switch>
+        <fluent-switch label-position="above">Above label</fluent-switch>
+      </div>
+    </section>
+
+    <!-- Radio -->
+    <section id="radio">
+      <h3>Radio</h3>
+      <div class="demo-area column">
+        <fluent-radio name="group1" checked>Option A</fluent-radio>
+        <fluent-radio name="group1">Option B</fluent-radio>
+        <fluent-radio name="group1">Option C</fluent-radio>
+        <fluent-radio name="group1" disabled>Disabled</fluent-radio>
+      </div>
+    </section>
+
+    <!-- Slider -->
+    <section id="slider">
+      <h3>Slider</h3>
+      <div class="demo-area column" style="min-width:400px">
+        <fluent-slider min="0" max="100" value="50"></fluent-slider>
+        <fluent-slider min="0" max="100" value="25" disabled></fluent-slider>
+        <fluent-slider min="0" max="50" value="10" size="small"></fluent-slider>
+      </div>
+    </section>
+
+    <!-- Text Input -->
+    <section id="text-input">
+      <h3>Text Input</h3>
+      <div class="demo-area column" style="min-width:300px">
+        <fluent-text-input placeholder="Enter text..."></fluent-text-input>
+        <fluent-text-input value="Read only" readonly></fluent-text-input>
+        <fluent-text-input placeholder="Disabled" disabled></fluent-text-input>
+      </div>
+    </section>
+
+    <!-- Textarea -->
+    <section id="textarea">
+      <h3>Textarea</h3>
+      <div class="demo-area column" style="min-width:300px">
+        <fluent-textarea placeholder="Enter multi-line text..." rows="3"></fluent-textarea>
+        <fluent-textarea value="Read-only content" readonly rows="3"></fluent-textarea>
+        <fluent-textarea placeholder="Disabled" disabled rows="3"></fluent-textarea>
+      </div>
+    </section>
+
+    <!-- Select -->
+    <section id="select">
+      <h3>Select</h3>
+      <div class="demo-area column" style="min-width:250px">
+        <fluent-select>
+          <option value="1">Option 1</option>
+          <option value="2" selected>Option 2</option>
+          <option value="3">Option 3</option>
+          <optgroup label="Group">
+            <option value="4">Option 4</option>
+            <option value="5">Option 5</option>
+          </optgroup>
+        </fluent-select>
+        <fluent-select disabled>
+          <option>Disabled select</option>
+        </fluent-select>
+      </div>
+    </section>
+
+    <!-- Image -->
+    <section id="image">
+      <h3>Image</h3>
+      <div class="demo-area">
+        <fluent-image src="https://picsum.photos/120/120?random=1" alt="Sample image" shape="rounded" bordered shadow></fluent-image>
+        <fluent-image src="https://picsum.photos/120/120?random=2" alt="Circular image" shape="circular" bordered></fluent-image>
+        <fluent-image src="https://picsum.photos/120/120?random=3" alt="Square image" fit="cover"></fluent-image>
+      </div>
+    </section>
+
+    <!-- Card -->
+    <section id="card">
+      <h3>Card</h3>
+      <div class="demo-area" style="gap:24px">
+        <fluent-card style="width:240px;padding:16px">
+          <fluent-text block weight="semibold">Card Title</fluent-text>
+          <fluent-text block size="200" style="color:var(--colorNeutralForeground2)">Card description content goes here.</fluent-text>
+        </fluent-card>
+        <fluent-card appearance="outline" style="width:240px;padding:16px">
+          <fluent-text block weight="semibold">Outline Card</fluent-text>
+          <fluent-text block size="200" style="color:var(--colorNeutralForeground2)">With outline appearance.</fluent-text>
+        </fluent-card>
+      </div>
+    </section>
+
+    <!-- Label -->
+    <section id="label">
+      <h3>Label</h3>
+      <div class="demo-area column">
+        <fluent-label>Default label</fluent-label>
+        <fluent-label required>Required label</fluent-label>
+        <fluent-label disabled>Disabled label</fluent-label>
+        <fluent-label size="large" weight="semibold">Large semibold label</fluent-label>
+      </div>
+    </section>
+
+    <!-- Text -->
+    <section id="text">
+      <h3>Text</h3>
+      <div class="demo-area column">
+        <fluent-text size="500" weight="semibold">Heading text (500)</fluent-text>
+        <fluent-text size="300">Body text (300)</fluent-text>
+        <fluent-text size="200">Caption text (200)</fluent-text>
+        <fluent-text italic>Italic text</fluent-text>
+        <fluent-text underline>Underlined text</fluent-text>
+        <fluent-text strikethrough>Strikethrough text</fluent-text>
+        <fluent-text font="monospace">Monospace text</fluent-text>
+        <fluent-text block align="center">Centered text</fluent-text>
+      </div>
+    </section>
+
+    <!-- Dialog -->
+    <section id="dialog">
+      <h3>Dialog</h3>
+      <div class="demo-area">
+        <fluent-button id="dialog-trigger">Open Dialog</fluent-button>
+        <fluent-dialog id="demo-dialog" aria-label="Example dialog"
+                       trigger="#dialog-trigger"
+                       close-on="#dialog-confirm,#dialog-cancel">
+          <fluent-text block size="400" weight="semibold">Dialog Title</fluent-text>
+          <fluent-text block style="margin:12px 0">This is a dialog body. Press Escape or click outside to close.</fluent-text>
+          <fluent-button id="dialog-confirm" appearance="primary">Confirm</fluent-button>
+          <fluent-button id="dialog-cancel" appearance="secondary">Cancel</fluent-button>
+        </fluent-dialog>
+      </div>
+    </section>
+
+    <!-- Tooltip -->
+    <section id="tooltip">
+      <h3>Tooltip</h3>
+      <div class="demo-area">
+        <fluent-button id="tooltip-anchor">Hover me</fluent-button>
+        <fluent-tooltip anchor="tooltip-anchor">This is a helpful tooltip!</fluent-tooltip>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section id="menu">
+      <h3>Menu</h3>
+      <div class="demo-area">
+        <fluent-menu>
+          <fluent-menu-item>Option A</fluent-menu-item>
+          <fluent-menu-item>Option B</fluent-menu-item>
+          <fluent-menu-item disabled>Disabled Option</fluent-menu-item>
+          <fluent-menu-item checked>Checked Option</fluent-menu-item>
+        </fluent-menu>
+      </div>
+    </section>
+
+    <!-- Tree -->
+    <section id="tree">
+      <h3>Tree</h3>
+      <div class="demo-area column" style="min-width:320px">
+        <fluent-tree>
+          <fluent-tree-item>Item 1
+            <fluent-tree-item>Item 1.1</fluent-tree-item>
+            <fluent-tree-item>Item 1.2</fluent-tree-item>
+          </fluent-tree-item>
+          <fluent-tree-item selected>Item 2
+            <fluent-tree-item>Item 2.1
+              <fluent-tree-item>Item 2.1.1</fluent-tree-item>
+            </fluent-tree-item>
+            <fluent-tree-item>Item 2.2</fluent-tree-item>
+          </fluent-tree-item>
+          <fluent-tree-item>Item 3</fluent-tree-item>
+          <fluent-tree-item disabled>Item 4 (disabled)</fluent-tree-item>
+        </fluent-tree>
+      </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section id="breadcrumb">
+      <h3>Breadcrumb</h3>
+      <div class="demo-area">
+        <fluent-breadcrumb>
+          <fluent-breadcrumb-item href="#">Home</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item href="#">Products</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item href="#">Category</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item current>Product Name</fluent-breadcrumb-item>
+        </fluent-breadcrumb>
+      </div>
+      <div class="demo-label" style="margin-top:12px">Small size</div>
+      <div class="demo-area">
+        <fluent-breadcrumb size="small">
+          <fluent-breadcrumb-item href="#">Home</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item href="#">Library</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item current>Data</fluent-breadcrumb-item>
+        </fluent-breadcrumb>
+      </div>
+      <div class="demo-label" style="margin-top:12px">Large size</div>
+      <div class="demo-area">
+        <fluent-breadcrumb size="large">
+          <fluent-breadcrumb-item href="#">Home</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item href="#">Settings</fluent-breadcrumb-item>
+          <fluent-breadcrumb-item current>Profile</fluent-breadcrumb-item>
+        </fluent-breadcrumb>
+      </div>
+    </section>
+
+    <!-- Link -->
+    <section id="link">
+      <h3>Link</h3>
+      <div class="demo-area column">
+        <fluent-link href="#">Default link</fluent-link>
+        <fluent-link href="#" appearance="subtle">Subtle link</fluent-link>
+        <span style="color: var(--colorNeutralForeground1)">Text with <fluent-link inline href="#">inline link</fluent-link> inside paragraph context.</span>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <section id="divider">
+      <h3>Divider</h3>
+      <div class="demo-area column">
+        <fluent-divider></fluent-divider>
+        <fluent-divider alignment="start">Start</fluent-divider>
+        <fluent-divider alignment="center">Center</fluent-divider>
+        <fluent-divider alignment="end">End</fluent-divider>
+        <fluent-divider appearance="brand">Brand</fluent-divider>
+        <fluent-divider appearance="strong">Strong</fluent-divider>
+        <fluent-divider appearance="subtle">Subtle</fluent-divider>
+      </div>
+    </section>
+
+    <!-- Spinner -->
+    <section id="spinner">
+      <h3>Spinner</h3>
+      <div class="demo-area">
+        <fluent-spinner size="extra-tiny"></fluent-spinner>
+        <fluent-spinner size="tiny"></fluent-spinner>
+        <fluent-spinner size="extra-small"></fluent-spinner>
+        <fluent-spinner size="small"></fluent-spinner>
+        <fluent-spinner size="medium"></fluent-spinner>
+        <fluent-spinner size="large"></fluent-spinner>
+        <fluent-spinner size="extra-large"></fluent-spinner>
+        <fluent-spinner size="huge"></fluent-spinner>
+      </div>
+    </section>
+
+    <!-- Avatar -->
+    <section id="avatar">
+      <h3>Avatar</h3>
+      <div class="demo-area">
+        <fluent-avatar name="John Doe" initials="JD"></fluent-avatar>
+        <fluent-avatar color="colorful" color-id="darkRed" name="Alice"></fluent-avatar>
+        <fluent-avatar shape="square" name="Bob" initials="BO"></fluent-avatar>
+        <fluent-avatar size="96" name="Large Avatar" initials="LA"></fluent-avatar>
+        <fluent-avatar name="No Initials"></fluent-avatar>
+      </div>
+    </section>
+  </main>
+
+  <!-- Components -->
+  <script type="module" src="components/button/fluent-button.js"></script>
+  <script type="module" src="components/badge/fluent-badge.js"></script>
+  <script type="module" src="components/link/fluent-link.js"></script>
+  <script type="module" src="components/divider/fluent-divider.js"></script>
+  <script type="module" src="components/spinner/fluent-spinner.js"></script>
+  <script type="module" src="components/avatar/fluent-avatar.js"></script>
+  <script type="module" src="components/checkbox/fluent-checkbox.js"></script>
+  <script type="module" src="components/radio/fluent-radio.js"></script>
+  <script type="module" src="components/switch/fluent-switch.js"></script>
+  <script type="module" src="components/slider/fluent-slider.js"></script>
+  <script type="module" src="components/text-input/fluent-text-input.js"></script>
+  <script type="module" src="components/textarea/fluent-textarea.js"></script>
+  <script type="module" src="components/select/fluent-select.js"></script>
+  <script type="module" src="components/card/fluent-card.js"></script>
+  <script type="module" src="components/label/fluent-label.js"></script>
+  <script type="module" src="components/text/fluent-text.js"></script>
+  <script type="module" src="components/image/fluent-image.js"></script>
+  <script type="module" src="components/dialog/fluent-dialog.js"></script>
+  <script type="module" src="components/tooltip/fluent-tooltip.js"></script>
+  <script type="module" src="components/popover/fluent-popover.js"></script>
+  <script type="module" src="components/menu/fluent-menu.js"></script>
+  <script type="module" src="components/menu-item/fluent-menu-item.js"></script>
+  <script type="module" src="components/tree/fluent-tree.js"></script>
+  <script type="module" src="components/tree-item/fluent-tree-item.js"></script>
+  <script type="module" src="components/breadcrumb/fluent-breadcrumb.js"></script>
+  <script type="module" src="components/breadcrumb-item/fluent-breadcrumb-item.js"></script>
+  <script type="module" src="theme/theme-picker.js"></script>
+</body>
+</html>

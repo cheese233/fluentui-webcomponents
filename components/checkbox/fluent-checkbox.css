@@ -1,0 +1,171 @@
+@import url('../../tokens.css');
+
+:host { display: inline-flex; }
+
+:host([hidden]) .root {
+  display: none;
+}
+
+.root {
+  --size: 16px;
+  background-color: var(--colorNeutralBackground1);
+  border-radius: var(--borderRadiusSmall);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStrokeAccessible);
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+  display: inline-flex;
+}
+
+.root:hover {
+  border-color: var(--colorNeutralStrokeAccessibleHover);
+}
+
+.root:active {
+  border-color: var(--colorNeutralStrokeAccessiblePressed);
+}
+
+:host([checked]) .root:hover {
+  background-color: var(--colorCompoundBrandBackgroundHover);
+  border-color: var(--colorCompoundBrandStrokeHover);
+}
+
+:host([checked]) .root:active {
+  background-color: var(--colorCompoundBrandBackgroundPressed);
+  border-color: var(--colorCompoundBrandStrokePressed);
+}
+
+.root:focus-visible {
+  outline: none;
+}
+
+:host(:not([slot='input'])) .root::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  box-sizing: border-box;
+  outline: none;
+  border: var(--strokeWidthThick) solid var(--colorTransparentStroke);
+  border-radius: var(--borderRadiusMedium);
+}
+
+:host(:not([slot='input'])) .root:focus-visible::after {
+  border-color: var(--colorStrokeFocus2);
+}
+
+.indeterminate-indicator,
+.checked-indicator {
+  color: var(--colorNeutralForegroundInverted);
+  inset: 0;
+  margin: auto;
+  position: absolute;
+  aspect-ratio: 1;
+}
+
+::slotted([slot='checked-indicator']),
+.checked-indicator {
+  fill: currentColor;
+  display: inline-flex;
+  flex: 1 0 auto;
+  width: 12px;
+}
+
+:host(:not([checked])) .root ::slotted([slot='checked-indicator']),
+:host(:not([checked])) .root .checked-indicator {
+  display: none;
+}
+
+:host([checked]) .root,
+:host([indeterminate]) .root {
+  border-color: var(--colorCompoundBrandStroke);
+}
+
+:host([checked]) .root,
+:host([indeterminate]) .root .indeterminate-indicator {
+  background-color: var(--colorCompoundBrandBackground);
+}
+
+:host([indeterminate]) .root .indeterminate-indicator {
+  border-radius: var(--borderRadiusSmall);
+  position: absolute;
+  width: calc(var(--size) / 2);
+  inset: 0;
+}
+
+:host([size='large']) .root {
+  --size: 20px;
+}
+
+:host([size='large']) .root ::slotted([slot='checked-indicator']),
+:host([size='large']) .root .checked-indicator {
+  width: 16px;
+}
+
+:host([shape='circular']) .root,
+:host([shape='circular']) .root .indeterminate-indicator {
+  border-radius: var(--borderRadiusCircular);
+}
+
+:host([disabled]) .root,
+:host([disabled][checked]) .root {
+  background-color: var(--colorNeutralBackgroundDisabled);
+  border-color: var(--colorNeutralStrokeDisabled);
+}
+
+:host([disabled]) .root {
+  cursor: unset;
+}
+
+:host([disabled][indeterminate]) .root .indeterminate-indicator {
+  background-color: var(--colorNeutralStrokeDisabled);
+}
+
+:host([disabled][checked]) .root .checked-indicator {
+  color: var(--colorNeutralStrokeDisabled);
+}
+
+@media (forced-colors: active) {
+  .root {
+    border-color: FieldText;
+  }
+
+  :host(:not([slot='input']:focus-visible)) .root::after {
+    border-color: Canvas;
+  }
+
+  :host(:not([disabled])) .root:hover,
+  :host([checked]:not([disabled])) .root:hover,
+  :host(:not([slot='input'])) .root:focus-visible::after {
+    border-color: Highlight;
+  }
+
+  .indeterminate-indicator,
+  .checked-indicator {
+    color: HighlightText;
+  }
+
+  :host([checked]) .root,
+  :host([indeterminate]) .root .indeterminate-indicator {
+    background-color: FieldText;
+  }
+
+  :host([checked]:not([disabled])) .root:hover,
+  :host([indeterminate]:not([disabled])) .root:hover .indeterminate-indicator {
+    background-color: Highlight;
+  }
+
+  :host([disabled]) .root {
+    border-color: GrayText;
+  }
+
+  :host([disabled][indeterminate]) .root .indeterminate-indicator {
+    background-color: GrayText;
+  }
+
+  :host([disabled]) .root,
+  :host([disabled][checked]) .root .checked-indicator {
+    color: GrayText;
+  }
+}

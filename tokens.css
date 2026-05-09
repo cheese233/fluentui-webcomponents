@@ -1,0 +1,469 @@
+/* ============================================================
+   Fluent UI Web Components — Design Tokens
+   Pure CSS, zero dependencies, zero build tools
+   ============================================================ */
+
+:root {
+  /* ===== Base Colors ===== */
+  --accent-base: #0f6cbd;
+  --neutral-base: #808080;
+
+  /* ===== Brand Palette (16 stops, color-mix in oklch) ===== */
+  --brand-10:  color-mix(in oklch, var(--accent-base)  5%, black 95%);
+  --brand-20:  color-mix(in oklch, var(--accent-base) 10%, black 90%);
+  --brand-30:  color-mix(in oklch, var(--accent-base) 16%, black 84%);
+  --brand-40:  color-mix(in oklch, var(--accent-base) 24%, black 76%);
+  --brand-50:  color-mix(in oklch, var(--accent-base) 34%, black 66%);
+  --brand-60:  color-mix(in oklch, var(--accent-base) 46%, black 54%);
+  --brand-70:  color-mix(in oklch, var(--accent-base) 60%, black 40%);
+  --brand-80:  color-mix(in oklch, var(--accent-base) 78%, black 22%);
+  --brand-90:  color-mix(in oklch, var(--accent-base) 90%, black 10%);
+  --brand-100: var(--accent-base);
+  --brand-110: color-mix(in oklch, var(--accent-base) 90%, white 10%);
+  --brand-120: color-mix(in oklch, var(--accent-base) 78%, white 22%);
+  --brand-130: color-mix(in oklch, var(--accent-base) 60%, white 40%);
+  --brand-140: color-mix(in oklch, var(--accent-base) 40%, white 60%);
+  --brand-150: color-mix(in oklch, var(--accent-base) 20%, white 80%);
+  --brand-160: color-mix(in oklch, var(--accent-base) 10%, white 90%);
+
+  /* ===== Neutral Palette (16 stops) ===== */
+  --neutral-10:  color-mix(in oklch, var(--neutral-base)  5%, black 95%);
+  --neutral-20:  color-mix(in oklch, var(--neutral-base) 10%, black 90%);
+  --neutral-30:  color-mix(in oklch, var(--neutral-base) 16%, black 84%);
+  --neutral-40:  color-mix(in oklch, var(--neutral-base) 24%, black 76%);
+  --neutral-50:  color-mix(in oklch, var(--neutral-base) 34%, black 66%);
+  --neutral-60:  color-mix(in oklch, var(--neutral-base) 46%, black 54%);
+  --neutral-70:  color-mix(in oklch, var(--neutral-base) 60%, black 40%);
+  --neutral-80:  color-mix(in oklch, var(--neutral-base) 78%, black 22%);
+  --neutral-90:  color-mix(in oklch, var(--neutral-base) 90%, black 10%);
+  --neutral-100: var(--neutral-base);
+  --neutral-110: color-mix(in oklch, var(--neutral-base) 90%, white 10%);
+  --neutral-120: color-mix(in oklch, var(--neutral-base) 78%, white 22%);
+  --neutral-130: color-mix(in oklch, var(--neutral-base) 60%, white 40%);
+  --neutral-140: color-mix(in oklch, var(--neutral-base) 40%, white 60%);
+  --neutral-150: color-mix(in oklch, var(--neutral-base) 20%, white 80%);
+  --neutral-160: color-mix(in oklch, var(--neutral-base) 10%, white 90%);
+
+  /* ===== Brand Color Tokens ===== */
+  --colorBrandBackground:            var(--brand-80);
+  --colorBrandBackgroundHover:       var(--brand-70);
+  --colorBrandBackgroundPressed:     var(--brand-40);
+  --colorBrandBackgroundSelected:    var(--brand-50);
+  --colorBrandBackground2:           var(--brand-90);
+  --colorBrandBackground2Hover:      var(--brand-80);
+  --colorBrandBackground2Pressed:    var(--brand-60);
+  --colorBrandBackgroundStatic:      var(--brand-80);
+  --colorBrandBackgroundInverted:    #fff;
+  --colorBrandBackgroundInvertedHover: var(--brand-150);
+  --colorBrandBackgroundInvertedPressed: var(--brand-140);
+  --colorBrandBackgroundInvertedSelected: var(--brand-150);
+  --colorBrandBackgroundDisabled:    var(--neutral-150);
+
+  /* ===== Brand Foreground Tokens ===== */
+  --colorBrandForeground1:           var(--brand-80);
+  --colorBrandForeground2:           var(--brand-110);
+  --colorBrandForegroundLink:        var(--brand-70);
+  --colorBrandForegroundLinkHover:   var(--brand-60);
+  --colorBrandForegroundLinkPressed: var(--brand-40);
+  --colorBrandForegroundLinkSelected: var(--brand-50);
+  --colorBrandForegroundInverted:    var(--brand-100);
+  --colorBrandForegroundInvertedHover: var(--brand-110);
+  --colorBrandForegroundInvertedPressed: var(--brand-120);
+  --colorBrandForegroundOnLight:     var(--brand-80);
+
+  /* ===== Neutral Color Tokens ===== */
+  --colorNeutralForeground1:            var(--neutral-10);
+  --colorNeutralForeground1Hover:       var(--neutral-20);
+  --colorNeutralForeground1Pressed:     var(--neutral-30);
+  --colorNeutralForeground1Selected:    var(--neutral-20);
+  --colorNeutralForeground2:            var(--neutral-40);
+  --colorNeutralForeground2Hover:       var(--neutral-50);
+  --colorNeutralForeground2Pressed:     var(--neutral-60);
+  --colorNeutralForeground2Selected:    var(--neutral-50);
+  --colorNeutralForeground2BrandHover:  var(--brand-60);
+  --colorNeutralForeground2BrandPressed: var(--brand-40);
+  --colorNeutralForeground2BrandSelected: var(--brand-50);
+  --colorNeutralForeground3:            var(--neutral-50);
+  --colorNeutralForeground3Hover:       var(--neutral-60);
+  --colorNeutralForeground3Pressed:     var(--neutral-70);
+  --colorNeutralForeground3Selected:    var(--neutral-60);
+  --colorNeutralForeground3BrandHover:  var(--brand-60);
+  --colorNeutralForeground3BrandPressed: var(--brand-40);
+  --colorNeutralForeground3BrandSelected: var(--brand-50);
+  --colorNeutralForeground4:            var(--neutral-60);
+  --colorNeutralForegroundDisabled:     var(--neutral-90);
+  --colorNeutralForegroundInverted:            var(--neutral-160);
+  --colorNeutralForegroundInvertedHover:       var(--neutral-160);
+  --colorNeutralForegroundInvertedPressed:     var(--neutral-160);
+  --colorNeutralForegroundInvertedSelected:    var(--neutral-160);
+  --colorNeutralForegroundInverted2:           var(--neutral-150);
+  --colorNeutralForegroundOnBrand:             #fff;
+  --colorNeutralForegroundInvertedLink:        var(--neutral-160);
+  --colorNeutralForegroundInvertedLinkHover:   var(--neutral-160);
+  --colorNeutralForegroundInvertedLinkPressed: var(--neutral-160);
+  --colorNeutralForegroundInvertedLinkSelected: var(--neutral-160);
+  --colorNeutralForegroundInvertedDisabled:    var(--neutral-130);
+
+  --colorNeutralBackground1:           var(--neutral-160);
+  --colorNeutralBackground1Hover:      var(--neutral-150);
+  --colorNeutralBackground1Pressed:    var(--neutral-140);
+  --colorNeutralBackground1Selected:   var(--neutral-140);
+  --colorNeutralBackground2:           var(--neutral-150);
+  --colorNeutralBackground2Hover:      var(--neutral-140);
+  --colorNeutralBackground2Pressed:    var(--neutral-130);
+  --colorNeutralBackground2Selected:   var(--neutral-130);
+  --colorNeutralBackground3:           var(--neutral-140);
+  --colorNeutralBackground3Hover:      var(--neutral-130);
+  --colorNeutralBackground3Pressed:    var(--neutral-120);
+  --colorNeutralBackground3Selected:   var(--neutral-120);
+  --colorNeutralBackground4:           var(--neutral-130);
+  --colorNeutralBackground4Hover:      var(--neutral-120);
+  --colorNeutralBackground4Pressed:    var(--neutral-110);
+  --colorNeutralBackground4Selected:   var(--neutral-110);
+  --colorNeutralBackground5:           var(--neutral-120);
+  --colorNeutralBackground5Hover:      var(--neutral-110);
+  --colorNeutralBackground5Pressed:    var(--neutral-100);
+  --colorNeutralBackground5Selected:   var(--neutral-100);
+  --colorNeutralBackground6:           var(--neutral-110);
+  --colorNeutralBackground6Hover:      var(--neutral-100);
+  --colorNeutralBackground6Pressed:    var(--neutral-90);
+  --colorNeutralBackground6Selected:   var(--neutral-90);
+  --colorNeutralBackgroundDisabled:    var(--neutral-150);
+  --colorNeutralBackgroundInverted:           var(--neutral-10);
+  --colorNeutralBackgroundInvertedHover:      var(--neutral-20);
+  --colorNeutralBackgroundInvertedPressed:    var(--neutral-30);
+  --colorNeutralBackgroundInvertedSelected:   var(--neutral-20);
+
+  --colorNeutralStroke1:           var(--neutral-110);
+  --colorNeutralStroke1Hover:      var(--neutral-100);
+  --colorNeutralStroke1Pressed:    var(--neutral-90);
+  --colorNeutralStroke1Selected:   var(--neutral-100);
+  --colorNeutralStroke2:           var(--neutral-130);
+  --colorNeutralStroke2Hover:      var(--neutral-120);
+  --colorNeutralStroke2Pressed:    var(--neutral-110);
+  --colorNeutralStroke2Selected:   var(--neutral-120);
+  --colorNeutralStroke3:           var(--neutral-140);
+  --colorNeutralStroke3Hover:      var(--neutral-130);
+  --colorNeutralStroke3Pressed:    var(--neutral-120);
+  --colorNeutralStroke3Selected:   var(--neutral-130);
+  --colorNeutralStrokeAccessible:         var(--neutral-70);
+  --colorNeutralStrokeAccessibleHover:    var(--neutral-60);
+  --colorNeutralStrokeAccessiblePressed:  var(--neutral-50);
+  --colorNeutralStrokeAccessibleSelected: var(--neutral-60);
+  --colorNeutralStrokeDisabled:    var(--neutral-140);
+  --colorNeutralStrokeInverted:           var(--neutral-160);
+  --colorNeutralStrokeInvertedHover:      var(--neutral-160);
+  --colorNeutralStrokeInvertedPressed:    var(--neutral-160);
+  --colorNeutralStrokeInvertedSelected:   var(--neutral-160);
+
+  /* ===== Brand Stroke Tokens ===== */
+  --colorBrandStroke1:           var(--brand-80);
+  --colorBrandStroke2:           var(--brand-60);
+
+  /* ===== Stroke Focus ===== */
+  --colorStrokeFocus1:       var(--neutral-160);
+  --colorStrokeFocus2:       #000;
+
+  /* ===== Transparent Tokens ===== */
+  --colorTransparentBackground:         transparent;
+  --colorTransparentBackgroundHover:    var(--neutral-150);
+  --colorTransparentBackgroundPressed:  var(--neutral-140);
+  --colorTransparentBackgroundSelected: var(--neutral-140);
+  --colorTransparentStroke:             transparent;
+  --colorTransparentStrokeInteractive:  transparent;
+  --colorTransparentStrokeDisabled:     transparent;
+
+  /* ===== Subtle Tokens ===== */
+  --colorSubtleBackground:              var(--neutral-150);
+  --colorSubtleBackgroundHover:         var(--neutral-140);
+  --colorSubtleBackgroundPressed:       var(--neutral-130);
+  --colorSubtleBackgroundSelected:      var(--neutral-130);
+  --colorSubtleBackgroundInverted:      var(--neutral-20);
+  --colorSubtleBackgroundInvertedHover: var(--neutral-30);
+  --colorSubtleBackgroundInvertedPressed: var(--neutral-40);
+  --colorSubtleBackgroundInvertedSelected: var(--neutral-30);
+
+  /* ===== Scrollbar Tokens ===== */
+  --colorScrollbarOverlay: var(--neutral-100);
+
+  /* ===== Compound Brand Tokens ===== */
+  --colorCompoundBrandBackground:          var(--brand-80);
+  --colorCompoundBrandBackgroundHover:     var(--brand-70);
+  --colorCompoundBrandBackgroundPressed:   var(--brand-40);
+  --colorCompoundBrandStroke:              var(--brand-130);
+  --colorCompoundBrandStrokeHover:         var(--brand-120);
+  --colorCompoundBrandStrokePressed:       var(--brand-110);
+  --colorCompoundBrandForeground1:         var(--brand-110);
+  --colorCompoundBrandForeground1Hover:    var(--brand-120);
+  --colorCompoundBrandForeground1Pressed:  var(--brand-130);
+
+  /* ===== Static Neutral Tokens ===== */
+  --colorNeutralForeground1Static: #242424;
+  --colorNeutralForegroundStaticInverted: #ffffff;
+
+  /* ===== Status Tokens ===== */
+  --colorPaletteRedBackground1:  #fdf6f6;
+  --colorPaletteRedBackground2:  #f1bbbc;
+  --colorPaletteRedBackground3:  #d13438;
+  --colorPaletteRedForeground1:  #bc2f32;
+  --colorPaletteRedForeground2:  #751d1f;
+  --colorPaletteRedForeground3:  #e37d80;
+  --colorPaletteRedBorder1:      #f1bbbc;
+  --colorPaletteRedBorder2:      #d13438;
+  --colorPaletteRedBorderActive: #d13438;
+  --colorStatusDangerBackground1: var(--colorPaletteRedBackground1);
+  --colorStatusDangerForeground1: var(--colorPaletteRedForeground1);
+  --colorStatusDangerForeground3: var(--colorPaletteRedForeground1);
+  --colorStatusDangerBorderActive: var(--colorPaletteRedBorderActive);
+  --colorStatusDangerBorderHover:  var(--colorPaletteRedBorderActive);
+
+  --colorPaletteGreenBackground1:  #f1faf1;
+  --colorPaletteGreenBackground2:  #9fd89f;
+  --colorPaletteGreenBackground3:  #107c10;
+  --colorPaletteGreenForeground1:  #0e700e;
+  --colorPaletteGreenForeground2:  #094509;
+  --colorPaletteGreenForeground3:  #9fd89f;
+  --colorPaletteGreenBorder1:      #9fd89f;
+  --colorPaletteGreenBorder2:      #107c10;
+  --colorStatusSuccessBackground1: var(--colorPaletteGreenBackground1);
+  --colorStatusSuccessForeground1: var(--colorPaletteGreenForeground1);
+  --colorStatusSuccessForeground3: var(--colorPaletteGreenForeground1);
+
+  --colorPaletteDarkOrangeBackground1:  #fdf6f3;
+  --colorPaletteDarkOrangeBackground2:  #f4bfab;
+  --colorPaletteDarkOrangeBackground3:  #da3b01;
+  --colorPaletteDarkOrangeForeground1:  #c43501;
+  --colorPaletteDarkOrangeForeground2:  #7a2101;
+  --colorPaletteDarkOrangeForeground3:  #e9835e;
+  --colorPaletteDarkOrangeBorder1:      #f4bfab;
+  --colorPaletteDarkOrangeBorder2:      #da3b01;
+  --colorPaletteDarkOrangeBorderActive: #da3b01;
+  --colorStatusWarningBackground1:      var(--colorPaletteDarkOrangeBackground1);
+  --colorStatusWarningForeground1:      var(--colorPaletteDarkOrangeForeground1);
+  --colorStatusWarningForeground3:      var(--colorPaletteDarkOrangeForeground1);
+  --colorStatusWarningBorderActive:     var(--colorPaletteDarkOrangeBorderActive);
+  --colorStatusWarningBorderHover:      var(--colorPaletteDarkOrangeBorderActive);
+
+  --colorPaletteYellowBackground1:  #fffef5;
+  --colorPaletteYellowBackground2:  #fef7b2;
+  --colorPaletteYellowBackground3:  #fde300;
+  --colorPaletteYellowForeground1:  #817400;
+  --colorPaletteYellowForeground2:  #c0ad00;
+  --colorPaletteYellowForeground3:  #fde300;
+  --colorPaletteYellowBorder1:      #fef7b2;
+  --colorPaletteYellowBorder2:      #fde300;
+  --colorStatusWarningBackground2:      var(--colorPaletteYellowBackground1);
+  --colorStatusWarningForeground2:      var(--colorPaletteYellowForeground1);
+
+  --colorPaletteBerryForeground1:  var(--brand-70);
+  --colorPaletteBerryBackground1:  var(--brand-140);
+  --colorPaletteBerryBackground2:  var(--brand-80);
+  --colorPaletteBerryForeground2:  var(--brand-70);
+  --colorPaletteBerryForeground3:  var(--brand-70);
+  --colorPaletteBerryBorder1:      var(--brand-130);
+  --colorPaletteBerryBorder2:      var(--brand-80);
+
+  --colorPaletteLightGreenForeground1: #0e700e;
+  --colorPaletteLightGreenBackground1: #a1e3a1;
+  --colorPaletteLightGreenBackground2: #0e700e;
+  --colorPaletteLightGreenForeground2: #0e700e;
+  --colorPaletteLightGreenBorder1: #b4dbb4;
+  --colorPaletteLightGreenBorder2: #0e700e;
+
+  --colorPaletteMarigoldForeground1: #da3b01;
+  --colorPaletteMarigoldBackground1: #fad3c5;
+  --colorPaletteMarigoldBackground2: #da3b01;
+  --colorPaletteMarigoldForeground2: #da3b01;
+  --colorPaletteMarigoldForeground3: #da3b01;
+  --colorPaletteMarigoldBorderActive: #da3b01;
+  --colorPaletteMarigoldBorder1: #eab8a5;
+  --colorPaletteMarigoldBorder2: #da3b01;
+
+  /* ===== Shadows ===== */
+  --shadow2:   0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+  --shadow4:   0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.14);
+  --shadow8:   0 0 2px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.14);
+  --shadow16:  0 0 2px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.14);
+  --shadow28:  0 0 8px rgba(0,0,0,0.12), 0 14px 28px rgba(0,0,0,0.14);
+  --shadow64:  0 0 8px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.14);
+  --shadow2Brand:   0 0 2px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.25);
+  --shadow4Brand:   0 0 2px rgba(0,0,0,0.30), 0 2px 4px rgba(0,0,0,0.25);
+  --shadow8Brand:   0 0 2px rgba(0,0,0,0.30), 0 4px 8px rgba(0,0,0,0.25);
+  --shadow16Brand:  0 0 2px rgba(0,0,0,0.30), 0 8px 16px rgba(0,0,0,0.25);
+  --shadow28Brand:  0 0 8px rgba(0,0,0,0.30), 0 14px 28px rgba(0,0,0,0.25);
+  --shadow64Brand:  0 0 8px rgba(0,0,0,0.30), 0 32px 64px rgba(0,0,0,0.25);
+
+  /* ===== Stroke Widths ===== */
+  --strokeWidthNone:   0;
+  --strokeWidthThin:   1px;
+  --strokeWidthThick:  2px;
+  --strokeWidthThicker: 3px;
+  --strokeWidthThickest: 4px;
+
+  /* ===== Border Radii ===== */
+  --borderRadiusNone:     0;
+  --borderRadiusSmall:    2px;
+  --borderRadiusMedium:   4px;
+  --borderRadiusLarge:    6px;
+  --borderRadiusXLarge:   8px;
+  --borderRadiusCircular: 9999px;
+
+  /* ===== Spacing (8px grid) ===== */
+  --spacingHorizontalNone:   0;
+  --spacingHorizontalXXS:    2px;
+  --spacingHorizontalXS:     4px;
+  --spacingHorizontalSNudge: 6px;
+  --spacingHorizontalS:      8px;
+  --spacingHorizontalMNudge: 10px;
+  --spacingHorizontalM:      12px;
+  --spacingHorizontalL:      16px;
+  --spacingHorizontalXL:     20px;
+  --spacingHorizontalXXL:    24px;
+  --spacingHorizontalXXXL:   32px;
+  --spacingVerticalNone:   0;
+  --spacingVerticalXXS:    2px;
+  --spacingVerticalXS:     4px;
+  --spacingVerticalSNudge: 6px;
+  --spacingVerticalS:      8px;
+  --spacingVerticalMNudge: 10px;
+  --spacingVerticalM:      12px;
+  --spacingVerticalL:      16px;
+  --spacingVerticalXL:     20px;
+  --spacingVerticalXXL:    24px;
+  --spacingVerticalXXXL:   32px;
+
+  /* ===== Typography ===== */
+  --fontSizeBase100: 10px;
+  --fontSizeBase200: 12px;
+  --fontSizeBase300: 14px;
+  --fontSizeBase400: 16px;
+  --fontSizeBase500: 20px;
+  --fontSizeBase600: 24px;
+  --fontSizeBase700: 28px;
+  --fontSizeBase800: 32px;
+  --fontSizeBase900: 40px;
+  --fontSizeBase1000: 68px;
+
+  --lineHeightBase100: 14px;
+  --lineHeightBase200: 16px;
+  --lineHeightBase300: 20px;
+  --lineHeightBase400: 22px;
+  --lineHeightBase500: 28px;
+  --lineHeightBase600: 32px;
+  --lineHeightBase700: 36px;
+  --lineHeightBase800: 40px;
+  --lineHeightBase900: 52px;
+  --lineHeightBase1000: 92px;
+
+  --fontFamilyBase:      'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fontFamilyMonospace:  'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
+  --fontFamilyNumeric:    'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --fontWeightRegular:  400;
+  --fontWeightMedium:   500;
+  --fontWeightSemibold: 600;
+  --fontWeightBold:     700;
+
+  /* ===== Duration ===== */
+  --durationUltraFast: 50ms;
+  --durationFaster:    100ms;
+  --durationFast:      150ms;
+  --durationNormal:    200ms;
+  --durationGentle:    250ms;
+  --durationSlow:      300ms;
+  --durationSlower:    400ms;
+  --durationUltraSlow: 500ms;
+
+  /* ===== Curves ===== */
+  --curveAccelerateMax:    cubic-bezier(1, 0, 1, 1);
+  --curveAccelerateMid:    cubic-bezier(0.7, 0, 1, 0.5);
+  --curveAccelerateMin:    cubic-bezier(0.8, 0, 1, 1);
+  --curveDecelerateMax:    cubic-bezier(0, 0, 0, 1);
+  --curveDecelerateMid:    cubic-bezier(0.1, 0.9, 0.2, 1);
+  --curveDecelerateMin:    cubic-bezier(0.33, 0, 0.1, 1);
+  --curveEasyEaseMax:      cubic-bezier(0.8, 0, 0.2, 1);
+  --curveEasyEase:         cubic-bezier(0.33, 0, 0.67, 1);
+  --curveLinear:           cubic-bezier(0, 0, 1, 1);
+
+  /* ===== Unstyled host default ===== */
+  --colorNeutralForegroundOnBrand: #fff;
+}
+
+/* ===== Dark Theme Override ===== */
+:root.dark,
+body.dark {
+  --accent-base: #479ef5;
+  --neutral-base: #b0b0b0;
+
+  --colorNeutralForeground1:            var(--neutral-160);
+  --colorNeutralForeground1Hover:       var(--neutral-150);
+  --colorNeutralForeground1Pressed:     var(--neutral-150);
+  --colorNeutralForeground2:            var(--neutral-130);
+  --colorNeutralForeground2Hover:       var(--neutral-140);
+  --colorNeutralForeground2Pressed:     var(--neutral-150);
+  --colorNeutralForeground2BrandHover:  var(--brand-100);
+  --colorNeutralForeground2BrandPressed: var(--brand-110);
+  --colorNeutralForeground3:            var(--neutral-120);
+  --colorNeutralForeground4:            var(--neutral-110);
+  --colorNeutralForegroundDisabled:     var(--neutral-70);
+
+  --colorNeutralBackground1:           var(--neutral-10);
+  --colorNeutralBackground1Hover:      var(--neutral-20);
+  --colorNeutralBackground1Pressed:    var(--neutral-30);
+  --colorNeutralBackground2:           var(--neutral-20);
+  --colorNeutralBackground2Hover:      var(--neutral-30);
+  --colorNeutralBackground2Pressed:    var(--neutral-40);
+  --colorNeutralBackground3:           var(--neutral-30);
+  --colorNeutralBackground3Hover:      var(--neutral-40);
+  --colorNeutralBackground3Pressed:    var(--neutral-50);
+  --colorNeutralBackground4:           var(--neutral-40);
+  --colorNeutralBackground5:           var(--neutral-50);
+  --colorNeutralBackground6:           var(--neutral-60);
+  --colorNeutralBackgroundDisabled:    var(--neutral-30);
+
+  --colorNeutralStroke1:           var(--neutral-70);
+  --colorNeutralStroke1Hover:      var(--neutral-60);
+  --colorNeutralStroke1Pressed:    var(--neutral-50);
+  --colorNeutralStroke2:           var(--neutral-50);
+  --colorNeutralStroke3:           var(--neutral-40);
+  --colorNeutralStrokeDisabled:    var(--neutral-50);
+  --colorNeutralStrokeAccessible:  var(--neutral-100);
+  --colorNeutralStrokeAccessibleHover: var(--neutral-110);
+
+  --colorTransparentBackgroundHover:    var(--neutral-30);
+  --colorTransparentBackgroundPressed:  var(--neutral-40);
+  --colorSubtleBackground:              var(--neutral-30);
+  --colorSubtleBackgroundHover:         var(--neutral-40);
+  --colorSubtleBackgroundPressed:       var(--neutral-50);
+
+  --colorStrokeFocus2: #fff;
+
+  --shadow2:   0 0 2px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.28);
+  --shadow4:   0 0 2px rgba(0,0,0,0.24), 0 2px 4px rgba(0,0,0,0.28);
+  --shadow8:   0 0 2px rgba(0,0,0,0.24), 0 4px 8px rgba(0,0,0,0.28);
+  --shadow16:  0 0 2px rgba(0,0,0,0.24), 0 8px 16px rgba(0,0,0,0.28);
+  --shadow28:  0 0 8px rgba(0,0,0,0.24), 0 14px 28px rgba(0,0,0,0.28);
+  --shadow64:  0 0 8px rgba(0,0,0,0.24), 0 32px 64px rgba(0,0,0,0.28);
+}
+
+/* ===== Forced Colors (High Contrast) ===== */
+@media (forced-colors: active) {
+  :root {
+    --colorNeutralForeground1: ButtonText;
+    --colorNeutralBackground1: ButtonFace;
+  }
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --durationUltraFast: 0.01ms;
+    --durationFaster:    0.01ms;
+    --durationFast:      0.01ms;
+    --durationNormal:    0.01ms;
+    --durationGentle:    0.01ms;
+    --durationSlow:      0.01ms;
+    --durationSlower:    0.01ms;
+    --durationUltraSlow: 0.01ms;
+  }
+}

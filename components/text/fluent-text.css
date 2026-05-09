@@ -1,0 +1,128 @@
+@import url('../../tokens.css');
+
+:host { display: inline; }
+
+.root {
+  display: inline;
+  font-family: var(--fontFamilyBase);
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  font-weight: var(--fontWeightRegular);
+  text-align: start;
+}
+
+:host([nowrap]) .root,
+:host([nowrap]) .root ::slotted(*) {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+:host([truncate]) .root,
+:host([truncate]) .root ::slotted(*) {
+  text-overflow: ellipsis;
+}
+
+:host([block]) .root {
+  display: block;
+}
+
+:host([italic]) .root {
+  font-style: italic;
+}
+
+:host([underline]) .root {
+  text-decoration-line: underline;
+}
+
+:host([strikethrough]) .root {
+  text-decoration-line: line-through;
+}
+
+:host([underline][strikethrough]) .root {
+  text-decoration-line: line-through underline;
+}
+
+:host([size='100']) .root {
+  font-size: var(--fontSizeBase100);
+  line-height: var(--lineHeightBase100);
+}
+
+:host([size='200']) .root {
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+}
+
+:host([size='400']) .root {
+  font-size: var(--fontSizeBase400);
+  line-height: var(--lineHeightBase400);
+}
+
+:host([size='500']) .root {
+  font-size: var(--fontSizeBase500);
+  line-height: var(--lineHeightBase500);
+}
+
+:host([size='600']) .root {
+  font-size: var(--fontSizeBase600);
+  line-height: var(--lineHeightBase600);
+}
+
+:host([size='700']) .root {
+  font-size: var(--fontSizeBase700);
+  line-height: var(--lineHeightBase700);
+}
+
+:host([size='800']) .root {
+  font-size: var(--fontSizeBase800);
+  line-height: var(--lineHeightBase800);
+}
+
+:host([size='900']) .root {
+  font-size: var(--fontSizeBase900);
+  line-height: var(--lineHeightBase900);
+}
+
+:host([size='1000']) .root {
+  font-size: var(--fontSizeBase1000);
+  line-height: var(--lineHeightBase1000);
+}
+
+:host([font='monospace']) .root {
+  font-family: var(--fontFamilyMonospace);
+}
+
+:host([font='numeric']) .root {
+  font-family: var(--fontFamilyNumeric);
+}
+
+:host([weight='medium']) .root {
+  font-weight: var(--fontWeightMedium);
+}
+
+:host([weight='semibold']) .root {
+  font-weight: var(--fontWeightSemibold);
+}
+
+:host([weight='bold']) .root {
+  font-weight: var(--fontWeightBold);
+}
+
+:host([align='center']) .root {
+  text-align: center;
+}
+
+:host([align='end']) .root {
+  text-align: end;
+}
+
+:host([align='justify']) .root {
+  text-align: justify;
+}
+
+::slotted(*) {
+  font: inherit;
+  line-height: inherit;
+  text-decoration-line: inherit;
+  text-align: inherit;
+  margin: 0;
+}

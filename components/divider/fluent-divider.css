@@ -1,0 +1,124 @@
+@import url('../../tokens.css');
+
+:host { display: flex; }
+
+:host([hidden]) .root {
+  display: none;
+}
+
+.root {
+  display: flex;
+}
+
+.root::after,
+.root::before {
+  align-self: center;
+  background: var(--colorNeutralStroke2);
+  box-sizing: border-box;
+  content: '';
+  display: flex;
+  flex-grow: 1;
+  height: var(--strokeWidthThin);
+}
+
+:host([inset]) .root {
+  padding: 0 12px;
+}
+
+.root ::slotted(*) {
+  color: var(--colorNeutralForeground2);
+  font-family: var(--fontFamilyBase);
+  font-size: var(--fontSizeBase200);
+  font-weight: var(--fontWeightRegular);
+  margin: 0;
+  padding: 0 12px;
+}
+
+:host([align-content='start']) .root::before,
+:host([align-content='end']) .root::after {
+  flex-basis: 12px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+:host([orientation='vertical']) .root {
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  min-height: 84px;
+}
+
+:host([orientation='vertical']:empty) .root {
+  min-height: 20px;
+}
+
+:host([orientation='vertical'][inset]) .root::before {
+  margin-top: 12px;
+}
+:host([orientation='vertical'][inset]) .root::after {
+  margin-bottom: 12px;
+}
+
+:host([orientation='vertical']:empty) .root::before,
+:host([orientation='vertical']:empty) .root::after {
+  height: 10px;
+  min-height: 10px;
+  flex-grow: 0;
+}
+
+:host([orientation='vertical']) .root::before,
+:host([orientation='vertical']) .root::after {
+  width: var(--strokeWidthThin);
+  min-height: 20px;
+  height: 100%;
+}
+
+:host([orientation='vertical']) .root ::slotted(*) {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  line-height: 20px;
+}
+
+:host([orientation='vertical'][align-content='start']) .root::before {
+  min-height: 8px;
+}
+:host([orientation='vertical'][align-content='end']) .root::after {
+  min-height: 8px;
+}
+
+:host([appearance='strong']) .root::before,
+:host([appearance='strong']) .root::after {
+  background: var(--colorNeutralStroke1);
+}
+:host([appearance='strong']) .root ::slotted(*) {
+  color: var(--colorNeutralForeground1);
+}
+:host([appearance='brand']) .root::before,
+:host([appearance='brand']) .root::after {
+  background: var(--colorBrandStroke1);
+}
+:host([appearance='brand']) .root ::slotted(*) {
+  color: var(--colorBrandForeground1);
+}
+:host([appearance='subtle']) .root::before,
+:host([appearance='subtle']) .root::after {
+  background: var(--colorNeutralStroke3);
+}
+:host([appearance='subtle']) .root ::slotted(*) {
+  color: var(--colorNeutralForeground3);
+}
+
+@media (forced-colors: active) {
+  :host([appearance='strong']) .root::before,
+  :host([appearance='strong']) .root::after,
+  :host([appearance='brand']) .root::before,
+  :host([appearance='brand']) .root::after,
+  :host([appearance='subtle']) .root::before,
+  :host([appearance='subtle']) .root::after,
+  .root::after,
+  .root::before {
+    background: WindowText;
+    color: WindowText;
+  }
+}

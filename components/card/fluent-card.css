@@ -1,0 +1,85 @@
+@import url('../../tokens.css');
+
+:host { display: block; }
+
+.root {
+  display: block;
+  box-sizing: border-box;
+  background-color: var(--colorNeutralBackground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStroke2);
+  border-radius: var(--borderRadiusXLarge);
+  color: var(--colorNeutralForeground1);
+  font-family: var(--fontFamilyBase);
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  padding: var(--spacingVerticalL) var(--spacingHorizontalL);
+  overflow: hidden;
+  position: relative;
+}
+
+:host([appearance='filled-alternative']) .root {
+  background-color: var(--colorNeutralBackground2);
+  border-color: transparent;
+}
+
+:host([appearance='filled-alternative']) .root:hover {
+  background-color: var(--colorNeutralBackground2Hover);
+}
+
+:host([appearance='outline']) .root {
+  background-color: var(--colorTransparentBackground);
+}
+
+:host([appearance='outline']) .root:hover {
+  background-color: var(--colorTransparentBackgroundHover);
+}
+
+:host([appearance='subtle']) .root {
+  background-color: var(--colorSubtleBackground);
+  border-color: transparent;
+}
+
+:host([appearance='subtle']) .root:hover {
+  background-color: var(--colorSubtleBackgroundHover);
+}
+
+:host([size='small']) .root {
+  padding: var(--spacingVerticalM) var(--spacingHorizontalM);
+  border-radius: var(--borderRadiusLarge);
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+}
+
+:host([size='large']) .root {
+  padding: var(--spacingVerticalXL) var(--spacingHorizontalXL);
+  font-size: var(--fontSizeBase400);
+  line-height: var(--lineHeightBase400);
+}
+
+::slotted([slot='preview']) {
+  margin: calc(-1 * var(--spacingVerticalL)) calc(-1 * var(--spacingHorizontalL)) var(--spacingVerticalL);
+  width: calc(100% + 2 * var(--spacingHorizontalL));
+  display: block;
+}
+
+::slotted([slot='header']) {
+  margin-bottom: var(--spacingVerticalM);
+}
+
+::slotted([slot='footer']) {
+  margin-top: var(--spacingVerticalM);
+  padding-top: var(--spacingVerticalM);
+  border-top: var(--strokeWidthThin) solid var(--colorNeutralStroke2);
+}
+
+@media (forced-colors: active) {
+  .root {
+    border-color: ButtonText;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .root {
+    transition-duration: 0.01ms;
+  }
+}

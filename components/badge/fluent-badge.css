@@ -1,0 +1,289 @@
+@import url('../../tokens.css');
+
+:host { display: inline-flex; }
+
+.root {
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fontFamilyBase);
+  font-weight: var(--fontWeightSemibold);
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+  min-width: 20px;
+  height: 20px;
+  padding-inline: calc(var(--spacingHorizontalXS) + var(--spacingHorizontalXXS));
+  border-radius: var(--borderRadiusCircular);
+  border: 1px solid var(--colorTransparentStroke);
+  background-color: var(--colorBrandBackground);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+::slotted(svg) {
+  font-size: 12px;
+}
+
+:host(:not([appearance='ghost'])) .root::after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-style: solid;
+  border-width: var(--strokeWidthThin);
+  border-color: inherit;
+  border-radius: inherit;
+}
+
+/* ===== Shapes ===== */
+:host([shape='square']) .root {
+  border-radius: var(--borderRadiusNone);
+}
+
+:host([shape='rounded']) .root {
+  border-radius: var(--borderRadiusMedium);
+}
+
+:host([shape='rounded']:is([size='tiny'], [size='extra-small'], [size='small'])) .root {
+  border-radius: var(--borderRadiusSmall);
+}
+
+/* ===== Sizes ===== */
+:host([size='tiny']) .root {
+  width: 6px;
+  height: 6px;
+  font-size: 4px;
+  line-height: 4px;
+  padding-inline: 0;
+  min-width: unset;
+}
+
+:host([size='tiny']) ::slotted(svg) {
+  font-size: 6px;
+}
+
+:host([size='extra-small']) .root {
+  width: 10px;
+  height: 10px;
+  font-size: 6px;
+  line-height: 6px;
+  padding-inline: 0;
+  min-width: unset;
+}
+
+:host([size='extra-small']) ::slotted(svg) {
+  font-size: 10px;
+}
+
+:host([size='small']) .root {
+  min-width: 16px;
+  height: 16px;
+  font-size: var(--fontSizeBase100);
+  line-height: var(--lineHeightBase100);
+  padding-inline: calc(var(--spacingHorizontalXXS) + var(--spacingHorizontalXXS));
+}
+
+:host([size='small']) ::slotted(svg) {
+  font-size: 12px;
+}
+
+:host([size='large']) .root {
+  min-width: 24px;
+  height: 24px;
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+  padding-inline: calc(var(--spacingHorizontalXS) + var(--spacingHorizontalXXS));
+}
+
+:host([size='large']) ::slotted(svg) {
+  font-size: 16px;
+}
+
+:host([size='extra-large']) .root {
+  min-width: 32px;
+  height: 32px;
+  font-size: var(--fontSizeBase200);
+  line-height: var(--lineHeightBase200);
+  padding-inline: calc(var(--spacingHorizontalSNudge) + var(--spacingHorizontalXXS));
+}
+
+:host([size='extra-large']) ::slotted(svg) {
+  font-size: 20px;
+}
+
+/* ===== Filled Appearance (default, no attribute) ===== */
+:host([color='danger']) .root {
+  background-color: var(--colorPaletteRedBackground3);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+:host([color='important']) .root {
+  background-color: var(--colorNeutralForeground1);
+  color: var(--colorNeutralBackground1);
+}
+
+:host([color='informative']) .root {
+  background-color: var(--colorNeutralBackground5);
+  color: var(--colorNeutralForeground3);
+}
+
+:host([color='severe']) .root {
+  background-color: var(--colorPaletteDarkOrangeBackground3);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+:host([color='subtle']) .root {
+  background-color: var(--colorNeutralBackground1);
+  color: var(--colorNeutralForeground1);
+}
+
+:host([color='success']) .root {
+  background-color: var(--colorPaletteGreenBackground3);
+  color: var(--colorNeutralForegroundOnBrand);
+}
+
+:host([color='warning']) .root {
+  background-color: var(--colorPaletteYellowBackground3);
+  color: var(--colorNeutralForeground1Static);
+}
+
+/* ===== Ghost Appearance ===== */
+:host([appearance='ghost']) .root {
+  color: var(--colorBrandForeground1);
+  background-color: initial;
+}
+
+:host([appearance='ghost'][color='danger']) .root {
+  color: var(--colorPaletteRedForeground3);
+}
+
+:host([appearance='ghost'][color='important']) .root {
+  color: var(--colorNeutralForeground1);
+}
+
+:host([appearance='ghost'][color='informative']) .root {
+  color: var(--colorNeutralForeground3);
+}
+
+:host([appearance='ghost'][color='severe']) .root {
+  color: var(--colorPaletteDarkOrangeForeground3);
+}
+
+:host([appearance='ghost'][color='subtle']) .root {
+  color: var(--colorNeutralForegroundInverted);
+}
+
+:host([appearance='ghost'][color='success']) .root {
+  color: var(--colorPaletteGreenForeground3);
+}
+
+:host([appearance='ghost'][color='warning']) .root {
+  color: var(--colorPaletteYellowForeground2);
+}
+
+/* ===== Outline Appearance ===== */
+:host([appearance='outline']) .root {
+  border-color: currentColor;
+  color: var(--colorBrandForeground1);
+  background-color: initial;
+}
+
+:host([appearance='outline'][color='danger']) .root {
+  color: var(--colorPaletteRedForeground3);
+}
+
+:host([appearance='outline'][color='important']) .root {
+  color: var(--colorNeutralForeground3);
+  border-color: var(--colorNeutralStrokeAccessible);
+}
+
+:host([appearance='outline'][color='informative']) .root {
+  color: var(--colorNeutralForeground3);
+  border-color: var(--colorNeutralStroke2);
+}
+
+:host([appearance='outline'][color='severe']) .root {
+  color: var(--colorPaletteDarkOrangeForeground3);
+}
+
+:host([appearance='outline'][color='subtle']) .root {
+  color: var(--colorNeutralForegroundStaticInverted);
+}
+
+:host([appearance='outline'][color='success']) .root {
+  color: var(--colorPaletteGreenForeground2);
+}
+
+:host([appearance='outline'][color='warning']) .root {
+  color: var(--colorPaletteYellowForeground2);
+}
+
+/* ===== Tint Appearance ===== */
+:host([appearance='tint']) .root {
+  background-color: var(--colorBrandBackground2);
+  color: var(--colorBrandForeground2);
+  border-color: var(--colorBrandStroke2);
+}
+
+:host([appearance='tint'][color='danger']) .root {
+  background-color: var(--colorPaletteRedBackground1);
+  color: var(--colorPaletteRedForeground1);
+  border-color: var(--colorPaletteRedBorder1);
+}
+
+:host([appearance='tint'][color='important']) .root {
+  background-color: var(--colorNeutralForeground3);
+  color: var(--colorNeutralBackground1);
+  border-color: var(--colorTransparentStroke);
+}
+
+:host([appearance='tint'][color='informative']) .root {
+  background-color: var(--colorNeutralBackground4);
+  color: var(--colorNeutralForeground3);
+  border-color: var(--colorNeutralStroke2);
+}
+
+:host([appearance='tint'][color='severe']) .root {
+  background-color: var(--colorPaletteDarkOrangeBackground1);
+  color: var(--colorPaletteDarkOrangeForeground1);
+  border-color: var(--colorPaletteDarkOrangeBorder1);
+}
+
+:host([appearance='tint'][color='subtle']) .root {
+  background-color: var(--colorNeutralBackground1);
+  color: var(--colorNeutralForeground3);
+  border-color: var(--colorNeutralStroke2);
+}
+
+:host([appearance='tint'][color='success']) .root {
+  background-color: var(--colorPaletteGreenBackground1);
+  color: var(--colorPaletteGreenForeground1);
+  border-color: var(--colorPaletteGreenBorder2);
+}
+
+:host([appearance='tint'][color='warning']) .root {
+  background-color: var(--colorPaletteYellowBackground1);
+  color: var(--colorPaletteYellowForeground2);
+  border-color: var(--colorPaletteYellowBorder1);
+}
+
+/* ===== Slot ===== */
+::slotted([slot='start']) {
+  margin-inline-end: var(--spacingHorizontalXXS);
+}
+
+::slotted([slot='end']) {
+  margin-inline-start: var(--spacingHorizontalXXS);
+}
+
+/* ===== Forced Colors ===== */
+@media (forced-colors: active) {
+  .root,
+  :host([appearance='outline']) .root,
+  :host([appearance='tint']) .root {
+    border-color: CanvasText;
+  }
+}

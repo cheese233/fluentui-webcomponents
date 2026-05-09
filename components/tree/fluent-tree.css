@@ -1,0 +1,16 @@
+@import url('../../tokens.css');
+
+:host { display: flex; }
+
+.root {
+  display: block;
+  outline: none;
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+}
+
+.root:focus-visible {
+  outline: var(--strokeWidthThick) solid var(--colorStrokeFocus2);
+  outline-offset: 2px;
+  border-radius: var(--borderRadiusMedium);
+}

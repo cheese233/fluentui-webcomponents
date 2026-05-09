@@ -1,0 +1,123 @@
+@import url('../../tokens.css');
+
+:host { display: inline-flex; }
+
+:host([hidden]) .root {
+  display: none;
+}
+
+.root {
+  --size: 16px;
+  aspect-ratio: 1;
+  background-color: var(--colorNeutralBackground1);
+  border: var(--strokeWidthThin) solid var(--colorNeutralStrokeAccessible);
+  border-radius: var(--borderRadiusCircular);
+  box-sizing: border-box;
+  position: relative;
+  width: var(--size);
+  display: inline-flex;
+  cursor: pointer;
+}
+
+:host([size='large']) .root {
+  --size: 20px;
+}
+
+.checked-indicator {
+  aspect-ratio: 1;
+  border-radius: var(--borderRadiusCircular);
+  color: var(--colorNeutralForegroundInverted);
+  inset: 0;
+  margin: auto;
+  position: absolute;
+  width: calc(var(--size) * 0.625);
+}
+
+:host(:not([slot='input'])) .root::after {
+  content: '';
+  position: absolute;
+  display: block;
+  inset: -8px;
+  box-sizing: border-box;
+  outline: none;
+  border: var(--strokeWidthThick) solid var(--colorTransparentStroke);
+  border-radius: var(--borderRadiusMedium);
+}
+
+:host(:not([slot='input'])) .root:focus-visible::after {
+  border-color: var(--colorStrokeFocus2);
+}
+
+.root:hover {
+  border-color: var(--colorNeutralStrokeAccessibleHover);
+}
+
+:host([checked]) .root {
+  border-color: var(--colorCompoundBrandStroke);
+}
+
+:host([checked]) .root .checked-indicator {
+  background-color: var(--colorCompoundBrandBackground);
+}
+
+:host([checked]) .root:hover .checked-indicator {
+  background-color: var(--colorCompoundBrandBackgroundHover);
+}
+
+.root:active {
+  border-color: var(--colorNeutralStrokeAccessiblePressed);
+}
+
+:host([checked]) .root:active .checked-indicator {
+  background-color: var(--colorCompoundBrandBackgroundPressed);
+}
+
+.root:focus-visible {
+  outline: none;
+}
+
+:host([disabled]) .root {
+  background-color: var(--colorNeutralBackgroundDisabled);
+  border-color: var(--colorNeutralStrokeDisabled);
+  cursor: unset;
+}
+
+:host([checked][disabled]) .root .checked-indicator {
+  background-color: var(--colorNeutralStrokeDisabled);
+}
+
+@media (forced-colors: active) {
+  .root {
+    border-color: FieldText;
+  }
+
+  :host(:not([slot='input']:focus-visible)) .root::after {
+    border-color: Canvas;
+  }
+
+  :host(:not([disabled])) .root:hover,
+  :host(:not([slot='input'])) .root:focus-visible::after {
+    border-color: Highlight;
+  }
+
+  .checked-indicator {
+    color: HighlightText;
+  }
+
+  :host([checked]) .root .checked-indicator {
+    background-color: FieldText;
+  }
+
+  :host([checked]:not([disabled])) .root:hover .checked-indicator {
+    background-color: Highlight;
+  }
+
+  :host([disabled]) .root {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  :host([disabled][checked]) .root .checked-indicator {
+    background-color: GrayText;
+  }
+}

@@ -1,0 +1,82 @@
+@import url('../../tokens.css');
+
+:host {
+  --dialog-backdrop: rgba(0, 0, 0, 0.4);
+  --dialog-starting-scale: 0.85;
+  display: none;
+}
+
+:host([open]) {
+  display: block;
+}
+
+::backdrop {
+  background: var(--dialog-backdrop);
+}
+
+dialog {
+  background: var(--colorNeutralBackground1);
+  border-radius: var(--borderRadiusXLarge);
+  border: none;
+  box-shadow: var(--shadow64);
+  color: var(--colorNeutralForeground1);
+  max-height: 100vh;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+:host([type='non-modal']) .root dialog {
+  inset: 0;
+  position: fixed;
+  z-index: 2;
+  overflow: auto;
+}
+
+@supports (max-height: 1dvh) {
+  dialog {
+    max-height: 100dvh;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog,
+  ::backdrop {
+    transition-behavior: allow-discrete;
+    transition-property: display, opacity, overlay, scale;
+    transition-duration: var(--durationGentle);
+    transition-timing-function: var(--curveDecelerateMid);
+    opacity: 0;
+  }
+
+  ::backdrop {
+    transition-timing-function: var(--curveLinear);
+  }
+
+  dialog[open],
+  dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  dialog:not([open]) {
+    scale: var(--dialog-starting-scale);
+    transition-timing-function: var(--curveAccelerateMid);
+  }
+}
+
+@starting-style {
+  dialog[open],
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+
+  dialog {
+    scale: var(--dialog-starting-scale);
+  }
+}
+
+@media (forced-colors: active) {
+  dialog {
+    border: var(--strokeWidthThin) solid var(--colorTransparentStroke);
+  }
+}

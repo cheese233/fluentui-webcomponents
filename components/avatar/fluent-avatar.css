@@ -1,0 +1,481 @@
+@import url('../../tokens.css');
+
+:host { display: inline-grid; }
+
+:host([hidden]) .root {
+  display: none;
+}
+
+.root {
+  display: inline-grid;
+  position: relative;
+  place-items: center;
+  place-content: center;
+  grid-template: 1fr / 1fr;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  font-family: var(--fontFamilyBase);
+  font-weight: var(--fontWeightSemibold);
+  font-size: var(--fontSizeBase300);
+  border-radius: var(--borderRadiusCircular);
+  color: var(--colorNeutralForeground3);
+  background-color: var(--colorNeutralBackground6);
+}
+
+.monogram,
+.default-icon {
+  grid-area: 1 / 1 / -1 / -1;
+}
+
+.monogram:empty {
+  display: none;
+}
+
+.default-slot:is(.has-slotted, :has-slotted) ~ .default-icon,
+.default-slot:is(.has-slotted, :has-slotted) ~ .monogram,
+:host(:is([name]):not([name=''])) .root .default-icon,
+:host(:is([initials]):not([initials=''])) .root .default-icon {
+  display: none;
+}
+
+.default-icon,
+::slotted(svg) {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+::slotted(img) {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--borderRadiusCircular);
+}
+
+::slotted([slot='badge']) {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 0 0 var(--strokeWidthThin) var(--colorNeutralBackground1);
+}
+
+:host([size='64']) .root ::slotted([slot='badge']),
+:host([size='72']) .root ::slotted([slot='badge']),
+:host([size='96']) .root ::slotted([slot='badge']),
+:host([size='120']) .root ::slotted([slot='badge']),
+:host([size='128']) .root ::slotted([slot='badge']) {
+  box-shadow: 0 0 0 var(--strokeWidthThick) var(--colorNeutralBackground1);
+}
+
+:host([size='16']) .root,
+:host([size='20']) .root,
+:host([size='24']) .root {
+  font-size: var(--fontSizeBase100);
+  font-weight: var(--fontWeightRegular);
+}
+
+:host([size='16']) .root {
+  width: 16px;
+  height: 16px;
+}
+
+:host([size='20']) .root {
+  width: 20px;
+  height: 20px;
+}
+
+:host([size='24']) .root {
+  width: 24px;
+  height: 24px;
+}
+
+:host([size='16']) .root .default-icon,
+:host([size='16']) .root ::slotted(svg) {
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+}
+
+:host([size='20']) .root .default-icon,
+:host([size='24']) .root .default-icon,
+:host([size='20']) .root ::slotted(svg),
+:host([size='24']) .root ::slotted(svg) {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
+:host([size='28']) .root {
+  width: 28px;
+  height: 28px;
+  font-size: var(--fontSizeBase200);
+}
+
+:host([size='36']) .root {
+  width: 36px;
+  height: 36px;
+}
+
+:host([size='40']) .root {
+  width: 40px;
+  height: 40px;
+}
+
+:host([size='48']) .root,
+:host([size='56']) .root {
+  font-size: var(--fontSizeBase400);
+}
+
+:host([size='48']) .root {
+  width: 48px;
+  height: 48px;
+}
+
+:host([size='48']) .root .default-icon,
+:host([size='48']) .root ::slotted(svg) {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+:host([size='56']) .root {
+  width: 56px;
+  height: 56px;
+}
+
+:host([size='56']) .root .default-icon,
+:host([size='56']) .root ::slotted(svg) {
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
+}
+
+:host([size='64']) .root,
+:host([size='72']) .root,
+:host([size='96']) .root {
+  font-size: var(--fontSizeBase500);
+}
+
+:host([size='64']) .root .default-icon,
+:host([size='72']) .root .default-icon,
+:host([size='64']) .root ::slotted(svg),
+:host([size='72']) .root ::slotted(svg) {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+}
+
+:host([size='64']) .root {
+  width: 64px;
+  height: 64px;
+}
+
+:host([size='72']) .root {
+  width: 72px;
+  height: 72px;
+}
+
+:host([size='96']) .root {
+  width: 96px;
+  height: 96px;
+}
+
+:host([size='96']) .root .default-icon,
+:host([size='120']) .root .default-icon,
+:host([size='128']) .root .default-icon,
+:host([size='96']) .root ::slotted(svg),
+:host([size='120']) .root ::slotted(svg),
+:host([size='128']) .root ::slotted(svg) {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+}
+
+:host([size='120']) .root,
+:host([size='128']) .root {
+  font-size: var(--fontSizeBase600);
+}
+
+:host([size='120']) .root {
+  width: 120px;
+  height: 120px;
+}
+
+:host([size='128']) .root {
+  width: 128px;
+  height: 128px;
+}
+
+:host([shape='square']) .root {
+  border-radius: var(--borderRadiusMedium);
+}
+
+:host([shape='square'][size='20']) .root,
+:host([shape='square'][size='24']) .root {
+  border-radius: var(--borderRadiusSmall);
+}
+
+:host([shape='square'][size='56']) .root,
+:host([shape='square'][size='64']) .root,
+:host([shape='square'][size='72']) .root {
+  border-radius: var(--borderRadiusLarge);
+}
+:host([shape='square'][size='96']) .root,
+:host([shape='square'][size='120']) .root,
+:host([shape='square'][size='128']) .root {
+  border-radius: var(--borderRadiusXLarge);
+}
+
+:host([data-color='brand']) .root {
+  color: var(--colorNeutralForegroundStaticInverted);
+  background-color: var(--colorBrandBackgroundStatic);
+}
+
+:host([data-color='dark-red']) .root {
+  color: var(--colorPaletteDarkRedForeground2);
+  background-color: var(--colorPaletteDarkRedBackground2);
+}
+
+:host([data-color='cranberry']) .root {
+  color: var(--colorPaletteCranberryForeground2);
+  background-color: var(--colorPaletteCranberryBackground2);
+}
+
+:host([data-color='red']) .root {
+  color: var(--colorPaletteRedForeground2);
+  background-color: var(--colorPaletteRedBackground2);
+}
+
+:host([data-color='pumpkin']) .root {
+  color: var(--colorPalettePumpkinForeground2);
+  background-color: var(--colorPalettePumpkinBackground2);
+}
+
+:host([data-color='peach']) .root {
+  color: var(--colorPalettePeachForeground2);
+  background-color: var(--colorPalettePeachBackground2);
+}
+
+:host([data-color='marigold']) .root {
+  color: var(--colorPaletteMarigoldForeground2);
+  background-color: var(--colorPaletteMarigoldBackground2);
+}
+
+:host([data-color='gold']) .root {
+  color: var(--colorPaletteGoldForeground2);
+  background-color: var(--colorPaletteGoldBackground2);
+}
+
+:host([data-color='brass']) .root {
+  color: var(--colorPaletteBrassForeground2);
+  background-color: var(--colorPaletteBrassBackground2);
+}
+
+:host([data-color='brown']) .root {
+  color: var(--colorPaletteBrownForeground2);
+  background-color: var(--colorPaletteBrownBackground2);
+}
+
+:host([data-color='forest']) .root {
+  color: var(--colorPaletteForestForeground2);
+  background-color: var(--colorPaletteForestBackground2);
+}
+
+:host([data-color='seafoam']) .root {
+  color: var(--colorPaletteSeafoamForeground2);
+  background-color: var(--colorPaletteSeafoamBackground2);
+}
+
+:host([data-color='dark-green']) .root {
+  color: var(--colorPaletteDarkGreenForeground2);
+  background-color: var(--colorPaletteDarkGreenBackground2);
+}
+
+:host([data-color='light-teal']) .root {
+  color: var(--colorPaletteLightTealForeground2);
+  background-color: var(--colorPaletteLightTealBackground2);
+}
+
+:host([data-color='teal']) .root {
+  color: var(--colorPaletteTealForeground2);
+  background-color: var(--colorPaletteTealBackground2);
+}
+
+:host([data-color='steel']) .root {
+  color: var(--colorPaletteSteelForeground2);
+  background-color: var(--colorPaletteSteelBackground2);
+}
+
+:host([data-color='blue']) .root {
+  color: var(--colorPaletteBlueForeground2);
+  background-color: var(--colorPaletteBlueBackground2);
+}
+
+:host([data-color='royal-blue']) .root {
+  color: var(--colorPaletteRoyalBlueForeground2);
+  background-color: var(--colorPaletteRoyalBlueBackground2);
+}
+
+:host([data-color='cornflower']) .root {
+  color: var(--colorPaletteCornflowerForeground2);
+  background-color: var(--colorPaletteCornflowerBackground2);
+}
+
+:host([data-color='navy']) .root {
+  color: var(--colorPaletteNavyForeground2);
+  background-color: var(--colorPaletteNavyBackground2);
+}
+
+:host([data-color='lavender']) .root {
+  color: var(--colorPaletteLavenderForeground2);
+  background-color: var(--colorPaletteLavenderBackground2);
+}
+
+:host([data-color='purple']) .root {
+  color: var(--colorPalettePurpleForeground2);
+  background-color: var(--colorPalettePurpleBackground2);
+}
+
+:host([data-color='grape']) .root {
+  color: var(--colorPaletteGrapeForeground2);
+  background-color: var(--colorPaletteGrapeBackground2);
+}
+
+:host([data-color='lilac']) .root {
+  color: var(--colorPaletteLilacForeground2);
+  background-color: var(--colorPaletteLilacBackground2);
+}
+
+:host([data-color='pink']) .root {
+  color: var(--colorPalettePinkForeground2);
+  background-color: var(--colorPalettePinkBackground2);
+}
+
+:host([data-color='magenta']) .root {
+  color: var(--colorPaletteMagentaForeground2);
+  background-color: var(--colorPaletteMagentaBackground2);
+}
+
+:host([data-color='plum']) .root {
+  color: var(--colorPalettePlumForeground2);
+  background-color: var(--colorPalettePlumBackground2);
+}
+
+:host([data-color='beige']) .root {
+  color: var(--colorPaletteBeigeForeground2);
+  background-color: var(--colorPaletteBeigeBackground2);
+}
+
+:host([data-color='mink']) .root {
+  color: var(--colorPaletteMinkForeground2);
+  background-color: var(--colorPaletteMinkBackground2);
+}
+
+:host([data-color='platinum']) .root {
+  color: var(--colorPalettePlatinumForeground2);
+  background-color: var(--colorPalettePlatinumBackground2);
+}
+
+:host([data-color='anchor']) .root {
+  color: var(--colorPaletteAnchorForeground2);
+  background-color: var(--colorPaletteAnchorBackground2);
+}
+
+:host([active]) .root {
+  transform: perspective(1px);
+  transition-property: transform, opacity;
+  transition-duration: var(--durationUltraSlow), var(--durationFaster);
+  transition-delay: var(--curveEasyEaseMax), var(--curveLinear);
+}
+
+:host([active]) .root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: inherit;
+  transition-property: margin, opacity;
+  transition-duration: var(--durationUltraSlow), var(--durationSlower);
+  transition-delay: var(--curveEasyEaseMax), var(--curveLinear);
+}
+:host([active]) .root::before {
+  box-shadow: var(--shadow8);
+  border-style: solid;
+  border-color: var(--colorBrandBackgroundStatic);
+}
+
+:host([active][appearance='shadow']) .root::before {
+  border-style: none;
+  border-color: none;
+}
+
+:host([active]:not([appearance='shadow'])) .root::before {
+  margin: calc(-2 * var(--strokeWidthThick));
+  border-width: var(--strokeWidthThick);
+}
+
+:host([size='56'][active]:not([appearance='shadow'])) .root::before,
+:host([size='64'][active]:not([appearance='shadow'])) .root::before {
+  margin: calc(-2 * var(--strokeWidthThicker));
+  border-width: var(--strokeWidthThicker);
+}
+
+:host([size='72'][active]:not([appearance='shadow'])) .root::before,
+:host([size='96'][active]:not([appearance='shadow'])) .root::before,
+:host([size='120'][active]:not([appearance='shadow'])) .root::before,
+:host([size='128'][active]:not([appearance='shadow'])) .root::before {
+  margin: calc(-2 * var(--strokeWidthThickest));
+  border-width: var(--strokeWidthThickest);
+}
+
+:host([size='20'][active][appearance]) .root::before,
+:host([size='24'][active][appearance]) .root::before,
+:host([size='28'][active][appearance]) .root::before {
+  box-shadow: var(--shadow4);
+}
+
+:host([size='56'][active][appearance]) .root::before,
+:host([size='64'][active][appearance]) .root::before {
+  box-shadow: var(--shadow16);
+}
+
+:host([size='72'][active][appearance]) .root::before,
+:host([size='96'][active][appearance]) .root::before,
+:host([size='120'][active][appearance]) .root::before,
+:host([size='128'][active][appearance]) .root::before {
+  box-shadow: var(--shadow28);
+}
+
+:host([active][appearance='ring']) .root::before {
+  box-shadow: none;
+}
+
+:host([active='inactive']) .root {
+  opacity: 0.8;
+  transform: scale(0.875);
+  transition-property: transform, opacity;
+  transition-duration: var(--durationUltraSlow), var(--durationFaster);
+  transition-delay: var(--curveDecelerateMin), var(--curveLinear);
+}
+
+:host([active='inactive']) .root::before {
+  margin: 0;
+  opacity: 0;
+  transition-property: margin, opacity;
+  transition-duration: var(--durationUltraSlow), var(--durationSlower);
+  transition-delay: var(--curveDecelerateMin), var(--curveLinear);
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  :host([active]) .root {
+    transition-duration: 0.01ms;
+  }
+
+  :host([active]) .root::before {
+    transition-duration: 0.01ms;
+    transition-delay: 0.01ms;
+  }
+}

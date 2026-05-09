@@ -1,0 +1,70 @@
+@import url("../../tokens.css");
+
+:host { display: flex; }
+
+.root {
+    display: flex;
+    align-items: center;
+    gap: var(--spacingHorizontalXS);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacingHorizontalXS);
+    list-style: none;
+}
+
+.link {
+    color: var(--colorNeutralForeground2);
+    text-decoration: none;
+    border-radius: var(--borderRadiusMedium);
+    padding: var(--spacingVerticalXXS) var(--spacingHorizontalXS);
+    transition:
+        color var(--durationFaster) var(--curveEasyEaseMax),
+        background var(--durationFaster) var(--curveEasyEaseMax);
+}
+
+.link:hover {
+    color: var(--colorNeutralForeground2Hover);
+    background: var(--colorSubtleBackgroundHover);
+}
+
+.link:active {
+    color: var(--colorNeutralForeground2Pressed);
+    background: var(--colorSubtleBackgroundPressed);
+}
+
+:host([current]) .link {
+    color: var(--colorNeutralForeground1);
+    font-weight: var(--fontWeightSemibold);
+    pointer-events: none;
+}
+
+:host([appearance="subtle"]) .link:hover {
+    background: var(--colorSubtleBackgroundHover);
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    color: var(--colorNeutralForeground3);
+    flex-shrink: 0;
+}
+
+.separator-icon {
+    inline-size: 12px;
+    block-size: 12px;
+}
+
+:host(:first-child) .separator,
+:host([data-position="first"]) .separator {
+    display: none;
+}
+
+@media (forced-colors: active) {
+    .link:hover {
+        background: Highlight;
+        color: HighlightText;
+    }
+}
