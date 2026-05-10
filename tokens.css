@@ -128,17 +128,17 @@
   --colorNeutralForeground3BrandSelected: var(--brand-50);
   --colorNeutralForeground4:            var(--neutral-60);
   --colorNeutralForegroundDisabled:     var(--neutral-90);
-  --colorNeutralForegroundInverted:            var(--neutral-160);
-  --colorNeutralForegroundInvertedHover:       var(--neutral-160);
-  --colorNeutralForegroundInvertedPressed:     var(--neutral-160);
-  --colorNeutralForegroundInvertedSelected:    var(--neutral-160);
-  --colorNeutralForegroundInverted2:           var(--neutral-150);
+  --colorNeutralForegroundInverted:            white;
+  --colorNeutralForegroundInvertedHover:       color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralForegroundInvertedPressed:     color-mix(in srgb, var(--neutral-base) 4%, white 96%);
+  --colorNeutralForegroundInvertedSelected:    color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralForegroundInverted2:           color-mix(in srgb, var(--neutral-base) 2%, white 98%);
   --colorNeutralForegroundOnBrand:             #fff;
-  --colorNeutralForegroundInvertedLink:        var(--neutral-160);
-  --colorNeutralForegroundInvertedLinkHover:   var(--neutral-160);
-  --colorNeutralForegroundInvertedLinkPressed: var(--neutral-160);
-  --colorNeutralForegroundInvertedLinkSelected: var(--neutral-160);
-  --colorNeutralForegroundInvertedDisabled:    var(--neutral-130);
+  --colorNeutralForegroundInvertedLink:        color-mix(in srgb, var(--neutral-base) 4%, white 96%);
+  --colorNeutralForegroundInvertedLinkHover:   color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralForegroundInvertedLinkPressed: color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+  --colorNeutralForegroundInvertedLinkSelected: color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralForegroundInvertedDisabled:    color-mix(in srgb, var(--neutral-base) 12%, white 88%);
 
   /*
    * Backgrounds extend to pure white (matching official Fluent UI).
@@ -469,17 +469,16 @@ body.dark {
   --colorNeutralForeground3BrandSelected: var(--brand-100);
   --colorNeutralForeground4:            var(--neutral-110);
   --colorNeutralForegroundDisabled:     var(--neutral-70);
-  --colorNeutralForegroundInverted:            var(--neutral-10);
-  --colorNeutralForegroundInvertedHover:       var(--neutral-20);
-  --colorNeutralForegroundInvertedPressed:     var(--neutral-30);
-  --colorNeutralForegroundInvertedSelected:    var(--neutral-20);
-  --colorNeutralForegroundInverted2:           var(--neutral-20);
-  --colorNeutralForegroundOnBrand:             #fff;
-  --colorNeutralForegroundInvertedLink:        var(--neutral-10);
-  --colorNeutralForegroundInvertedLinkHover:   var(--neutral-20);
-  --colorNeutralForegroundInvertedLinkPressed: var(--neutral-20);
-  --colorNeutralForegroundInvertedLinkSelected: var(--neutral-20);
-  --colorNeutralForegroundInvertedDisabled:    var(--neutral-50);
+  --colorNeutralForegroundInverted:            color-mix(in srgb, black 86%, var(--neutral-base) 14%);
+  --colorNeutralForegroundInvertedHover:       color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInvertedPressed:     color-mix(in srgb, black 82%, var(--neutral-base) 18%);
+  --colorNeutralForegroundInvertedSelected:    color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInverted2:           color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInvertedLink:        color-mix(in srgb, black 86%, var(--neutral-base) 14%);
+  --colorNeutralForegroundInvertedLinkHover:   color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInvertedLinkPressed: color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInvertedLinkSelected: color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+  --colorNeutralForegroundInvertedDisabled:    color-mix(in srgb, black 74%, var(--neutral-base) 26%);
 
   /* ===== Backgrounds ===== */
   /*
