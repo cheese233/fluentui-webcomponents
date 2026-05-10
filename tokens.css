@@ -140,31 +140,37 @@
   --colorNeutralForegroundInvertedLinkSelected: var(--neutral-160);
   --colorNeutralForegroundInvertedDisabled:    var(--neutral-130);
 
-  --colorNeutralBackground1:           var(--neutral-160);
-  --colorNeutralBackground1Hover:      var(--neutral-150);
-  --colorNeutralBackground1Pressed:    var(--neutral-140);
-  --colorNeutralBackground1Selected:   var(--neutral-140);
-  --colorNeutralBackground2:           var(--neutral-150);
-  --colorNeutralBackground2Hover:      var(--neutral-140);
-  --colorNeutralBackground2Pressed:    var(--neutral-130);
-  --colorNeutralBackground2Selected:   var(--neutral-130);
-  --colorNeutralBackground3:           var(--neutral-140);
-  --colorNeutralBackground3Hover:      var(--neutral-130);
-  --colorNeutralBackground3Pressed:    var(--neutral-120);
-  --colorNeutralBackground3Selected:   var(--neutral-120);
-  --colorNeutralBackground4:           var(--neutral-130);
-  --colorNeutralBackground4Hover:      var(--neutral-120);
-  --colorNeutralBackground4Pressed:    var(--neutral-110);
-  --colorNeutralBackground4Selected:   var(--neutral-110);
-  --colorNeutralBackground5:           var(--neutral-120);
-  --colorNeutralBackground5Hover:      var(--neutral-110);
-  --colorNeutralBackground5Pressed:    var(--neutral-100);
-  --colorNeutralBackground5Selected:   var(--neutral-100);
-  --colorNeutralBackground6:           var(--neutral-110);
-  --colorNeutralBackground6Hover:      var(--neutral-100);
-  --colorNeutralBackground6Pressed:    var(--neutral-90);
-  --colorNeutralBackground6Selected:   var(--neutral-90);
-  --colorNeutralBackgroundDisabled:    var(--neutral-150);
+  /*
+   * Backgrounds extend to pure white (matching official Fluent UI).
+   * The trim-based palette clips at ~#d0d0d0, too dark for page background.
+   * These are derived by mixing --neutral-base into white at low percentages,
+   * producing the same near-white values as the official grey[90]-grey[98].
+   */
+  --colorNeutralBackground1:           white;
+  --colorNeutralBackground1Hover:      color-mix(in srgb, var(--neutral-base) 4%, white 96%);
+  --colorNeutralBackground1Pressed:    color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+  --colorNeutralBackground1Selected:   color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+  --colorNeutralBackground2:           color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralBackground2Hover:      color-mix(in srgb, var(--neutral-base) 6%, white 94%);
+  --colorNeutralBackground2Pressed:    color-mix(in srgb, var(--neutral-base) 10%, white 90%);
+  --colorNeutralBackground2Selected:   color-mix(in srgb, var(--neutral-base) 10%, white 90%);
+  --colorNeutralBackground3:           color-mix(in srgb, var(--neutral-base) 4%, white 96%);
+  --colorNeutralBackground3Hover:      color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+  --colorNeutralBackground3Pressed:    color-mix(in srgb, var(--neutral-base) 12%, white 88%);
+  --colorNeutralBackground3Selected:   color-mix(in srgb, var(--neutral-base) 12%, white 88%);
+  --colorNeutralBackground4:           color-mix(in srgb, var(--neutral-base) 6%, white 94%);
+  --colorNeutralBackground4Hover:      color-mix(in srgb, var(--neutral-base) 10%, white 90%);
+  --colorNeutralBackground4Pressed:    color-mix(in srgb, var(--neutral-base) 14%, white 86%);
+  --colorNeutralBackground4Selected:   color-mix(in srgb, var(--neutral-base) 14%, white 86%);
+  --colorNeutralBackground5:           color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+  --colorNeutralBackground5Hover:      color-mix(in srgb, var(--neutral-base) 12%, white 88%);
+  --colorNeutralBackground5Pressed:    color-mix(in srgb, var(--neutral-base) 16%, white 84%);
+  --colorNeutralBackground5Selected:   color-mix(in srgb, var(--neutral-base) 16%, white 84%);
+  --colorNeutralBackground6:           color-mix(in srgb, var(--neutral-base) 10%, white 90%);
+  --colorNeutralBackground6Hover:      color-mix(in srgb, var(--neutral-base) 14%, white 86%);
+  --colorNeutralBackground6Pressed:    color-mix(in srgb, var(--neutral-base) 18%, white 82%);
+  --colorNeutralBackground6Selected:   color-mix(in srgb, var(--neutral-base) 18%, white 82%);
+  --colorNeutralBackgroundDisabled:    color-mix(in srgb, var(--neutral-base) 4%, white 96%);
   --colorNeutralBackgroundInverted:           var(--neutral-10);
   --colorNeutralBackgroundInvertedHover:      var(--neutral-20);
   --colorNeutralBackgroundInvertedPressed:    var(--neutral-30);
@@ -476,35 +482,39 @@ body.dark {
   --colorNeutralForegroundInvertedDisabled:    var(--neutral-50);
 
   /* ===== Backgrounds ===== */
-  --colorNeutralBackground1:           var(--neutral-10);
-  --colorNeutralBackground1Hover:      var(--neutral-20);
-  --colorNeutralBackground1Pressed:    var(--neutral-30);
-  --colorNeutralBackground1Selected:   var(--neutral-30);
-  --colorNeutralBackground2:           var(--neutral-20);
-  --colorNeutralBackground2Hover:      var(--neutral-30);
-  --colorNeutralBackground2Pressed:    var(--neutral-40);
-  --colorNeutralBackground2Selected:   var(--neutral-40);
-  --colorNeutralBackground3:           var(--neutral-30);
-  --colorNeutralBackground3Hover:      var(--neutral-40);
-  --colorNeutralBackground3Pressed:    var(--neutral-50);
-  --colorNeutralBackground3Selected:   var(--neutral-50);
-  --colorNeutralBackground4:           var(--neutral-40);
-  --colorNeutralBackground4Hover:      var(--neutral-50);
-  --colorNeutralBackground4Pressed:    var(--neutral-60);
-  --colorNeutralBackground4Selected:   var(--neutral-60);
-  --colorNeutralBackground5:           var(--neutral-50);
-  --colorNeutralBackground5Hover:      var(--neutral-60);
-  --colorNeutralBackground5Pressed:    var(--neutral-70);
-  --colorNeutralBackground5Selected:   var(--neutral-70);
-  --colorNeutralBackground6:           var(--neutral-60);
-  --colorNeutralBackground6Hover:      var(--neutral-70);
-  --colorNeutralBackground6Pressed:    var(--neutral-80);
-  --colorNeutralBackground6Selected:   var(--neutral-80);
-  --colorNeutralBackgroundDisabled:    var(--neutral-30);
-  --colorNeutralBackgroundInverted:           var(--neutral-160);
-  --colorNeutralBackgroundInvertedHover:      var(--neutral-150);
-  --colorNeutralBackgroundInvertedPressed:    var(--neutral-140);
-  --colorNeutralBackgroundInvertedSelected:   var(--neutral-150);
+  /*
+   * Dark backgrounds are near-black. Using direct color-mix(base, black)
+   * to match official grey[14]-grey[24] values exactly.
+   */
+  --colorNeutralBackground1:           color-mix(in srgb, black 80%, var(--neutral-base) 20%);
+  --colorNeutralBackground1Hover:      color-mix(in srgb, black 77%, var(--neutral-base) 23%);
+  --colorNeutralBackground1Pressed:    color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+  --colorNeutralBackground1Selected:   color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+  --colorNeutralBackground2:           color-mix(in srgb, black 77%, var(--neutral-base) 23%);
+  --colorNeutralBackground2Hover:      color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+  --colorNeutralBackground2Pressed:    color-mix(in srgb, black 71%, var(--neutral-base) 29%);
+  --colorNeutralBackground2Selected:   color-mix(in srgb, black 71%, var(--neutral-base) 29%);
+  --colorNeutralBackground3:           color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+  --colorNeutralBackground3Hover:      color-mix(in srgb, black 71%, var(--neutral-base) 29%);
+  --colorNeutralBackground3Pressed:    color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+  --colorNeutralBackground3Selected:   color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+  --colorNeutralBackground4:           color-mix(in srgb, black 71%, var(--neutral-base) 29%);
+  --colorNeutralBackground4Hover:      color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+  --colorNeutralBackground4Pressed:    color-mix(in srgb, black 65%, var(--neutral-base) 35%);
+  --colorNeutralBackground4Selected:   color-mix(in srgb, black 65%, var(--neutral-base) 35%);
+  --colorNeutralBackground5:           color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+  --colorNeutralBackground5Hover:      color-mix(in srgb, black 65%, var(--neutral-base) 35%);
+  --colorNeutralBackground5Pressed:    color-mix(in srgb, black 62%, var(--neutral-base) 38%);
+  --colorNeutralBackground5Selected:   color-mix(in srgb, black 62%, var(--neutral-base) 38%);
+  --colorNeutralBackground6:           color-mix(in srgb, black 65%, var(--neutral-base) 35%);
+  --colorNeutralBackground6Hover:      color-mix(in srgb, black 62%, var(--neutral-base) 38%);
+  --colorNeutralBackground6Pressed:    color-mix(in srgb, black 59%, var(--neutral-base) 41%);
+  --colorNeutralBackground6Selected:   color-mix(in srgb, black 59%, var(--neutral-base) 41%);
+  --colorNeutralBackgroundDisabled:    color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+  --colorNeutralBackgroundInverted:           white;
+  --colorNeutralBackgroundInvertedHover:      color-mix(in srgb, var(--neutral-base) 2%, white 98%);
+  --colorNeutralBackgroundInvertedPressed:    color-mix(in srgb, var(--neutral-base) 6%, white 94%);
+  --colorNeutralBackgroundInvertedSelected:   color-mix(in srgb, var(--neutral-base) 2%, white 98%);
 
   /* ===== Strokes ===== */
   --colorNeutralStroke1:           var(--neutral-70);
