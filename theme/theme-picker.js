@@ -18,7 +18,7 @@ class FluentThemePicker extends HTMLElement {
         <select id="theme-select" title="Theme">
           <option value="light">Light</option>
           <option value="dark">Dark</option>
-          <option value="system">System</option>
+          <option value="system" selected>System</option>
         </select>
         Theme
       </label>
@@ -26,12 +26,34 @@ class FluentThemePicker extends HTMLElement {
     this.querySelector('#accent-picker').addEventListener('input', e => {
       document.documentElement.style.setProperty('--accent-base', e.target.value);
     });
-    this.querySelector('#theme-select').addEventListener('change', e => {
+    const themeSelect = this.querySelector('#theme-select');
+    
+    const applyTheme = (theme) => {
       document.body.classList.remove('light', 'dark');
-      if (e.target.value !== 'system') {
-        document.body.classList.add(e.target.value);
+      if (theme === 'system') {
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.add(isDark ? 'dark' : 'light');
+      } else {
+        document.body.classList.add(theme);
       }
+    };
+
+    themeSelect.addEventListener('change', e => {
+      applyTheme(e.target.value);
     });
+
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (themeSelect.value === 'system') {
+          applyTheme('system');
+        }
+      });
+    }
+
+    // Initialize with the current selection if it's 'system'
+    if (themeSelect.value === 'system') {
+      applyTheme('system');
+    }
   }
 }
 
