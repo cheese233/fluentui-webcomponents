@@ -1,4 +1,5 @@
 # fluentui-webcomponents
+<img src="https://nodei.co/npm/fluentui-webcomponents.svg?style=shields&data=n,v&color=blue"/>
 
 Vanilla Custom Elements rewrite of `@fluentui/web-components` — zero dependencies, zero build tools.
 
