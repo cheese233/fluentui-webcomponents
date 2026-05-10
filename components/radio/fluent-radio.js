@@ -15,7 +15,7 @@ class FluentRadio extends FluentElement {
   `;
 
   static get observedAttributes() {
-    return ['checked', 'disabled', 'required', 'value', 'name'];
+    return ['checked', 'disabled', 'required', 'value', 'name', 'size', 'shape', 'autofocus'];
   }
 
   constructor() {
@@ -25,6 +25,10 @@ class FluentRadio extends FluentElement {
     this._checked = false;
     this._dirtyChecked = false;
     this._keydownPressed = false;
+    this._value = 'on';
+    this._name = '';
+    this._size = 'medium';
+    this._shape = 'circular';
   }
 
   connectedCallback() {
@@ -52,11 +56,30 @@ class FluentRadio extends FluentElement {
         this.dispatchEvent(new Event('disabled', { bubbles: true }));
         break;
       case 'required':
+        this._internals.ariaRequired = this.required ? 'true' : 'false';
+        this._setValidity();
         break;
       case 'value':
         this._value = newVal || 'on';
         break;
       case 'name':
+        this._name = newVal || '';
+        if (this._name) {
+          this.setAttribute('name', this._name);
+        } else {
+          this.removeAttribute('name');
+        }
+        break;
+      case 'size':
+        this._size = newVal || 'medium';
+        break;
+      case 'shape':
+        this._shape = newVal || 'circular';
+        break;
+      case 'autofocus':
+        if (newVal !== null && !this.disabled) {
+          this.focus();
+        }
         break;
     }
   }
@@ -101,7 +124,16 @@ class FluentRadio extends FluentElement {
   }
 
   get name() {
-    return this.getAttribute('name') || '';
+    return this._name;
+  }
+
+  set name(val) {
+    this._name = val;
+    if (val) {
+      this.setAttribute('name', val);
+    } else {
+      this.removeAttribute('name');
+    }
   }
 
   get form() {
@@ -186,7 +218,14 @@ class FluentRadio extends FluentElement {
   }
 
   _setValidity() {
-    this._internals.setValidity({});
+    if (this.disabled || !this.required) {
+      this._internals.setValidity({});
+      return;
+    }
+    this._internals.setValidity(
+      { valueMissing: !!this.required && !this._checked },
+      this.validationMessage || undefined
+    );
   }
 
   _uncheckSiblings() {

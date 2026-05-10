@@ -7,7 +7,7 @@
 1. **Zero external dependencies.** No `@microsoft/fast-element`, no `@fluentui/tokens`, no Lit, no frameworks. Vanilla `HTMLElement` only.
 2. **No build tools.** Plain `.js` + `.css` files. Native ES modules (`import`/`export`). No bundler, no TypeScript compiler, no CSS preprocessor.
 3. **Design tokens are CSS custom properties.** All colors, spacing, typography, radii, shadows, durations, and curves are defined in `tokens.css` and referenced via `var(--tokenName)`. Never hardcode a value.
-4. **`color-mix(in oklch, ...)` for palette derivation.** The 16-stop brand/neutral palettes derive from a single `--accent-base` / `--neutral-base` CSS variable. No JS color math, no lookup tables.
+4. **`color-mix(in srgb, ...)` for palette derivation.** The 16-stop brand/neutral palettes derive from a single `--accent-base` / `--neutral-base` CSS variable using the `@microsoft/fast-colors` ColorPalette algorithm (trim-and-rescale with RGB interpolation). No JS color math, no lookup tables.
 5. **Component CSS imports tokens.** Every `fluent-xxx.css` starts with `@import url('../../tokens.css');`. Browsers deduplicate by URL.
 
 ## Component Pattern
@@ -109,10 +109,15 @@ class FluentElement extends HTMLElement {
 
 ```
 --accent-base (#0f6cbd)
-  → color-mix(in oklch, var(--accent-base) 5%, black)  → --brand-10  (darkest)
-  → color-mix(in oklch, var(--accent-base) 78%, black)  → --brand-80  (main)
-  → var(--accent-base)                                   → --brand-100 (pure)
-  → color-mix(in oklch, var(--accent-base) 10%, white)   → --brand-160 (lightest)
+  → trim endpoints (ColorPalette: clipLight=0.185, clipDark=0.16, RGB interp)
+  → 16-stop ramp from trimDark through baseColor to trimLight
+  → --brand-10 … --brand-160
+
+--neutral-base (#808080)
+  → same algorithm, trim endpoints
+  → --neutral-10 … --neutral-160
+
+Dark mode: clipLight=0 → trimLight = pure white (maximum contrast text)
 ```
 
 Semantic tokens alias these stops:

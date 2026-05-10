@@ -37,6 +37,8 @@ class FluentSelect extends FluentElement {
     super();
     this._internals = this.attachInternals();
     this._userInteracted = false;
+    this._boundHandleInput = this._handleInput.bind(this);
+    this._boundHandleChange = this._handleChange.bind(this);
   }
 
   connectedCallback() {
@@ -61,8 +63,8 @@ class FluentSelect extends FluentElement {
       this._setFormValue(this._selectEl.value);
       this._setValidity();
 
-      this._selectEl.addEventListener('input', this._handleInput.bind(this));
-      this._selectEl.addEventListener('change', this._handleChange.bind(this));
+      this._selectEl.addEventListener('input', this._boundHandleInput);
+      this._selectEl.addEventListener('change', this._boundHandleChange);
 
       this._updateLabelVisibility();
     });
@@ -91,12 +93,16 @@ class FluentSelect extends FluentElement {
       case 'autocomplete':
         this._selectEl.autocomplete = newVal || 'off';
         break;
+      case 'autofocus':
+        if (newVal !== null) {
+          this._selectEl.focus();
+        }
+        break;
       case 'aria-label':
       case 'aria-labelledby':
       case 'aria-describedby':
       case 'appearance':
       case 'control-size':
-      case 'autofocus':
         break;
     }
   }
@@ -118,6 +124,10 @@ class FluentSelect extends FluentElement {
 
   get form() {
     return this._internals.form;
+  }
+
+  get labels() {
+    return this._internals.labels;
   }
 
   get validity() {

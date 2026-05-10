@@ -30,6 +30,11 @@ class FluentCheckbox extends FluentElement {
     this._checked = false;
     this._dirtyChecked = false;
     this._keydownPressed = false;
+    this._indeterminate = false;
+    this._value = 'on';
+    this._name = '';
+    this._size = 'medium';
+    this._shape = 'square';
   }
 
   connectedCallback() {
@@ -67,6 +72,23 @@ class FluentCheckbox extends FluentElement {
         this._value = newVal || 'on';
         break;
       case 'name':
+        this._name = newVal || '';
+        if (this._name) {
+          this.setAttribute('name', this._name);
+        } else {
+          this.removeAttribute('name');
+        }
+        break;
+      case 'autofocus':
+        if (newVal !== null && !this.disabled) {
+          this.focus();
+        }
+        break;
+      case 'size':
+        this._size = newVal || 'medium';
+        break;
+      case 'shape':
+        this._shape = newVal || 'square';
         break;
     }
   }
@@ -124,6 +146,19 @@ class FluentCheckbox extends FluentElement {
     this._value = val;
     if (this._checked) {
       this._setFormValue(val);
+    }
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(val) {
+    this._name = val;
+    if (val) {
+      this.setAttribute('name', val);
+    } else {
+      this.removeAttribute('name');
     }
   }
 
@@ -244,8 +279,13 @@ class FluentCheckbox extends FluentElement {
   }
 
   formResetCallback() {
+    const wasIndeterminate = this._indeterminate;
     this._checked = this.hasAttribute('checked');
     this._dirtyChecked = false;
+    if (wasIndeterminate) {
+      this._indeterminate = false;
+      this.removeAttribute('indeterminate');
+    }
     this._setAriaChecked();
     this._setValidity();
   }

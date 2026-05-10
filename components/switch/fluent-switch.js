@@ -15,7 +15,7 @@ class FluentSwitch extends FluentElement {
   `;
 
   static get observedAttributes() {
-    return ['checked', 'disabled', 'required', 'value', 'name', 'label-position'];
+    return ['checked', 'disabled', 'required', 'value', 'name', 'label-position', 'autofocus', 'size', 'shape'];
   }
 
   constructor() {
@@ -25,6 +25,10 @@ class FluentSwitch extends FluentElement {
     this._checked = false;
     this._dirtyChecked = false;
     this._keydownPressed = false;
+    this._value = 'on';
+    this._name = '';
+    this._size = 'medium';
+    this._shape = 'circular';
   }
 
   connectedCallback() {
@@ -48,13 +52,32 @@ class FluentSwitch extends FluentElement {
         this._updateDisabled();
         break;
       case 'required':
+        this._internals.ariaRequired = this.required ? 'true' : 'false';
         this._setValidity();
         break;
       case 'value':
         this._value = newVal || 'on';
         break;
       case 'name':
+        this._name = newVal || '';
+        if (this._name) {
+          this.setAttribute('name', this._name);
+        } else {
+          this.removeAttribute('name');
+        }
+        break;
       case 'label-position':
+        break;
+      case 'autofocus':
+        if (newVal !== null && !this.disabled) {
+          this.focus();
+        }
+        break;
+      case 'size':
+        this._size = newVal || 'medium';
+        break;
+      case 'shape':
+        this._shape = newVal || 'circular';
         break;
     }
   }
@@ -99,6 +122,19 @@ class FluentSwitch extends FluentElement {
     this._value = val;
     if (this._checked) {
       this._setFormValue(val);
+    }
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(val) {
+    this._name = val;
+    if (val) {
+      this.setAttribute('name', val);
+    } else {
+      this.removeAttribute('name');
     }
   }
 

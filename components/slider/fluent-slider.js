@@ -30,7 +30,7 @@ class FluentSlider extends FluentElement {
   `;
 
   static get observedAttributes() {
-    return ['min', 'max', 'step', 'value', 'disabled', 'orientation', 'size', 'mode'];
+    return ['min', 'max', 'step', 'value', 'disabled', 'orientation', 'size', 'mode', 'name', 'autofocus'];
   }
 
   constructor() {
@@ -109,6 +109,13 @@ class FluentSlider extends FluentElement {
         break;
       case 'size':
       case 'mode':
+        break;
+      case 'name':
+        break;
+      case 'autofocus':
+        if (newVal !== null && !this.disabled) {
+          this.focus();
+        }
         break;
     }
   }

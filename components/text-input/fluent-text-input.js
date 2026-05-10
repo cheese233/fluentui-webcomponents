@@ -34,6 +34,10 @@ class FluentTextInput extends FluentElement {
     super();
     this._internals = this.attachInternals();
     this._dirtyValue = false;
+    this._boundInputHandler = this._inputHandler.bind(this);
+    this._boundChangeHandler = this._changeHandler.bind(this);
+    this._boundFocusinHandler = this._focusinHandler.bind(this);
+    this._boundKeydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
@@ -50,13 +54,13 @@ class FluentTextInput extends FluentElement {
       this._setFormValue(this.value);
       this._setValidity();
 
-      input.addEventListener('input', this._inputHandler.bind(this));
-      input.addEventListener('change', this._changeHandler.bind(this));
+      input.addEventListener('input', this._boundInputHandler);
+      input.addEventListener('change', this._boundChangeHandler);
       input.addEventListener('select', () => this.dispatchEvent(new Event('select')));
     }
 
-    this.addEventListener('focusin', this._focusinHandler.bind(this));
-    this.addEventListener('keydown', this._keydownHandler.bind(this));
+    this.addEventListener('focusin', this._boundFocusinHandler);
+    this.addEventListener('keydown', this._boundKeydownHandler);
     this._updateLabelVisibility();
   }
 
@@ -157,6 +161,18 @@ class FluentTextInput extends FluentElement {
 
   get willValidate() {
     return this._internals.willValidate;
+  }
+
+  get labels() {
+    return Object.freeze(Array.from(this._internals.labels));
+  }
+
+  get type() {
+    return this._input ? this._input.type : (this.getAttribute('type') || 'text');
+  }
+
+  get textLength() {
+    return this._input ? this._input.textLength : 0;
   }
 
   checkValidity() {

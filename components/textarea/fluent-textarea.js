@@ -37,6 +37,11 @@ class FluentTextArea extends FluentElement {
     this._internals = this.attachInternals();
     this._userInteracted = false;
     this._preConnectEl = document.createElement('textarea');
+    this._autoSizerEl = null;
+    this._autoSizerObserver = null;
+    this._boundHandleInput = this._handleControlInput.bind(this);
+    this._boundHandleChange = this._handleControlChange.bind(this);
+    this._boundHandleSelect = this._handleControlSelect.bind(this);
   }
 
   connectedCallback() {
@@ -60,9 +65,9 @@ class FluentTextArea extends FluentElement {
       this._setValidity();
       this._preConnectEl = null;
 
-      this._textarea.addEventListener('input', this._handleControlInput.bind(this));
-      this._textarea.addEventListener('change', this._handleControlChange.bind(this));
-      this._textarea.addEventListener('select', this._handleControlSelect.bind(this));
+      this._textarea.addEventListener('input', this._boundHandleInput);
+      this._textarea.addEventListener('change', this._boundHandleChange);
+      this._textarea.addEventListener('select', this._boundHandleSelect);
 
       new MutationObserver(() => this._setValidity()).observe(this._textarea, {
         attributes: true,
@@ -70,7 +75,15 @@ class FluentTextArea extends FluentElement {
       });
 
       this._updateLabelVisibility();
+      this._updateResize();
+      this._maybeCreateAutoSizer();
     });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._autoSizerObserver?.disconnect();
+    this._autoSizerObserver = null;
   }
 
   changed(name, oldVal, newVal) {
@@ -97,6 +110,7 @@ class FluentTextArea extends FluentElement {
         }
         break;
       case 'resize':
+        this._updateResize();
         break;
       case 'required':
         this._textarea.required = newVal !== null;
@@ -129,7 +143,10 @@ class FluentTextArea extends FluentElement {
       case 'appearance':
       case 'size':
       case 'block':
+        break;
       case 'auto-resize':
+        this._maybeCreateAutoSizer();
+        break;
       case 'display-shadow':
       case 'dirname':
         break;
@@ -187,6 +204,14 @@ class FluentTextArea extends FluentElement {
     return this._internals.willValidate;
   }
 
+  get textLength() {
+    return this._textarea ? this._textarea.textLength : 0;
+  }
+
+  get type() {
+    return 'textarea';
+  }
+
   checkValidity() {
     return this._internals.checkValidity();
   }
@@ -229,6 +254,9 @@ class FluentTextArea extends FluentElement {
 
   _handleControlInput() {
     this._userInteracted = true;
+    if (this._autoSizerEl && this._textarea) {
+      this._autoSizerEl.textContent = this._textarea.value + ' ';
+    }
     this._setFormValue(this._textarea.value);
     this._setValidity();
   }
@@ -300,6 +328,57 @@ class FluentTextArea extends FluentElement {
       (n.nodeType === Node.TEXT_NODE && n.textContent.trim())
     );
     label.hidden = !hasContent;
+  }
+
+  _updateResize() {
+    const ta = this._textarea;
+    if (!ta) return;
+    const resize = this.getAttribute('resize');
+    ta.style.resize = resize || 'none';
+  }
+
+  _maybeCreateAutoSizer() {
+    if (CSS.supports('field-sizing: content')) {
+      if (this._autoSizerEl) {
+        this._autoSizerEl.remove();
+        this._autoSizerEl = null;
+      }
+      return;
+    }
+
+    const autoResize = this.hasAttribute('auto-resize');
+    if (!autoResize) {
+      if (this._autoSizerEl) {
+        this._autoSizerEl.remove();
+        this._autoSizerEl = null;
+      }
+      this._autoSizerObserver?.disconnect();
+      return;
+    }
+
+    if (!this._autoSizerEl) {
+      this._autoSizerEl = document.createElement('div');
+      this._autoSizerEl.classList.add('auto-sizer');
+      this._autoSizerEl.setAttribute('aria-hidden', 'true');
+    }
+
+    const root = this._shadowRoot?.querySelector('.root');
+    if (root) {
+      root.insertBefore(this._autoSizerEl, root.firstChild);
+    }
+
+    if (this._textarea) {
+      this._autoSizerEl.textContent = this._textarea.value + ' ';
+    }
+
+    if (!this._autoSizerObserver) {
+      this._autoSizerObserver = new ResizeObserver(() => {
+        if (this._autoSizerEl && this._textarea) {
+          this._autoSizerEl.textContent = this._textarea.value + ' ';
+        }
+      });
+    }
+    this._autoSizerObserver.observe(this._textarea);
   }
 
   formResetCallback() {
