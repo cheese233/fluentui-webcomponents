@@ -1,0 +1,19 @@
+{
+  "name": "fluentui-webcomponents",
+  "version": "0.0.2",
+  "description": "fully vibe-coded @microsoft/fluentui to get rid of FAST frameworks.",
+  "homepage": "https://github.com/cheese233/fluentui-webcomponents#readme",
+  "bugs": {
+    "url": "https://github.com/cheese233/fluentui-webcomponents/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheese233/fluentui-webcomponents.git"
+  },
+  "license": "MIT",
+  "author": "cheese233",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
