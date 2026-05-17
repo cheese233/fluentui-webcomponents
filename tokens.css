@@ -14,711 +14,502 @@
         through baseColor
 
    Dark mode: clipLight = 0 so trimLight = white (pure foreground)
+
+   Theme switching: light-dark() CSS function + color-scheme property.
+   Set color-scheme: light dark on :root for auto, override via JS.
    ============================================================ */
 
+:host,
 :root {
-  /* ===== Base Colors ===== */
-  --accent-base: #0f6cbd;
-  --neutral-base: #808080;
+    color-scheme: light dark;
 
-  /* ===== Trim Endpoints (fast-colors ColorPalette) ===== */
-  /*
-   * trimLight = position 0.185 from white→base, segPos = 0.185/0.5 = 0.37
-   * trimDark  = position 0.84  from base→black, segPos = (0.84-0.5)/0.5 = 0.68
-   */
-  --neutral-trim-light: color-mix(in srgb, var(--neutral-base) 37%, white 63%);
-  --neutral-trim-dark:  color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+    /* ===== Base Colors ===== */
+    --accent-base: light-dark(#0f6cbd, #479ef5);
+    --neutral-base: light-dark(#808080, #b0b0b0);
 
-  --brand-trim-light: color-mix(in srgb, var(--accent-base) 37%, white 63%);
-  --brand-trim-dark:  color-mix(in srgb, black 68%, var(--accent-base) 32%);
+    /* ===== Trim Endpoints ===== */
+    /*
+     * trimLight = position 0.185 from white→base, segPos = 0.185/0.5 = 0.37
+     * trimDark  = position 0.84  from base→black, segPos = (0.84-0.5)/0.5 = 0.68
+     * In dark mode: trimLight = white (clipLight=0 for maximum foreground contrast)
+     */
+    --neutral-trim-light: light-dark(
+        color-mix(in srgb, var(--neutral-base) 37%, white 63%),
+        white
+    );
+    --neutral-trim-dark: color-mix(in srgb, black 68%, var(--neutral-base) 32%);
 
-  /* ===== Neutral Palette (16 stops) ===== */
-  /*
-   * Scale direction: trimDark(0) → baseColor(0.5) → trimLight(1)
-   * Mapping: N=10(darkest) … N=100(base) … N=160(lightest)
-   * Dark side: segPos = (100 - N) / 90
-   * Light side: segPos = (N - 100) / 60
-   */
-  --neutral-10:  var(--neutral-trim-dark);
-  --neutral-20:  color-mix(in srgb, var(--neutral-trim-dark) 88.9%, var(--neutral-base) 11.1%);
-  --neutral-30:  color-mix(in srgb, var(--neutral-trim-dark) 77.8%, var(--neutral-base) 22.2%);
-  --neutral-40:  color-mix(in srgb, var(--neutral-trim-dark) 66.7%, var(--neutral-base) 33.3%);
-  --neutral-50:  color-mix(in srgb, var(--neutral-trim-dark) 55.6%, var(--neutral-base) 44.4%);
-  --neutral-60:  color-mix(in srgb, var(--neutral-trim-dark) 44.4%, var(--neutral-base) 55.6%);
-  --neutral-70:  color-mix(in srgb, var(--neutral-trim-dark) 33.3%, var(--neutral-base) 66.7%);
-  --neutral-80:  color-mix(in srgb, var(--neutral-trim-dark) 22.2%, var(--neutral-base) 77.8%);
-  --neutral-90:  color-mix(in srgb, var(--neutral-trim-dark) 11.1%, var(--neutral-base) 88.9%);
-  --neutral-100: var(--neutral-base);
-  --neutral-110: color-mix(in srgb, var(--neutral-trim-light) 16.7%, var(--neutral-base) 83.3%);
-  --neutral-120: color-mix(in srgb, var(--neutral-trim-light) 33.3%, var(--neutral-base) 66.7%);
-  --neutral-130: color-mix(in srgb, var(--neutral-trim-light) 50%,   var(--neutral-base) 50%);
-  --neutral-140: color-mix(in srgb, var(--neutral-trim-light) 66.7%, var(--neutral-base) 33.3%);
-  --neutral-150: color-mix(in srgb, var(--neutral-trim-light) 83.3%, var(--neutral-base) 16.7%);
-  --neutral-160: var(--neutral-trim-light);
+    --brand-trim-light: light-dark(
+        color-mix(in srgb, var(--accent-base) 37%, white 63%),
+        white
+    );
+    --brand-trim-dark: color-mix(in srgb, black 68%, var(--accent-base) 32%);
 
-  /* ===== Brand Palette (16 stops) ===== */
-  /*
-   * Same algorithm as neutral. Saturation adjustments from fast-colors
-   * (saturationLight=0.35, saturationDark=1.25, overlayDark=0.25)
-   * are omitted — they require LCH/LAB color space not available in CSS.
-   * The result is a perceptually uniform ramp through the accent color.
-   */
-  --brand-10:  var(--brand-trim-dark);
-  --brand-20:  color-mix(in srgb, var(--brand-trim-dark) 88.9%, var(--accent-base) 11.1%);
-  --brand-30:  color-mix(in srgb, var(--brand-trim-dark) 77.8%, var(--accent-base) 22.2%);
-  --brand-40:  color-mix(in srgb, var(--brand-trim-dark) 66.7%, var(--accent-base) 33.3%);
-  --brand-50:  color-mix(in srgb, var(--brand-trim-dark) 55.6%, var(--accent-base) 44.4%);
-  --brand-60:  color-mix(in srgb, var(--brand-trim-dark) 44.4%, var(--accent-base) 55.6%);
-  --brand-70:  color-mix(in srgb, var(--brand-trim-dark) 33.3%, var(--accent-base) 66.7%);
-  --brand-80:  color-mix(in srgb, var(--brand-trim-dark) 22.2%, var(--accent-base) 77.8%);
-  --brand-90:  color-mix(in srgb, var(--brand-trim-dark) 11.1%, var(--accent-base) 88.9%);
-  --brand-100: var(--accent-base);
-  --brand-110: color-mix(in srgb, var(--brand-trim-light) 16.7%, var(--accent-base) 83.3%);
-  --brand-120: color-mix(in srgb, var(--brand-trim-light) 33.3%, var(--accent-base) 66.7%);
-  --brand-130: color-mix(in srgb, var(--brand-trim-light) 50%,   var(--accent-base) 50%);
-  --brand-140: color-mix(in srgb, var(--brand-trim-light) 66.7%, var(--accent-base) 33.3%);
-  --brand-150: color-mix(in srgb, var(--brand-trim-light) 83.3%, var(--accent-base) 16.7%);
-  --brand-160: var(--brand-trim-light);
+    /* ===== Neutral Palette (16 stops) ===== */
+    /*
+     * Scale direction: trimDark(0) → baseColor(0.5) → trimLight(1)
+     * Mapping: N=10(darkest) … N=100(base) … N=160(lightest)
+     * Dark side: segPos = (100 - N) / 90
+     * Light side: segPos = (N - 100) / 60
+     * All stops auto-adapt via --neutral-base and --neutral-trim-* light-dark() values.
+     */
+    --neutral-10: var(--neutral-trim-dark);
+    --neutral-20: color-mix(in srgb, var(--neutral-trim-dark) 88.9%, var(--neutral-base) 11.1%);
+    --neutral-30: color-mix(in srgb, var(--neutral-trim-dark) 77.8%, var(--neutral-base) 22.2%);
+    --neutral-40: color-mix(in srgb, var(--neutral-trim-dark) 66.7%, var(--neutral-base) 33.3%);
+    --neutral-50: color-mix(in srgb, var(--neutral-trim-dark) 55.6%, var(--neutral-base) 44.4%);
+    --neutral-60: color-mix(in srgb, var(--neutral-trim-dark) 44.4%, var(--neutral-base) 55.6%);
+    --neutral-70: color-mix(in srgb, var(--neutral-trim-dark) 33.3%, var(--neutral-base) 66.7%);
+    --neutral-80: color-mix(in srgb, var(--neutral-trim-dark) 22.2%, var(--neutral-base) 77.8%);
+    --neutral-90: color-mix(in srgb, var(--neutral-trim-dark) 11.1%, var(--neutral-base) 88.9%);
+    --neutral-100: var(--neutral-base);
+    --neutral-110: color-mix(in srgb, var(--neutral-trim-light) 16.7%, var(--neutral-base) 83.3%);
+    --neutral-120: color-mix(in srgb, var(--neutral-trim-light) 33.3%, var(--neutral-base) 66.7%);
+    --neutral-130: color-mix(in srgb, var(--neutral-trim-light) 50%, var(--neutral-base) 50%);
+    --neutral-140: color-mix(in srgb, var(--neutral-trim-light) 66.7%, var(--neutral-base) 33.3%);
+    --neutral-150: color-mix(in srgb, var(--neutral-trim-light) 83.3%, var(--neutral-base) 16.7%);
+    --neutral-160: var(--neutral-trim-light);
 
-  /* ===== Neutral Extensions (near-white / near-black) ===== */
-  /*
-   * The 16-stop palette clips at trimLight (~#d0d0d0) and trimDark (~#292929).
-   * Backgrounds, foregrounds, and inverted surfaces need values reaching
-   * pure white and near-black, matching official Fluent UI grey[4]..grey[98].
-   *
-   * --neutral-tint-N  = mix(base N%, white) → near-white to grey[84]≈tint-32
-   * --neutral-shade-N = mix(black (100-N)%, base N%) → near-black to grey[44]≈shade-56
-   *
-   * In light mode (base=#808080=128): channel = 128 * shade% / 100
-   * In dark mode  (base=#b0b0b0=176): channel = 176 * shade% / 100
-   *
-   * Official grey scale mapping (light mode, approx):
-   *   grey[14]=#242424 → shade-28    grey[26]=#424242 → shade-52
-   *   grey[38]=#616161 → not in shade range
-   *
-   * Official grey scale mapping (dark mode, approx):
-   *   grey[4]=#0a0a0a  → shade-6     grey[16]=#292929 → shade-23
-   *   grey[24]=#3d3d3d → shade-35    grey[36]=#5c5c5c → shade-52
-   *
-   * Tint mapping (light mode):
-   *   grey[98]=#fafafa → tint-4      grey[96]=#f5f5f5 → tint-8
-   *   grey[94]=#f0f0f0 → tint-12     grey[92]=#ebebeb → tint-16
-   *   grey[90]=#e6e6e6 → tint-20     grey[88]=#e0e0e0 → tint-24
-   *   grey[86]=#dbdbdb → tint-28     grey[84]=#d6d6d6 → tint-32
-   */
-  --neutral-tint-4:  color-mix(in srgb, var(--neutral-base) 4%, white 96%);
-  --neutral-tint-8:  color-mix(in srgb, var(--neutral-base) 8%, white 92%);
-  --neutral-tint-12: color-mix(in srgb, var(--neutral-base) 12%, white 88%);
-  --neutral-tint-16: color-mix(in srgb, var(--neutral-base) 16%, white 84%);
-  --neutral-tint-20: color-mix(in srgb, var(--neutral-base) 20%, white 80%);
-  --neutral-tint-24: color-mix(in srgb, var(--neutral-base) 24%, white 76%);
-  --neutral-tint-28: color-mix(in srgb, var(--neutral-base) 28%, white 72%);
-  --neutral-tint-32: color-mix(in srgb, var(--neutral-base) 32%, white 68%);
+    /* ===== Brand Palette (16 stops) ===== */
+    /*
+     * Same algorithm as neutral. Saturation adjustments from fast-colors
+     * (saturationLight=0.35, saturationDark=1.25, overlayDark=0.25)
+     * are omitted — they require LCH/LAB color space not available in CSS.
+     */
+    --brand-10: var(--brand-trim-dark);
+    --brand-20: color-mix(in srgb, var(--brand-trim-dark) 88.9%, var(--accent-base) 11.1%);
+    --brand-30: color-mix(in srgb, var(--brand-trim-dark) 77.8%, var(--accent-base) 22.2%);
+    --brand-40: color-mix(in srgb, var(--brand-trim-dark) 66.7%, var(--accent-base) 33.3%);
+    --brand-50: color-mix(in srgb, var(--brand-trim-dark) 55.6%, var(--accent-base) 44.4%);
+    --brand-60: color-mix(in srgb, var(--brand-trim-dark) 44.4%, var(--accent-base) 55.6%);
+    --brand-70: color-mix(in srgb, var(--brand-trim-dark) 33.3%, var(--accent-base) 66.7%);
+    --brand-80: color-mix(in srgb, var(--brand-trim-dark) 22.2%, var(--accent-base) 77.8%);
+    --brand-90: color-mix(in srgb, var(--brand-trim-dark) 11.1%, var(--accent-base) 88.9%);
+    --brand-100: var(--accent-base);
+    --brand-110: color-mix(in srgb, var(--brand-trim-light) 16.7%, var(--accent-base) 83.3%);
+    --brand-120: color-mix(in srgb, var(--brand-trim-light) 33.3%, var(--accent-base) 66.7%);
+    --brand-130: color-mix(in srgb, var(--brand-trim-light) 50%, var(--accent-base) 50%);
+    --brand-140: color-mix(in srgb, var(--brand-trim-light) 66.7%, var(--accent-base) 33.3%);
+    --brand-150: color-mix(in srgb, var(--brand-trim-light) 83.3%, var(--accent-base) 16.7%);
+    --brand-160: var(--brand-trim-light);
 
-  --neutral-shade-2:  color-mix(in srgb, black 98%, var(--neutral-base) 2%);
-  --neutral-shade-4:  color-mix(in srgb, black 96%, var(--neutral-base) 4%);
-  --neutral-shade-6:  color-mix(in srgb, black 94%, var(--neutral-base) 6%);
-  --neutral-shade-8:  color-mix(in srgb, black 92%, var(--neutral-base) 8%);
-  --neutral-shade-10: color-mix(in srgb, black 90%, var(--neutral-base) 10%);
-  --neutral-shade-12: color-mix(in srgb, black 88%, var(--neutral-base) 12%);
-  --neutral-shade-14: color-mix(in srgb, black 86%, var(--neutral-base) 14%);
-  --neutral-shade-16: color-mix(in srgb, black 84%, var(--neutral-base) 16%);
-  --neutral-shade-18: color-mix(in srgb, black 82%, var(--neutral-base) 18%);
-  --neutral-shade-20: color-mix(in srgb, black 80%, var(--neutral-base) 20%);
-  --neutral-shade-22: color-mix(in srgb, black 78%, var(--neutral-base) 22%);
-  --neutral-shade-24: color-mix(in srgb, black 76%, var(--neutral-base) 24%);
-  --neutral-shade-26: color-mix(in srgb, black 74%, var(--neutral-base) 26%);
-  --neutral-shade-28: color-mix(in srgb, black 72%, var(--neutral-base) 28%);
-  --neutral-shade-30: color-mix(in srgb, black 70%, var(--neutral-base) 30%);
-  --neutral-shade-32: color-mix(in srgb, black 68%, var(--neutral-base) 32%);
-  --neutral-shade-34: color-mix(in srgb, black 66%, var(--neutral-base) 34%);
-  --neutral-shade-36: color-mix(in srgb, black 64%, var(--neutral-base) 36%);
-  --neutral-shade-38: color-mix(in srgb, black 62%, var(--neutral-base) 38%);
-  --neutral-shade-40: color-mix(in srgb, black 60%, var(--neutral-base) 40%);
-  --neutral-shade-42: color-mix(in srgb, black 58%, var(--neutral-base) 42%);
-  --neutral-shade-44: color-mix(in srgb, black 56%, var(--neutral-base) 44%);
-  --neutral-shade-46: color-mix(in srgb, black 54%, var(--neutral-base) 46%);
-  --neutral-shade-48: color-mix(in srgb, black 52%, var(--neutral-base) 48%);
-  --neutral-shade-50: color-mix(in srgb, black 50%, var(--neutral-base) 50%);
-  --neutral-shade-52: color-mix(in srgb, black 48%, var(--neutral-base) 52%);
-  --neutral-shade-54: color-mix(in srgb, black 46%, var(--neutral-base) 54%);
-  --neutral-shade-56: color-mix(in srgb, black 44%, var(--neutral-base) 56%);
+    /* ===== Neutral Extensions (near-white / near-black) ===== */
+    /*
+     * Tint/Shade auto-adapt via --neutral-base (which is light-dark()).
+     * --neutral-tint-N  = mix(base N%, white) → near-white
+     * --neutral-shade-N = mix(black (100-N)%, base N%) → near-black
+     */
+    --neutral-tint-4:  color-mix(in srgb, var(--neutral-base) 4%, white 96%);
+    --neutral-tint-8:  color-mix(in srgb, var(--neutral-base) 8%, white 92%);
+    --neutral-tint-12: color-mix(in srgb, var(--neutral-base) 12%, white 88%);
+    --neutral-tint-16: color-mix(in srgb, var(--neutral-base) 16%, white 84%);
+    --neutral-tint-20: color-mix(in srgb, var(--neutral-base) 20%, white 80%);
+    --neutral-tint-24: color-mix(in srgb, var(--neutral-base) 24%, white 76%);
+    --neutral-tint-28: color-mix(in srgb, var(--neutral-base) 28%, white 72%);
+    --neutral-tint-32: color-mix(in srgb, var(--neutral-base) 32%, white 68%);
 
-  /* ===== Brand Color Tokens ===== */
-  /*
-   * Mapped to match official Fluent UI v9 brandWeb ramp indices.
-   *   brand-10  = darkest, brand-100 = base (accent), brand-160 = lightest
-   *   @see fluentui/packages/tokens/src/global/brandColors.ts
-   */
-  --colorBrandBackground:            var(--brand-80);
-  --colorBrandBackgroundHover:       var(--brand-70);
-  --colorBrandBackgroundPressed:     var(--brand-40);
-  --colorBrandBackgroundSelected:    var(--brand-60);
-  --colorBrandBackground2:           var(--brand-160);
-  --colorBrandBackground2Hover:      var(--brand-150);
-  --colorBrandBackground2Pressed:    var(--brand-130);
-  --colorBrandBackgroundStatic:      var(--brand-80);
-  --colorBrandBackgroundInverted:    #fff;
-  --colorBrandBackgroundInvertedHover: var(--brand-150);
-  --colorBrandBackgroundInvertedPressed: var(--brand-140);
-  --colorBrandBackgroundInvertedSelected: var(--brand-150);
-  --colorBrandBackgroundDisabled:    var(--neutral-150);
+    --neutral-shade-2:  color-mix(in srgb, black 98%, var(--neutral-base) 2%);
+    --neutral-shade-4:  color-mix(in srgb, black 96%, var(--neutral-base) 4%);
+    --neutral-shade-6:  color-mix(in srgb, black 94%, var(--neutral-base) 6%);
+    --neutral-shade-8:  color-mix(in srgb, black 92%, var(--neutral-base) 8%);
+    --neutral-shade-10: color-mix(in srgb, black 90%, var(--neutral-base) 10%);
+    --neutral-shade-12: color-mix(in srgb, black 88%, var(--neutral-base) 12%);
+    --neutral-shade-14: color-mix(in srgb, black 86%, var(--neutral-base) 14%);
+    --neutral-shade-16: color-mix(in srgb, black 84%, var(--neutral-base) 16%);
+    --neutral-shade-18: color-mix(in srgb, black 82%, var(--neutral-base) 18%);
+    --neutral-shade-20: color-mix(in srgb, black 80%, var(--neutral-base) 20%);
+    --neutral-shade-22: color-mix(in srgb, black 78%, var(--neutral-base) 22%);
+    --neutral-shade-24: color-mix(in srgb, black 76%, var(--neutral-base) 24%);
+    --neutral-shade-26: color-mix(in srgb, black 74%, var(--neutral-base) 26%);
+    --neutral-shade-28: color-mix(in srgb, black 72%, var(--neutral-base) 28%);
+    --neutral-shade-30: color-mix(in srgb, black 70%, var(--neutral-base) 30%);
+    --neutral-shade-32: color-mix(in srgb, black 68%, var(--neutral-base) 32%);
+    --neutral-shade-34: color-mix(in srgb, black 66%, var(--neutral-base) 34%);
+    --neutral-shade-36: color-mix(in srgb, black 64%, var(--neutral-base) 36%);
+    --neutral-shade-38: color-mix(in srgb, black 62%, var(--neutral-base) 38%);
+    --neutral-shade-40: color-mix(in srgb, black 60%, var(--neutral-base) 40%);
+    --neutral-shade-42: color-mix(in srgb, black 58%, var(--neutral-base) 42%);
+    --neutral-shade-44: color-mix(in srgb, black 56%, var(--neutral-base) 44%);
+    --neutral-shade-46: color-mix(in srgb, black 54%, var(--neutral-base) 46%);
+    --neutral-shade-48: color-mix(in srgb, black 52%, var(--neutral-base) 48%);
+    --neutral-shade-50: color-mix(in srgb, black 50%, var(--neutral-base) 50%);
+    --neutral-shade-52: color-mix(in srgb, black 48%, var(--neutral-base) 52%);
+    --neutral-shade-54: color-mix(in srgb, black 46%, var(--neutral-base) 54%);
+    --neutral-shade-56: color-mix(in srgb, black 44%, var(--neutral-base) 56%);
 
-  /* ===== Brand Foreground Tokens ===== */
-  --colorBrandForeground1:           var(--brand-80);
-  --colorBrandForeground2:           var(--brand-110);
-  --colorBrandForegroundLink:        var(--brand-70);
-  --colorBrandForegroundLinkHover:   var(--brand-60);
-  --colorBrandForegroundLinkPressed: var(--brand-40);
-  --colorBrandForegroundLinkSelected: var(--brand-70);
-  --colorBrandForegroundInverted:    var(--brand-100);
-  --colorBrandForegroundInvertedHover: var(--brand-110);
-  --colorBrandForegroundInvertedPressed: var(--brand-100);
-  --colorBrandForegroundOnLight:     var(--brand-80);
+    /* ===== Brand Color Tokens ===== */
+    --colorBrandBackground: var(--brand-80);
+    --colorBrandBackgroundHover: var(--brand-70);
+    --colorBrandBackgroundPressed: var(--brand-40);
+    --colorBrandBackgroundSelected: var(--brand-60);
+    --colorBrandBackground2: var(--brand-160);
+    --colorBrandBackground2Hover: var(--brand-150);
+    --colorBrandBackground2Pressed: var(--brand-130);
+    --colorBrandBackgroundStatic: var(--brand-80);
+    --colorBrandBackgroundInverted: #fff;
+    --colorBrandBackgroundInvertedHover: var(--brand-150);
+    --colorBrandBackgroundInvertedPressed: var(--brand-140);
+    --colorBrandBackgroundInvertedSelected: var(--brand-150);
+    --colorBrandBackgroundDisabled: var(--neutral-150);
 
-  /* ===== Brand Stroke Tokens ===== */
-  --colorBrandStroke1: var(--brand-80);
-  --colorBrandStroke2: var(--brand-140);
+    /* ===== Brand Foreground Tokens ===== */
+    --colorBrandForeground1: light-dark(var(--brand-80), var(--brand-90));
+    --colorBrandForeground2: var(--brand-110);
+    --colorBrandForegroundLink: light-dark(var(--brand-70), var(--brand-100));
+    --colorBrandForegroundLinkHover: light-dark(var(--brand-60), var(--brand-110));
+    --colorBrandForegroundLinkPressed: light-dark(var(--brand-40), var(--brand-90));
+    --colorBrandForegroundLinkSelected: light-dark(var(--brand-70), var(--brand-100));
+    --colorBrandForegroundInverted: var(--brand-100);
+    --colorBrandForegroundInvertedHover: var(--brand-110);
+    --colorBrandForegroundInvertedPressed: var(--brand-100);
+    --colorBrandForegroundOnLight: var(--brand-80);
 
-  /* ===== Compound Brand Tokens ===== */
-  --colorCompoundBrandBackground:          var(--brand-80);
-  --colorCompoundBrandBackgroundHover:     var(--brand-70);
-  --colorCompoundBrandBackgroundPressed:   var(--brand-60);
-  --colorCompoundBrandStroke:              var(--brand-80);
-  --colorCompoundBrandStrokeHover:         var(--brand-70);
-  --colorCompoundBrandStrokePressed:       var(--brand-60);
-  --colorCompoundBrandForeground1:         var(--brand-80);
-  --colorCompoundBrandForeground1Hover:    var(--brand-70);
-  --colorCompoundBrandForeground1Pressed:  var(--brand-60);
+    /* ===== Brand Stroke Tokens ===== */
+    --colorBrandStroke1: light-dark(var(--brand-80), var(--brand-100));
+    --colorBrandStroke2: light-dark(var(--brand-140), var(--brand-50));
 
-  /* ===== Neutral Foreground Tokens ===== */
-  /*
-   * Dark end of the palette: trimDark→baseColor gives darker-than-base values.
-   *   neutral-10 ≈ grey[16] | neutral-40 ≈ grey[28] | neutral-70 ≈ grey[40]
-   * Official: Fg1=grey[14], Fg2=grey[26], Fg3=grey[38], Fg4=grey[44]
-   * Hover/Pressed/Selected get DARKER (lower neutral index = more towards trimDark).
-   * Disabled gets LIGHTER (neutral-150 on the light side, ≈ grey[76]).
-   */
-  --colorNeutralForeground1:            var(--neutral-10);
-  --colorNeutralForeground1Hover:       var(--neutral-10);
-  --colorNeutralForeground1Pressed:     var(--neutral-10);
-  --colorNeutralForeground1Selected:    var(--neutral-10);
-  --colorNeutralForeground2:            var(--neutral-40);
-  --colorNeutralForeground2Hover:       var(--neutral-10);
-  --colorNeutralForeground2Pressed:     var(--neutral-10);
-  --colorNeutralForeground2Selected:    var(--neutral-10);
-  --colorNeutralForeground2BrandHover:  var(--brand-60);
-  --colorNeutralForeground2BrandPressed: var(--brand-40);
-  --colorNeutralForeground2BrandSelected: var(--brand-50);
-  --colorNeutralForeground3:            var(--neutral-70);
-  --colorNeutralForeground3Hover:       var(--neutral-40);
-  --colorNeutralForeground3Pressed:     var(--neutral-40);
-  --colorNeutralForeground3Selected:    var(--neutral-40);
-  --colorNeutralForeground3BrandHover:  var(--brand-60);
-  --colorNeutralForeground3BrandPressed: var(--brand-40);
-  --colorNeutralForeground3BrandSelected: var(--brand-50);
-  --colorNeutralForeground4:            var(--neutral-80);
-  --colorNeutralForegroundDisabled:     var(--neutral-150);
-  --colorNeutralForegroundInverted:            white;
-  --colorNeutralForegroundInvertedHover:       white;
-  --colorNeutralForegroundInvertedPressed:     white;
-  --colorNeutralForegroundInvertedSelected:    white;
-  --colorNeutralForegroundInverted2:           white;
-  --colorNeutralForegroundOnBrand:             #fff;
-  --colorNeutralForegroundInvertedLink:        white;
-  --colorNeutralForegroundInvertedLinkHover:   white;
-  --colorNeutralForegroundInvertedLinkPressed: white;
-  --colorNeutralForegroundInvertedLinkSelected: white;
-  --colorNeutralForegroundInvertedDisabled:    white;
+    /* ===== Compound Brand Tokens ===== */
+    --colorCompoundBrandBackground: var(--brand-80);
+    --colorCompoundBrandBackgroundHover: var(--brand-70);
+    --colorCompoundBrandBackgroundPressed: var(--brand-60);
+    --colorCompoundBrandStroke: var(--brand-80);
+    --colorCompoundBrandStrokeHover: var(--brand-70);
+    --colorCompoundBrandStrokePressed: var(--brand-60);
+    --colorCompoundBrandForeground1: var(--brand-80);
+    --colorCompoundBrandForeground1Hover: var(--brand-70);
+    --colorCompoundBrandForeground1Pressed: var(--brand-60);
 
-  /*
-   * Backgrounds: near-white through grey[90], matching official Fluent UI.
-   * Uses --neutral-tint-N which derives from --neutral-base, so they auto-adapt
-   * when the base changes per theme.
-   *
-   * Official grey mapping: tint-4≈grey[98], tint-8≈grey[96], tint-12≈grey[94],
-   *   tint-16≈grey[92], tint-20≈grey[90], tint-24≈grey[88], tint-28≈grey[86],
-   *   tint-32≈grey[84]
-   *
-   * Background4-6 get LIGHTER on hover/press in the official Fluent UI
-   * (these are darker surfaces like card headers — interaction reveals them).
-   */
-  --colorNeutralBackground1:           white;
-  --colorNeutralBackground1Hover:      var(--neutral-tint-8);
-  --colorNeutralBackground1Pressed:    var(--neutral-tint-24);
-  --colorNeutralBackground1Selected:   var(--neutral-tint-16);
-  --colorNeutralBackground2:           var(--neutral-tint-4);
-  --colorNeutralBackground2Hover:      var(--neutral-tint-12);
-  --colorNeutralBackground2Pressed:    var(--neutral-tint-28);
-  --colorNeutralBackground2Selected:   var(--neutral-tint-20);
-  --colorNeutralBackground3:           var(--neutral-tint-8);
-  --colorNeutralBackground3Hover:      var(--neutral-tint-16);
-  --colorNeutralBackground3Pressed:    var(--neutral-tint-32);
-  --colorNeutralBackground3Selected:   var(--neutral-tint-24);
-  --colorNeutralBackground4:           var(--neutral-tint-12);
-  --colorNeutralBackground4Hover:      var(--neutral-tint-4);
-  --colorNeutralBackground4Pressed:    var(--neutral-tint-8);
-  --colorNeutralBackground4Selected:   white;
-  --colorNeutralBackground5:           var(--neutral-tint-16);
-  --colorNeutralBackground5Hover:      var(--neutral-tint-8);
-  --colorNeutralBackground5Pressed:    var(--neutral-tint-12);
-  --colorNeutralBackground5Selected:   var(--neutral-tint-4);
-  --colorNeutralBackground6:           var(--neutral-tint-20);
-  --colorNeutralBackground6Hover:      var(--neutral-tint-12);
-  --colorNeutralBackground6Pressed:    var(--neutral-tint-24);
-  --colorNeutralBackground6Selected:   var(--neutral-tint-16);
-  --colorNeutralBackgroundDisabled:    var(--neutral-tint-12);
-  --colorNeutralBackgroundInverted:           var(--neutral-10);
-  --colorNeutralBackgroundInvertedHover:      var(--neutral-20);
-  --colorNeutralBackgroundInvertedPressed:    var(--neutral-shade-24);
-  --colorNeutralBackgroundInvertedSelected:   var(--neutral-shade-44);
+    /* ===== Neutral Foreground Tokens ===== */
+    --colorNeutralForeground1: light-dark(var(--neutral-10), var(--neutral-160));
+    --colorNeutralForeground1Hover: light-dark(var(--neutral-10), var(--neutral-150));
+    --colorNeutralForeground1Pressed: light-dark(var(--neutral-10), var(--neutral-150));
+    --colorNeutralForeground1Selected: light-dark(var(--neutral-10), var(--neutral-150));
+    --colorNeutralForeground2: light-dark(var(--neutral-40), var(--neutral-130));
+    --colorNeutralForeground2Hover: light-dark(var(--neutral-10), var(--neutral-140));
+    --colorNeutralForeground2Pressed: light-dark(var(--neutral-10), var(--neutral-150));
+    --colorNeutralForeground2Selected: light-dark(var(--neutral-10), var(--neutral-140));
+    --colorNeutralForeground2BrandHover: light-dark(var(--brand-60), var(--brand-100));
+    --colorNeutralForeground2BrandPressed: light-dark(var(--brand-40), var(--brand-110));
+    --colorNeutralForeground2BrandSelected: light-dark(var(--brand-50), var(--brand-100));
+    --colorNeutralForeground3: light-dark(var(--neutral-70), var(--neutral-90));
+    --colorNeutralForeground3Hover: light-dark(var(--neutral-40), var(--neutral-100));
+    --colorNeutralForeground3Pressed: light-dark(var(--neutral-40), var(--neutral-110));
+    --colorNeutralForeground3Selected: light-dark(var(--neutral-40), var(--neutral-100));
+    --colorNeutralForeground3BrandHover: light-dark(var(--brand-60), var(--brand-100));
+    --colorNeutralForeground3BrandPressed: light-dark(var(--brand-40), var(--brand-110));
+    --colorNeutralForeground3BrandSelected: light-dark(var(--brand-50), var(--brand-100));
+    --colorNeutralForeground4: var(--neutral-80);
+    --colorNeutralForegroundDisabled: light-dark(var(--neutral-150), var(--neutral-40));
+    --colorNeutralForegroundOnBrand: #fff;
+    --colorNeutralForegroundInverted: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedHover: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedPressed: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedSelected: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInverted2: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedLink: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedLinkHover: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedLinkPressed: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedLinkSelected: light-dark(white, var(--neutral-shade-22));
+    --colorNeutralForegroundInvertedDisabled: light-dark(white, var(--neutral-shade-44));
 
-  /* ===== Neutral Stroke Tokens ===== */
-  /*
-   * Official: Stroke1=grey[82](#d1d1d1), Stroke2=grey[88](#e0e0e0),
-   *   Stroke3=grey[94](#f0f0f0), StrokeAccessible=grey[38](#616161).
-   *   Stroke1 ≈ trimLight(neutral-160), Stroke2+3 are beyond trim → use tints.
-   *   StrokeAccessible uses a dark-side palette stop for contrast on white.
-   */
-  --colorNeutralStroke1:           var(--neutral-160);
-  --colorNeutralStroke1Hover:      var(--neutral-150);
-  --colorNeutralStroke1Pressed:    var(--neutral-140);
-  --colorNeutralStroke1Selected:   var(--neutral-150);
-  --colorNeutralStroke2:           var(--neutral-tint-24);
-  --colorNeutralStroke2Hover:      var(--neutral-tint-20);
-  --colorNeutralStroke2Pressed:    var(--neutral-tint-16);
-  --colorNeutralStroke2Selected:   var(--neutral-tint-20);
-  --colorNeutralStroke3:           var(--neutral-tint-12);
-  --colorNeutralStroke3Hover:      var(--neutral-tint-8);
-  --colorNeutralStroke3Pressed:    var(--neutral-tint-4);
-  --colorNeutralStroke3Selected:   var(--neutral-tint-8);
-  --colorNeutralStrokeAccessible:         var(--neutral-70);
-  --colorNeutralStrokeAccessibleHover:    var(--neutral-60);
-  --colorNeutralStrokeAccessiblePressed:  var(--neutral-50);
-  --colorNeutralStrokeAccessibleSelected: var(--brand-80);
-  --colorNeutralStrokeDisabled:    var(--neutral-tint-24);
-  --colorNeutralStrokeInverted:           var(--neutral-160);
-  --colorNeutralStrokeInvertedHover:      var(--neutral-160);
-  --colorNeutralStrokeInvertedPressed:    var(--neutral-160);
-  --colorNeutralStrokeInvertedSelected:   var(--neutral-160);
+    /* ===== Neutral Background Tokens ===== */
+    --colorNeutralBackground1: light-dark(white, var(--neutral-shade-24));
+    --colorNeutralBackground1Hover: light-dark(var(--neutral-tint-8), var(--neutral-shade-36));
+    --colorNeutralBackground1Pressed: light-dark(var(--neutral-tint-24), var(--neutral-shade-18));
+    --colorNeutralBackground1Selected: light-dark(var(--neutral-tint-16), var(--neutral-shade-32));
+    --colorNeutralBackground2: light-dark(var(--neutral-tint-4), var(--neutral-shade-18));
+    --colorNeutralBackground2Hover: light-dark(var(--neutral-tint-12), var(--neutral-shade-30));
+    --colorNeutralBackground2Pressed: light-dark(var(--neutral-tint-28), var(--neutral-shade-12));
+    --colorNeutralBackground2Selected: light-dark(var(--neutral-tint-20), var(--neutral-shade-26));
+    --colorNeutralBackground3: light-dark(var(--neutral-tint-8), var(--neutral-shade-12));
+    --colorNeutralBackground3Hover: light-dark(var(--neutral-tint-16), var(--neutral-shade-24));
+    --colorNeutralBackground3Pressed: light-dark(var(--neutral-tint-32), var(--neutral-shade-6));
+    --colorNeutralBackground3Selected: light-dark(var(--neutral-tint-24), var(--neutral-shade-20));
+    --colorNeutralBackground4: light-dark(var(--neutral-tint-12), var(--neutral-shade-6));
+    --colorNeutralBackground4Hover: light-dark(var(--neutral-tint-4), var(--neutral-shade-18));
+    --colorNeutralBackground4Pressed: light-dark(var(--neutral-tint-8), black);
+    --colorNeutralBackground4Selected: light-dark(white, var(--neutral-shade-16));
+    --colorNeutralBackground5: light-dark(var(--neutral-tint-16), black);
+    --colorNeutralBackground5Hover: light-dark(var(--neutral-tint-8), var(--neutral-shade-12));
+    --colorNeutralBackground5Pressed: light-dark(var(--neutral-tint-12), var(--neutral-shade-4));
+    --colorNeutralBackground5Selected: light-dark(var(--neutral-tint-4), var(--neutral-shade-8));
+    --colorNeutralBackground6: light-dark(var(--neutral-tint-20), var(--neutral-shade-30));
+    --colorNeutralBackground6Hover: light-dark(var(--neutral-tint-12), var(--neutral-shade-36));
+    --colorNeutralBackground6Pressed: light-dark(var(--neutral-tint-24), var(--neutral-shade-42));
+    --colorNeutralBackground6Selected: light-dark(var(--neutral-tint-16), var(--neutral-shade-38));
+    --colorNeutralBackgroundDisabled: light-dark(var(--neutral-tint-12), var(--neutral-shade-12));
+    --colorNeutralBackgroundInverted: light-dark(var(--neutral-10), white);
+    --colorNeutralBackgroundInvertedHover: light-dark(var(--neutral-20), var(--neutral-tint-8));
+    --colorNeutralBackgroundInvertedPressed: light-dark(var(--neutral-shade-24), var(--neutral-tint-16));
+    --colorNeutralBackgroundInvertedSelected: light-dark(var(--neutral-shade-44), var(--neutral-tint-8));
 
-  /* ===== Stroke Focus ===== */
-  --colorStrokeFocus1:       white;
-  --colorStrokeFocus2:       #000;
+    /* ===== Neutral Stroke Tokens ===== */
+    --colorNeutralStroke1: light-dark(var(--neutral-160), var(--neutral-70));
+    --colorNeutralStroke1Hover: light-dark(var(--neutral-150), var(--neutral-60));
+    --colorNeutralStroke1Pressed: light-dark(var(--neutral-140), var(--neutral-50));
+    --colorNeutralStroke1Selected: light-dark(var(--neutral-150), var(--neutral-60));
+    --colorNeutralStroke2: light-dark(var(--neutral-tint-24), var(--neutral-50));
+    --colorNeutralStroke2Hover: light-dark(var(--neutral-tint-20), var(--neutral-60));
+    --colorNeutralStroke2Pressed: light-dark(var(--neutral-tint-16), var(--neutral-70));
+    --colorNeutralStroke2Selected: light-dark(var(--neutral-tint-20), var(--neutral-60));
+    --colorNeutralStroke3: light-dark(var(--neutral-tint-12), var(--neutral-shade-36));
+    --colorNeutralStroke3Hover: light-dark(var(--neutral-tint-8), var(--neutral-40));
+    --colorNeutralStroke3Pressed: light-dark(var(--neutral-tint-4), var(--neutral-50));
+    --colorNeutralStroke3Selected: light-dark(var(--neutral-tint-8), var(--neutral-40));
+    --colorNeutralStrokeAccessible: light-dark(var(--neutral-70), var(--neutral-100));
+    --colorNeutralStrokeAccessibleHover: light-dark(var(--neutral-60), var(--neutral-110));
+    --colorNeutralStrokeAccessiblePressed: light-dark(var(--neutral-50), var(--neutral-120));
+    --colorNeutralStrokeAccessibleSelected: light-dark(var(--brand-80), var(--brand-100));
+    --colorNeutralStrokeDisabled: light-dark(var(--neutral-tint-24), var(--neutral-40));
+    --colorNeutralStrokeInverted: var(--neutral-160);
+    --colorNeutralStrokeInvertedHover: var(--neutral-160);
+    --colorNeutralStrokeInvertedPressed: var(--neutral-160);
+    --colorNeutralStrokeInvertedSelected: var(--neutral-160);
 
-  /* ===== Transparent Tokens ===== */
-  --colorTransparentBackground:         transparent;
-  --colorTransparentBackgroundHover:    var(--neutral-tint-8);
-  --colorTransparentBackgroundPressed:  var(--neutral-tint-16);
-  --colorTransparentBackgroundSelected: var(--neutral-tint-16);
-  --colorTransparentStroke:             transparent;
-  --colorTransparentStrokeInteractive:  transparent;
-  --colorTransparentStrokeDisabled:     transparent;
+    /* ===== Stroke Focus ===== */
+    --colorStrokeFocus1: light-dark(white, black);
+    --colorStrokeFocus2: light-dark(#000, white);
 
-  /* ===== Subtle Tokens ===== */
-  /*
-   * Official light: SubtleBackground=transparent; we use a faint tint for visibility.
-   * SubtleBackgroundInverted uses dark-side palette stops (near ~grey[16-24]).
-   */
-  --colorSubtleBackground:              var(--neutral-tint-8);
-  --colorSubtleBackgroundHover:         var(--neutral-tint-16);
-  --colorSubtleBackgroundPressed:       var(--neutral-tint-24);
-  --colorSubtleBackgroundSelected:      var(--neutral-tint-24);
-  --colorSubtleBackgroundInverted:      var(--neutral-shade-32);
-  --colorSubtleBackgroundInvertedHover: var(--neutral-shade-48);
-  --colorSubtleBackgroundInvertedPressed: var(--neutral-shade-28);
-  --colorSubtleBackgroundInvertedSelected: var(--neutral-shade-44);
+    /* ===== Transparent Tokens ===== */
+    --colorTransparentBackground: transparent;
+    --colorTransparentBackgroundHover: light-dark(var(--neutral-tint-8), var(--neutral-shade-36));
+    --colorTransparentBackgroundPressed: light-dark(var(--neutral-tint-16), var(--neutral-shade-24));
+    --colorTransparentBackgroundSelected: light-dark(var(--neutral-tint-16), var(--neutral-shade-24));
+    --colorTransparentStroke: transparent;
+    --colorTransparentStrokeInteractive: transparent;
+    --colorTransparentStrokeDisabled: transparent;
 
-  /* ===== Scrollbar ===== */
-  /*
-   * Official light: blackAlpha[50]=rgba(0,0,0,0.5) → translucent overlay.
-   * The overlay approach requires rgba which can't derive from --neutral-base.
-   */
-  --colorScrollbarOverlay: rgba(0,0,0,0.5);
+    /* ===== Subtle Tokens ===== */
+    --colorSubtleBackground: light-dark(var(--neutral-tint-8), var(--neutral-shade-36));
+    --colorSubtleBackgroundHover: light-dark(var(--neutral-tint-16), var(--neutral-shade-24));
+    --colorSubtleBackgroundPressed: light-dark(var(--neutral-tint-24), var(--neutral-shade-18));
+    --colorSubtleBackgroundSelected: light-dark(var(--neutral-tint-24), var(--neutral-shade-30));
+    --colorSubtleBackgroundInverted: light-dark(var(--neutral-shade-32), var(--neutral-tint-8));
+    --colorSubtleBackgroundInvertedHover: light-dark(var(--neutral-shade-48), var(--neutral-tint-16));
+    --colorSubtleBackgroundInvertedPressed: light-dark(var(--neutral-shade-28), var(--neutral-tint-24));
+    --colorSubtleBackgroundInvertedSelected: light-dark(var(--neutral-shade-44), var(--neutral-tint-16));
 
-  /* ===== Static Neutral Tokens ===== */
-  --colorNeutralForeground1Static: #242424;
-  --colorNeutralForegroundStaticInverted: #ffffff;
+    /* ===== Scrollbar ===== */
+    --colorScrollbarOverlay: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.6));
 
-  /* ===== Status Tokens ===== */
-  --colorPaletteRedBackground1:  #fdf6f6;
-  --colorPaletteRedBackground2:  #f1bbbc;
-  --colorPaletteRedBackground3:  #d13438;
-  --colorPaletteRedForeground1:  #bc2f32;
-  --colorPaletteRedForeground2:  #751d1f;
-  --colorPaletteRedForeground3:  #e37d80;
-  --colorPaletteRedBorder1:      #f1bbbc;
-  --colorPaletteRedBorder2:      #d13438;
-  --colorPaletteRedBorderActive: #d13438;
-  --colorStatusDangerBackground1: var(--colorPaletteRedBackground1);
-  --colorStatusDangerForeground1: var(--colorPaletteRedForeground1);
-  --colorStatusDangerForeground3: var(--colorPaletteRedForeground1);
-  --colorStatusDangerBorderActive: var(--colorPaletteRedBorderActive);
-  --colorStatusDangerBorderHover:  var(--colorPaletteRedBorderActive);
+    /* ===== Static Neutral Tokens ===== */
+    --colorNeutralForeground1Static: #242424;
+    --colorNeutralForegroundStaticInverted: #ffffff;
 
-  --colorPaletteGreenBackground1:  #f1faf1;
-  --colorPaletteGreenBackground2:  #9fd89f;
-  --colorPaletteGreenBackground3:  #107c10;
-  --colorPaletteGreenForeground1:  #0e700e;
-  --colorPaletteGreenForeground2:  #094509;
-  --colorPaletteGreenForeground3:  #9fd89f;
-  --colorPaletteGreenBorder1:      #9fd89f;
-  --colorPaletteGreenBorder2:      #107c10;
-  --colorStatusSuccessBackground1: var(--colorPaletteGreenBackground1);
-  --colorStatusSuccessForeground1: var(--colorPaletteGreenForeground1);
-  --colorStatusSuccessForeground3: var(--colorPaletteGreenForeground1);
+    /* ===== Status Tokens ===== */
+    --colorPaletteRedBackground1: #fdf6f6;
+    --colorPaletteRedBackground2: #f1bbbc;
+    --colorPaletteRedBackground3: #d13438;
+    --colorPaletteRedForeground1: #bc2f32;
+    --colorPaletteRedForeground2: #751d1f;
+    --colorPaletteRedForeground3: #e37d80;
+    --colorPaletteRedBorder1: #f1bbbc;
+    --colorPaletteRedBorder2: #d13438;
+    --colorPaletteRedBorderActive: #d13438;
+    --colorStatusDangerBackground1: var(--colorPaletteRedBackground1);
+    --colorStatusDangerForeground1: var(--colorPaletteRedForeground1);
+    --colorStatusDangerForeground3: var(--colorPaletteRedForeground1);
+    --colorStatusDangerBorderActive: var(--colorPaletteRedBorderActive);
+    --colorStatusDangerBorderHover: var(--colorPaletteRedBorderActive);
 
-  --colorPaletteDarkOrangeBackground1:  #fdf6f3;
-  --colorPaletteDarkOrangeBackground2:  #f4bfab;
-  --colorPaletteDarkOrangeBackground3:  #da3b01;
-  --colorPaletteDarkOrangeForeground1:  #c43501;
-  --colorPaletteDarkOrangeForeground2:  #7a2101;
-  --colorPaletteDarkOrangeForeground3:  #e9835e;
-  --colorPaletteDarkOrangeBorder1:      #f4bfab;
-  --colorPaletteDarkOrangeBorder2:      #da3b01;
-  --colorPaletteDarkOrangeBorderActive: #da3b01;
-  --colorStatusWarningBackground1:      var(--colorPaletteDarkOrangeBackground1);
-  --colorStatusWarningForeground1:      var(--colorPaletteDarkOrangeForeground1);
-  --colorStatusWarningForeground3:      var(--colorPaletteDarkOrangeForeground1);
-  --colorStatusWarningBorderActive:     var(--colorPaletteDarkOrangeBorderActive);
-  --colorStatusWarningBorderHover:      var(--colorPaletteDarkOrangeBorderActive);
+    --colorPaletteGreenBackground1: #f1faf1;
+    --colorPaletteGreenBackground2: #9fd89f;
+    --colorPaletteGreenBackground3: #107c10;
+    --colorPaletteGreenForeground1: #0e700e;
+    --colorPaletteGreenForeground2: #094509;
+    --colorPaletteGreenForeground3: #9fd89f;
+    --colorPaletteGreenBorder1: #9fd89f;
+    --colorPaletteGreenBorder2: #107c10;
+    --colorStatusSuccessBackground1: var(--colorPaletteGreenBackground1);
+    --colorStatusSuccessForeground1: var(--colorPaletteGreenForeground1);
+    --colorStatusSuccessForeground3: var(--colorPaletteGreenForeground1);
 
-  --colorPaletteYellowBackground1:  #fffef5;
-  --colorPaletteYellowBackground2:  #fef7b2;
-  --colorPaletteYellowBackground3:  #fde300;
-  --colorPaletteYellowForeground1:  #817400;
-  --colorPaletteYellowForeground2:  #c0ad00;
-  --colorPaletteYellowForeground3:  #fde300;
-  --colorPaletteYellowBorder1:      #fef7b2;
-  --colorPaletteYellowBorder2:      #fde300;
-  --colorStatusWarningBackground2:      var(--colorPaletteYellowBackground1);
-  --colorStatusWarningForeground2:      var(--colorPaletteYellowForeground1);
+    --colorPaletteDarkOrangeBackground1: #fdf6f3;
+    --colorPaletteDarkOrangeBackground2: #f4bfab;
+    --colorPaletteDarkOrangeBackground3: #da3b01;
+    --colorPaletteDarkOrangeForeground1: #c43501;
+    --colorPaletteDarkOrangeForeground2: #7a2101;
+    --colorPaletteDarkOrangeForeground3: #e9835e;
+    --colorPaletteDarkOrangeBorder1: #f4bfab;
+    --colorPaletteDarkOrangeBorder2: #da3b01;
+    --colorPaletteDarkOrangeBorderActive: #da3b01;
+    --colorStatusWarningBackground1: var(--colorPaletteDarkOrangeBackground1);
+    --colorStatusWarningForeground1: var(--colorPaletteDarkOrangeForeground1);
+    --colorStatusWarningForeground3: var(--colorPaletteDarkOrangeForeground1);
+    --colorStatusWarningBorderActive: var(--colorPaletteDarkOrangeBorderActive);
+    --colorStatusWarningBorderHover: var(--colorPaletteDarkOrangeBorderActive);
 
-  --colorPaletteBerryForeground1:  var(--brand-70);
-  --colorPaletteBerryBackground1:  var(--brand-140);
-  --colorPaletteBerryBackground2:  var(--brand-80);
-  --colorPaletteBerryForeground2:  var(--brand-70);
-  --colorPaletteBerryForeground3:  var(--brand-70);
-  --colorPaletteBerryBorder1:      var(--brand-130);
-  --colorPaletteBerryBorder2:      var(--brand-80);
+    --colorPaletteYellowBackground1: #fffef5;
+    --colorPaletteYellowBackground2: #fef7b2;
+    --colorPaletteYellowBackground3: #fde300;
+    --colorPaletteYellowForeground1: #817400;
+    --colorPaletteYellowForeground2: #c0ad00;
+    --colorPaletteYellowForeground3: #fde300;
+    --colorPaletteYellowBorder1: #fef7b2;
+    --colorPaletteYellowBorder2: #fde300;
+    --colorStatusWarningBackground2: var(--colorPaletteYellowBackground1);
+    --colorStatusWarningForeground2: var(--colorPaletteYellowForeground1);
 
-  --colorPaletteLightGreenForeground1: #0e700e;
-  --colorPaletteLightGreenBackground1: #a1e3a1;
-  --colorPaletteLightGreenBackground2: #0e700e;
-  --colorPaletteLightGreenForeground2: #0e700e;
-  --colorPaletteLightGreenBorder1: #b4dbb4;
-  --colorPaletteLightGreenBorder2: #0e700e;
+    --colorPaletteBerryForeground1: var(--brand-70);
+    --colorPaletteBerryBackground1: var(--brand-140);
+    --colorPaletteBerryBackground2: var(--brand-80);
+    --colorPaletteBerryForeground2: var(--brand-70);
+    --colorPaletteBerryForeground3: var(--brand-70);
+    --colorPaletteBerryBorder1: var(--brand-130);
+    --colorPaletteBerryBorder2: var(--brand-80);
 
-  --colorPaletteMarigoldForeground1: #da3b01;
-  --colorPaletteMarigoldBackground1: #fad3c5;
-  --colorPaletteMarigoldBackground2: #da3b01;
-  --colorPaletteMarigoldForeground2: #da3b01;
-  --colorPaletteMarigoldForeground3: #da3b01;
-  --colorPaletteMarigoldBorderActive: #da3b01;
-  --colorPaletteMarigoldBorder1: #eab8a5;
-  --colorPaletteMarigoldBorder2: #da3b01;
+    --colorPaletteLightGreenForeground1: #0e700e;
+    --colorPaletteLightGreenBackground1: #a1e3a1;
+    --colorPaletteLightGreenBackground2: #0e700e;
+    --colorPaletteLightGreenForeground2: #0e700e;
+    --colorPaletteLightGreenBorder1: #b4dbb4;
+    --colorPaletteLightGreenBorder2: #0e700e;
 
-  /* ===== Shadow Color Tokens ===== */
-  --colorNeutralShadowAmbient: rgba(0,0,0,0.12);
-  --colorNeutralShadowKey:     rgba(0,0,0,0.14);
-  --colorBrandShadowAmbient:   rgba(0,0,0,0.30);
-  --colorBrandShadowKey:       rgba(0,0,0,0.25);
+    --colorPaletteMarigoldForeground1: #da3b01;
+    --colorPaletteMarigoldBackground1: #fad3c5;
+    --colorPaletteMarigoldBackground2: #da3b01;
+    --colorPaletteMarigoldForeground2: #da3b01;
+    --colorPaletteMarigoldForeground3: #da3b01;
+    --colorPaletteMarigoldBorderActive: #da3b01;
+    --colorPaletteMarigoldBorder1: #eab8a5;
+    --colorPaletteMarigoldBorder2: #da3b01;
 
-  /* ===== Shadows ===== */
-  --shadow2:   0 0 2px var(--colorNeutralShadowAmbient), 0 1px 2px var(--colorNeutralShadowKey);
-  --shadow4:   0 0 2px var(--colorNeutralShadowAmbient), 0 2px 4px var(--colorNeutralShadowKey);
-  --shadow8:   0 0 2px var(--colorNeutralShadowAmbient), 0 4px 8px var(--colorNeutralShadowKey);
-  --shadow16:  0 0 2px var(--colorNeutralShadowAmbient), 0 8px 16px var(--colorNeutralShadowKey);
-  --shadow28:  0 0 8px var(--colorNeutralShadowAmbient), 0 14px 28px var(--colorNeutralShadowKey);
-  --shadow64:  0 0 8px var(--colorNeutralShadowAmbient), 0 32px 64px var(--colorNeutralShadowKey);
-  --shadow2Brand:   0 0 2px var(--colorBrandShadowAmbient), 0 1px 2px var(--colorBrandShadowKey);
-  --shadow4Brand:   0 0 2px var(--colorBrandShadowAmbient), 0 2px 4px var(--colorBrandShadowKey);
-  --shadow8Brand:   0 0 2px var(--colorBrandShadowAmbient), 0 4px 8px var(--colorBrandShadowKey);
-  --shadow16Brand:  0 0 2px var(--colorBrandShadowAmbient), 0 8px 16px var(--colorBrandShadowKey);
-  --shadow28Brand:  0 0 8px var(--colorBrandShadowAmbient), 0 14px 28px var(--colorBrandShadowKey);
-  --shadow64Brand:  0 0 8px var(--colorBrandShadowAmbient), 0 32px 64px var(--colorBrandShadowKey);
+    /* ===== Shadow Color Tokens ===== */
+    --colorNeutralShadowAmbient: light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.24));
+    --colorNeutralShadowKey: light-dark(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.28));
+    --colorBrandShadowAmbient: rgba(0, 0, 0, 0.3);
+    --colorBrandShadowKey: rgba(0, 0, 0, 0.25);
 
-  /* ===== Stroke Widths ===== */
-  --strokeWidthNone:   0;
-  --strokeWidthThin:   1px;
-  --strokeWidthThick:  2px;
-  --strokeWidthThicker: 3px;
-  --strokeWidthThickest: 4px;
+    /* ===== Shadows ===== */
+    --shadow2:  0 0 2px var(--colorNeutralShadowAmbient), 0 1px 2px var(--colorNeutralShadowKey);
+    --shadow4:  0 0 2px var(--colorNeutralShadowAmbient), 0 2px 4px var(--colorNeutralShadowKey);
+    --shadow8:  0 0 2px var(--colorNeutralShadowAmbient), 0 4px 8px var(--colorNeutralShadowKey);
+    --shadow16: 0 0 2px var(--colorNeutralShadowAmbient), 0 8px 16px var(--colorNeutralShadowKey);
+    --shadow28: 0 0 8px var(--colorNeutralShadowAmbient), 0 14px 28px var(--colorNeutralShadowKey);
+    --shadow64: 0 0 8px var(--colorNeutralShadowAmbient), 0 32px 64px var(--colorNeutralShadowKey);
+    --shadow2Brand:  0 0 2px var(--colorBrandShadowAmbient), 0 1px 2px var(--colorBrandShadowKey);
+    --shadow4Brand:  0 0 2px var(--colorBrandShadowAmbient), 0 2px 4px var(--colorBrandShadowKey);
+    --shadow8Brand:  0 0 2px var(--colorBrandShadowAmbient), 0 4px 8px var(--colorBrandShadowKey);
+    --shadow16Brand: 0 0 2px var(--colorBrandShadowAmbient), 0 8px 16px var(--colorBrandShadowKey);
+    --shadow28Brand: 0 0 8px var(--colorBrandShadowAmbient), 0 14px 28px var(--colorBrandShadowKey);
+    --shadow64Brand: 0 0 8px var(--colorBrandShadowAmbient), 0 32px 64px var(--colorBrandShadowKey);
 
-  /* ===== Border Radii ===== */
-  --borderRadiusNone:     0;
-  --borderRadiusSmall:    2px;
-  --borderRadiusMedium:   4px;
-  --borderRadiusLarge:    6px;
-  --borderRadiusXLarge:   8px;
-  --borderRadiusCircular: 9999px;
+    /* ===== Stroke Widths ===== */
+    --strokeWidthNone: 0;
+    --strokeWidthThin: 1px;
+    --strokeWidthThick: 2px;
+    --strokeWidthThicker: 3px;
+    --strokeWidthThickest: 4px;
 
-  /* ===== Spacing (8px grid) ===== */
-  --spacingHorizontalNone:   0;
-  --spacingHorizontalXXS:    2px;
-  --spacingHorizontalXS:     4px;
-  --spacingHorizontalSNudge: 6px;
-  --spacingHorizontalS:      8px;
-  --spacingHorizontalMNudge: 10px;
-  --spacingHorizontalM:      12px;
-  --spacingHorizontalL:      16px;
-  --spacingHorizontalXL:     20px;
-  --spacingHorizontalXXL:    24px;
-  --spacingHorizontalXXXL:   32px;
-  --spacingVerticalNone:   0;
-  --spacingVerticalXXS:    2px;
-  --spacingVerticalXS:     4px;
-  --spacingVerticalSNudge: 6px;
-  --spacingVerticalS:      8px;
-  --spacingVerticalMNudge: 10px;
-  --spacingVerticalM:      12px;
-  --spacingVerticalL:      16px;
-  --spacingVerticalXL:     20px;
-  --spacingVerticalXXL:    24px;
-  --spacingVerticalXXXL:   32px;
+    /* ===== Border Radii ===== */
+    --borderRadiusNone: 0;
+    --borderRadiusSmall: 2px;
+    --borderRadiusMedium: 4px;
+    --borderRadiusLarge: 6px;
+    --borderRadiusXLarge: 8px;
+    --borderRadiusCircular: 9999px;
 
-  /* ===== Typography ===== */
-  --fontSizeBase100: 10px;
-  --fontSizeBase200: 12px;
-  --fontSizeBase300: 14px;
-  --fontSizeBase400: 16px;
-  --fontSizeBase500: 20px;
-  --fontSizeBase600: 24px;
-  --fontSizeBase700: 28px;
-  --fontSizeBase800: 32px;
-  --fontSizeBase900: 40px;
-  --fontSizeBase1000: 68px;
+    /* ===== Spacing (8px grid) ===== */
+    --spacingHorizontalNone: 0;
+    --spacingHorizontalXXS: 2px;
+    --spacingHorizontalXS: 4px;
+    --spacingHorizontalSNudge: 6px;
+    --spacingHorizontalS: 8px;
+    --spacingHorizontalMNudge: 10px;
+    --spacingHorizontalM: 12px;
+    --spacingHorizontalL: 16px;
+    --spacingHorizontalXL: 20px;
+    --spacingHorizontalXXL: 24px;
+    --spacingHorizontalXXXL: 32px;
+    --spacingVerticalNone: 0;
+    --spacingVerticalXXS: 2px;
+    --spacingVerticalXS: 4px;
+    --spacingVerticalSNudge: 6px;
+    --spacingVerticalS: 8px;
+    --spacingVerticalMNudge: 10px;
+    --spacingVerticalM: 12px;
+    --spacingVerticalL: 16px;
+    --spacingVerticalXL: 20px;
+    --spacingVerticalXXL: 24px;
+    --spacingVerticalXXXL: 32px;
 
-  --lineHeightBase100: 14px;
-  --lineHeightBase200: 16px;
-  --lineHeightBase300: 20px;
-  --lineHeightBase400: 22px;
-  --lineHeightBase500: 28px;
-  --lineHeightBase600: 32px;
-  --lineHeightBase700: 36px;
-  --lineHeightBase800: 40px;
-  --lineHeightBase900: 52px;
-  --lineHeightBase1000: 92px;
+    /* ===== Typography ===== */
+    --fontSizeBase100: 10px;
+    --fontSizeBase200: 12px;
+    --fontSizeBase300: 14px;
+    --fontSizeBase400: 16px;
+    --fontSizeBase500: 20px;
+    --fontSizeBase600: 24px;
+    --fontSizeBase700: 28px;
+    --fontSizeBase800: 32px;
+    --fontSizeBase900: 40px;
+    --fontSizeBase1000: 68px;
 
-  --fontFamilyBase:      'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --fontFamilyMonospace:  'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace;
-  --fontFamilyNumeric:    'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --lineHeightBase100: 14px;
+    --lineHeightBase200: 16px;
+    --lineHeightBase300: 20px;
+    --lineHeightBase400: 22px;
+    --lineHeightBase500: 28px;
+    --lineHeightBase600: 32px;
+    --lineHeightBase700: 36px;
+    --lineHeightBase800: 40px;
+    --lineHeightBase900: 52px;
+    --lineHeightBase1000: 92px;
 
-  --fontWeightRegular:  400;
-  --fontWeightMedium:   500;
-  --fontWeightSemibold: 600;
-  --fontWeightBold:     700;
+    --fontFamilyBase: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --fontFamilyMonospace: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
+    --fontFamilyNumeric: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* ===== Duration ===== */
-  --durationUltraFast: 50ms;
-  --durationFaster:    100ms;
-  --durationFast:      150ms;
-  --durationNormal:    200ms;
-  --durationGentle:    250ms;
-  --durationSlow:      300ms;
-  --durationSlower:    400ms;
-  --durationUltraSlow: 500ms;
+    --fontWeightRegular: 400;
+    --fontWeightMedium: 500;
+    --fontWeightSemibold: 600;
+    --fontWeightBold: 700;
 
-  /* ===== Curves ===== */
-  --curveAccelerateMax:    cubic-bezier(1, 0, 1, 1);
-  --curveAccelerateMid:    cubic-bezier(0.7, 0, 1, 0.5);
-  --curveAccelerateMin:    cubic-bezier(0.8, 0, 1, 1);
-  --curveDecelerateMax:    cubic-bezier(0, 0, 0, 1);
-  --curveDecelerateMid:    cubic-bezier(0.1, 0.9, 0.2, 1);
-  --curveDecelerateMin:    cubic-bezier(0.33, 0, 0.1, 1);
-  --curveEasyEaseMax:      cubic-bezier(0.8, 0, 0.2, 1);
-  --curveEasyEase:         cubic-bezier(0.33, 0, 0.67, 1);
-  --curveLinear:           cubic-bezier(0, 0, 1, 1);
+    /* ===== Duration ===== */
+    --durationUltraFast: 50ms;
+    --durationFaster: 100ms;
+    --durationFast: 150ms;
+    --durationNormal: 200ms;
+    --durationGentle: 250ms;
+    --durationSlow: 300ms;
+    --durationSlower: 400ms;
+    --durationUltraSlow: 500ms;
 
-  /* ===== Unstyled host default ===== */
-  --colorNeutralForegroundOnBrand: #fff;
-}
+    /* ===== Curves ===== */
+    --curveAccelerateMax: cubic-bezier(1, 0, 1, 1);
+    --curveAccelerateMid: cubic-bezier(0.7, 0, 1, 0.5);
+    --curveAccelerateMin: cubic-bezier(0.8, 0, 1, 1);
+    --curveDecelerateMax: cubic-bezier(0, 0, 0, 1);
+    --curveDecelerateMid: cubic-bezier(0.1, 0.9, 0.2, 1);
+    --curveDecelerateMin: cubic-bezier(0.33, 0, 0.1, 1);
+    --curveEasyEaseMax: cubic-bezier(0.8, 0, 0.2, 1);
+    --curveEasyEase: cubic-bezier(0.33, 0, 0.67, 1);
+    --curveLinear: cubic-bezier(0, 0, 1, 1);
 
-/* ===== Dark Theme Override ===== */
-/*
- * Dark mode uses clipLight=0 so trimLight = pure white.
- * This ensures foreground text reaches maximum contrast (#ffffff)
- * matching the official Fluent UI darkColor token values.
- *
- * Tint/Shade auto-adapt: with base=#b0b0b0:
- *   shade-24 = mix(black 76%, #b0b0b0 24%) ≈ grey[16]
- *   shade-36 = mix(black 64%, #b0b0b0 36%) ≈ grey[24]
- *   tint-24  = mix(#b0b0b0 24%, white 76%)  ≈ grey[90]
- *
- * Official reference: fluentui/packages/tokens/src/alias/darkColor.ts
- */
-:root.dark,
-body.dark {
-  --accent-base: #479ef5;
-  --neutral-base: #b0b0b0;
-
-  /* clipLight=0 → trimLight = white (pure foreground for dark theme) */
-  --neutral-trim-light: white;
-  --neutral-trim-dark:  color-mix(in srgb, black 68%, var(--neutral-base) 32%);
-  --brand-trim-light: white;
-  --brand-trim-dark:  color-mix(in srgb, black 68%, var(--accent-base) 32%);
-
-  /* ===== Foregrounds ===== */
-  /*
-   * Official order: Fg1=white(neutral-160), Fg2=~grey[84](neutral-130),
-   *   Fg3=~grey[68](neutral-90), Fg4=~grey[60](neutral-80).
-   * Disabled = ~grey[36](neutral-40), very dark against near-black backgrounds.
-   */
-  --colorNeutralForeground1:            var(--neutral-160);
-  --colorNeutralForeground1Hover:       var(--neutral-150);
-  --colorNeutralForeground1Pressed:     var(--neutral-150);
-  --colorNeutralForeground1Selected:    var(--neutral-150);
-  --colorNeutralForeground2:            var(--neutral-130);
-  --colorNeutralForeground2Hover:       var(--neutral-140);
-  --colorNeutralForeground2Pressed:     var(--neutral-150);
-  --colorNeutralForeground2Selected:    var(--neutral-140);
-  --colorNeutralForeground2BrandHover:  var(--brand-100);
-  --colorNeutralForeground2BrandPressed: var(--brand-110);
-  --colorNeutralForeground2BrandSelected: var(--brand-100);
-  --colorNeutralForeground3:            var(--neutral-90);
-  --colorNeutralForeground3Hover:       var(--neutral-100);
-  --colorNeutralForeground3Pressed:     var(--neutral-110);
-  --colorNeutralForeground3Selected:    var(--neutral-100);
-  --colorNeutralForeground3BrandHover:  var(--brand-100);
-  --colorNeutralForeground3BrandPressed: var(--brand-110);
-  --colorNeutralForeground3BrandSelected: var(--brand-100);
-  --colorNeutralForeground4:            var(--neutral-80);
-  --colorNeutralForegroundDisabled:     var(--neutral-40);
-
-  /* ForegroundInverted: dark grey (#242424=~grey[14]) against white inverted surface */
-  --colorNeutralForegroundInverted:            var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedHover:       var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedPressed:     var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedSelected:    var(--neutral-shade-22);
-  --colorNeutralForegroundInverted2:           var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedLink:        var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedLinkHover:   var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedLinkPressed: var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedLinkSelected: var(--neutral-shade-22);
-  --colorNeutralForegroundInvertedDisabled:    var(--neutral-shade-44);
-
-  /* ===== Backgrounds ===== */
-  /*
-   * Near-black using --neutral-shade-N.
-   * Official: Bg1=grey[16], Bg2=grey[12], Bg3=grey[8], Bg4=grey[4],
-   *   Bg5=black, Bg6=grey[20].
-   */
-  --colorNeutralBackground1:           var(--neutral-shade-24);
-  --colorNeutralBackground1Hover:      var(--neutral-shade-36);
-  --colorNeutralBackground1Pressed:    var(--neutral-shade-18);
-  --colorNeutralBackground1Selected:   var(--neutral-shade-32);
-  --colorNeutralBackground2:           var(--neutral-shade-18);
-  --colorNeutralBackground2Hover:      var(--neutral-shade-30);
-  --colorNeutralBackground2Pressed:    var(--neutral-shade-12);
-  --colorNeutralBackground2Selected:   var(--neutral-shade-26);
-  --colorNeutralBackground3:           var(--neutral-shade-12);
-  --colorNeutralBackground3Hover:      var(--neutral-shade-24);
-  --colorNeutralBackground3Pressed:    var(--neutral-shade-6);
-  --colorNeutralBackground3Selected:   var(--neutral-shade-20);
-  --colorNeutralBackground4:           var(--neutral-shade-6);
-  --colorNeutralBackground4Hover:      var(--neutral-shade-18);
-  --colorNeutralBackground4Pressed:    black;
-  --colorNeutralBackground4Selected:   var(--neutral-shade-16);
-  --colorNeutralBackground5:           black;
-  --colorNeutralBackground5Hover:      var(--neutral-shade-12);
-  --colorNeutralBackground5Pressed:    var(--neutral-shade-4);
-  --colorNeutralBackground5Selected:   var(--neutral-shade-8);
-  --colorNeutralBackground6:           var(--neutral-shade-30);
-  --colorNeutralBackground6Hover:      var(--neutral-shade-36);
-  --colorNeutralBackground6Pressed:    var(--neutral-shade-42);
-  --colorNeutralBackground6Selected:   var(--neutral-shade-38);
-  --colorNeutralBackgroundDisabled:    var(--neutral-shade-12);
-
-  --colorNeutralBackgroundInverted:           white;
-  --colorNeutralBackgroundInvertedHover:      var(--neutral-tint-8);
-  --colorNeutralBackgroundInvertedPressed:    var(--neutral-tint-16);
-  --colorNeutralBackgroundInvertedSelected:   var(--neutral-tint-8);
-
-  /* ===== Strokes ===== */
-  /*
-   * Official dark: Stroke1=grey[40](neutral-70), Stroke2=grey[32](neutral-60),
-   *   Stroke3=grey[24](neutral-shade-36), StrokeAccessible=grey[68](neutral-100).
-   */
-  --colorNeutralStroke1:           var(--neutral-70);
-  --colorNeutralStroke1Hover:      var(--neutral-60);
-  --colorNeutralStroke1Pressed:    var(--neutral-50);
-  --colorNeutralStroke1Selected:   var(--neutral-60);
-  --colorNeutralStroke2:           var(--neutral-50);
-  --colorNeutralStroke2Hover:      var(--neutral-60);
-  --colorNeutralStroke2Pressed:    var(--neutral-70);
-  --colorNeutralStroke2Selected:   var(--neutral-60);
-  --colorNeutralStroke3:           var(--neutral-shade-36);
-  --colorNeutralStroke3Hover:      var(--neutral-40);
-  --colorNeutralStroke3Pressed:    var(--neutral-50);
-  --colorNeutralStroke3Selected:   var(--neutral-40);
-  --colorNeutralStrokeAccessible:         var(--neutral-100);
-  --colorNeutralStrokeAccessibleHover:    var(--neutral-110);
-  --colorNeutralStrokeAccessiblePressed:  var(--neutral-120);
-  --colorNeutralStrokeAccessibleSelected: var(--brand-100);
-  --colorNeutralStrokeDisabled:    var(--neutral-40);
-  --colorNeutralStrokeInverted:           var(--neutral-160);
-  --colorNeutralStrokeInvertedHover:      var(--neutral-160);
-  --colorNeutralStrokeInvertedPressed:    var(--neutral-160);
-  --colorNeutralStrokeInvertedSelected:   var(--neutral-160);
-
-  /* ===== Brand Stroke (dark mode) ===== */
-  --colorBrandStroke1: var(--brand-100);
-  --colorBrandStroke2: var(--brand-50);
-
-  /* ===== Brand Foreground (dark mode) ===== */
-  --colorBrandForeground1: var(--brand-90);
-  --colorBrandForegroundLink: var(--brand-100);
-  --colorBrandForegroundLinkHover: var(--brand-110);
-  --colorBrandForegroundLinkPressed: var(--brand-90);
-  --colorBrandForegroundLinkSelected: var(--brand-100);
-
-  /* ===== Transparent ===== */
-  --colorTransparentBackgroundHover:    var(--neutral-shade-36);
-  --colorTransparentBackgroundPressed:  var(--neutral-shade-24);
-  --colorTransparentBackgroundSelected: var(--neutral-shade-24);
-
-  /* ===== Subtle ===== */
-  --colorSubtleBackground:              var(--neutral-shade-36);
-  --colorSubtleBackgroundHover:         var(--neutral-shade-24);
-  --colorSubtleBackgroundPressed:       var(--neutral-shade-18);
-  --colorSubtleBackgroundSelected:      var(--neutral-shade-30);
-  --colorSubtleBackgroundInverted:      var(--neutral-tint-8);
-  --colorSubtleBackgroundInvertedHover: var(--neutral-tint-16);
-  --colorSubtleBackgroundInvertedPressed: var(--neutral-tint-24);
-  --colorSubtleBackgroundInvertedSelected: var(--neutral-tint-16);
-
-  /* ===== Focus ===== */
-  --colorStrokeFocus1: black;
-  --colorStrokeFocus2: white;
-
-  /* ===== Scrollbar ===== */
-  --colorScrollbarOverlay: rgba(255,255,255,0.6);
-
-  /* ===== Shadow Color Tokens (dark) ===== */
-  --colorNeutralShadowAmbient: rgba(0,0,0,0.24);
-  --colorNeutralShadowKey:     rgba(0,0,0,0.28);
-  --colorBrandShadowAmbient:   rgba(0,0,0,0.30);
-  --colorBrandShadowKey:       rgba(0,0,0,0.25);
+    /* ===== Unstyled host default ===== */
+    --colorNeutralForegroundOnBrand: #fff;
 }
 
 /* ===== Forced Colors (High Contrast) ===== */
 @media (forced-colors: active) {
-  :root {
-    --colorNeutralForeground1: ButtonText;
-    --colorNeutralBackground1: ButtonFace;
-  }
+    :host,
+    :root {
+        --colorNeutralForeground1: ButtonText;
+        --colorNeutralBackground1: ButtonFace;
+    }
 }
 
 /* ===== Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --durationUltraFast: 0.01ms;
-    --durationFaster:    0.01ms;
-    --durationFast:      0.01ms;
-    --durationNormal:    0.01ms;
-    --durationGentle:    0.01ms;
-    --durationSlow:      0.01ms;
-    --durationSlower:    0.01ms;
-    --durationUltraSlow: 0.01ms;
-  }
+    :host,
+    :root {
+        --durationUltraFast: 0.01ms;
+        --durationFaster: 0.01ms;
+        --durationFast: 0.01ms;
+        --durationNormal: 0.01ms;
+        --durationGentle: 0.01ms;
+        --durationSlow: 0.01ms;
+        --durationSlower: 0.01ms;
+        --durationUltraSlow: 0.01ms;
+    }
 }

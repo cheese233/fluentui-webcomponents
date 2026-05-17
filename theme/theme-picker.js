@@ -27,14 +27,13 @@ class FluentThemePicker extends HTMLElement {
       document.documentElement.style.setProperty('--accent-base', e.target.value);
     });
     const themeSelect = this.querySelector('#theme-select');
-    
+
     const applyTheme = (theme) => {
-      document.body.classList.remove('light', 'dark');
+      const root = document.documentElement;
       if (theme === 'system') {
-        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.body.classList.add(isDark ? 'dark' : 'light');
+        root.style.colorScheme = 'light dark';
       } else {
-        document.body.classList.add(theme);
+        root.style.colorScheme = theme;
       }
     };
 
@@ -50,10 +49,8 @@ class FluentThemePicker extends HTMLElement {
       });
     }
 
-    // Initialize with the current selection if it's 'system'
-    if (themeSelect.value === 'system') {
-      applyTheme('system');
-    }
+    // Initialize with the current selection
+    applyTheme(themeSelect.value);
   }
 }
 

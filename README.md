@@ -31,12 +31,16 @@ Open `http://localhost:3000/gallery.html` — a single-page showcase of all 26 c
 :root { --accent-base: #e3008c; }
 ```
 
-The entire 16-stop brand palette derives from this single CSS variable via `color-mix(in oklch, ...)`. All component colors update automatically.
+The entire 16-stop brand palette derives from this single CSS variable via `color-mix(in srgb, ...)`. All component colors update automatically.
 
-**Dark theme**:
-```html
-<body class="dark">
+**Dark theme** (via `color-scheme` CSS property):
+```css
+:root { color-scheme: dark; }
 ```
+```js
+document.documentElement.style.colorScheme = 'dark';
+```
+Tokens use `light-dark(lightValue, darkValue)` — no class toggling needed.
 
 **Theme picker** (optional):
 ```html
@@ -77,6 +81,7 @@ The entire 16-stop brand palette derives from this single CSS variable via `colo
 fluentui-webcomponents/
 ├── tokens.css              # All design tokens (colors, spacing, type, shadows...)
 ├── gallery.html            # Component showcase
+├── standalone-example.html # Minimal usage (no page CSS needed)
 ├── core/
 │   └── fluent-element.js   # Base class (~30 lines)
 ├── components/

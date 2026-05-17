@@ -127,20 +127,39 @@ Semantic tokens alias these stops:
 --colorBrandBackgroundPressed → --brand-40
 ```
 
+### Theme Switching (light-dark() + color-scheme)
+
+Tokens use CSS `light-dark(lightValue, darkValue)` — a single declaration per token. No duplicate dark blocks, no `@media` queries, no `.dark` classes.
+
+```css
+:host, :root {
+  color-scheme: light dark;
+  --accent-base: light-dark(#0f6cbd, #479ef5);
+  --neutral-base: light-dark(#808080, #b0b0b0);
+  --colorNeutralBackground1: light-dark(white, var(--neutral-shade-24));
+}
+```
+
+Palette stops (`--neutral-10`…`160`, `--brand-10`…`160`, tints, shades) auto-adapt from the `light-dark()` base colors via `color-mix()` — no changes needed.
+
+Page-level overrides use the `color-scheme` CSS property on `:root`:
+
+```js
+// Light mode
+document.documentElement.style.colorScheme = 'light';
+// Dark mode
+document.documentElement.style.colorScheme = 'dark';
+// Follow system
+document.documentElement.style.colorScheme = 'light dark';
+```
+
 ### Runtime Accent Change
 
 ```js
 document.documentElement.style.setProperty('--accent-base', '#e3008c');
 ```
 
-One line. Entire palette and all dependent tokens update instantly. Zero JS math.
-
-### Theme Switching
-
-```css
-:root.dark { --accent-base: #479ef5; --neutral-base: #b0b0b0; }
-body.dark { /* overrides for dark theme tokens */ }
-```
+One line. Overrides the `light-dark()` value. Entire palette and all dependent tokens update instantly. Zero JS math.
 
 ## Form Association
 
