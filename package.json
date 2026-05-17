@@ -1,6 +1,6 @@
 {
   "name": "fluentui-webcomponents",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "fully vibe-coded @microsoft/fluentui to get rid of FAST frameworks.",
   "homepage": "https://github.com/cheese233/fluentui-webcomponents#readme",
   "bugs": {

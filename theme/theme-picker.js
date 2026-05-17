@@ -24,9 +24,9 @@ class FluentThemePicker extends HTMLElement {
       </label>
     `;
     this.querySelector('#accent-picker').addEventListener('input', e => {
-      document.documentElement.style.setProperty('--accent-base', e.target.value);
+      document.documentElement.style.setProperty('--accent-base-override', e.target.value);
     });
-    const themeSelect = this.querySelector('#theme-select');
+    const themeSelect = this.querySelector("#theme-select");
 
     const applyTheme = (theme) => {
       const root = document.documentElement;
@@ -37,16 +37,18 @@ class FluentThemePicker extends HTMLElement {
       }
     };
 
-    themeSelect.addEventListener('change', e => {
+    themeSelect.addEventListener("change", (e) => {
       applyTheme(e.target.value);
     });
 
     if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        if (themeSelect.value === 'system') {
-          applyTheme('system');
-        }
-      });
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", () => {
+          if (themeSelect.value === "system") {
+            applyTheme("system");
+          }
+        });
     }
 
     // Initialize with the current selection
@@ -54,4 +56,4 @@ class FluentThemePicker extends HTMLElement {
   }
 }
 
-customElements.define('fluent-theme-picker', FluentThemePicker);
+customElements.define("fluent-theme-picker", FluentThemePicker);

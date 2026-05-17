@@ -19,13 +19,21 @@
    Set color-scheme: light dark on :root for auto, override via JS.
    ============================================================ */
 
-:host,
 :root {
     color-scheme: light dark;
+}
 
+:host,
+:root {
     /* ===== Base Colors ===== */
-    --accent-base: light-dark(#0f6cbd, #479ef5);
-    --neutral-base: light-dark(#808080, #b0b0b0);
+    /*
+     * Use var(--foo-override, default) so page-level JS (theme picker)
+     * can override --accent-base via --accent-base-override on :root,
+     * which inherits through :host's var() fallback chain.
+     * Direct :host definitions would block inheritance, so we delegate.
+     */
+    --accent-base: var(--accent-base-override, light-dark(#0f6cbd, #479ef5));
+    --neutral-base: var(--neutral-base-override, light-dark(#808080, #b0b0b0));
 
     /* ===== Trim Endpoints ===== */
     /*

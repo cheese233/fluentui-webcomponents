@@ -156,7 +156,7 @@ document.documentElement.style.colorScheme = 'light dark';
 ### Runtime Accent Change
 
 ```js
-document.documentElement.style.setProperty('--accent-base', '#e3008c');
+document.documentElement.style.setProperty('--accent-base-override', '#e3008c');
 ```
 
 One line. Overrides the `light-dark()` value. Entire palette and all dependent tokens update instantly. Zero JS math.
