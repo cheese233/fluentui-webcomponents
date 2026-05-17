@@ -20,6 +20,8 @@ class FluentElement extends HTMLElement {
     this._root.appendChild(tmpl.content.cloneNode(true));
   }
 
+  disconnectedCallback() {}
+
   static get observedAttributes() {
     return [];
   }
