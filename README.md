@@ -1,7 +1,7 @@
 # fluentui-webcomponents
 <img src="https://nodei.co/npm/fluentui-webcomponents.svg?style=shields&data=n,v&color=blue"/>
 
-Vanilla Custom Elements rewrite of `@fluentui/web-components` — zero dependencies, zero build tools.
+Vanilla Custom Elements rewrite of `@fluentui/web-components` — zero runtime dependencies.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ Vanilla Custom Elements rewrite of `@fluentui/web-components` — zero dependenc
 <fluent-badge color="danger">New</fluent-badge>
 ```
 
-CSS design tokens are defined in `tokens.css`. Each component's CSS imports it via `@import` — no `<link>` needed in your page.
+CSS design tokens are defined in `tokens.css`. Components import their stylesheet with a standard default CSS import; configure your bundler to load `.css` as text (Rolldown: `moduleTypes: { ".css": "text" }`). `FluentElement` imports `tokens.css` itself and injects tokens plus the component styles into the shadow root.
 
 ## Gallery
 
@@ -90,7 +90,7 @@ fluentui-webcomponents/
 ├── components/
 │   ├── button/
 │   │   ├── fluent-button.js
-│   │   └── fluent-button.css   # @import url('../../tokens.css');
+│   │   └── fluent-button.css   # imported as text by the bundler
 │   ├── badge/
 │   ├── ...
 │   └── tree/
@@ -98,11 +98,11 @@ fluentui-webcomponents/
     └── theme-picker.js     # Optional accent/theme switcher
 ```
 
-Each component is self-contained: one `.js` file (class + `customElements.define`) and one `.css` file. No bundler, no framework, no external dependencies.
+Each component is self-contained: one `.js` file (class + `customElements.define`) and one `.css` file. No framework and no external runtime dependencies; the stylesheet is loaded as text by the bundler.
 
 ## Architecture
 
-- **`FluentElement`** — base class extends `HTMLElement`, attaches shadow DOM, injects `<link rel="stylesheet">` for the component's CSS
+- **`FluentElement`** — base class extends `HTMLElement`, attaches shadow DOM, injects a `<style>` containing imported tokens plus the component's CSS text
 - **CSS-only state** — `:host([disabled])`, `:host([appearance="primary"])`, etc. Zero JS for visual updates
 - **Form association** — native `this.attachInternals()` + `setFormValue` + `setValidity`
 - **Design tokens** — `color-mix(in oklch, var(--accent-base), ...)` palette, CSS `var()` throughout
