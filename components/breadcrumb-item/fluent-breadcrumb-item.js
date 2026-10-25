@@ -1,9 +1,9 @@
 import { FluentElement } from '../../core/fluent-element.js';
 
-const stylesUrl = new URL('./fluent-breadcrumb-item.css', import.meta.url).href;
+const styles = ":host { display: flex; }\r\n\r\n.root {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: var(--spacingHorizontalXS);\r\n}\r\n\r\n.item {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: var(--spacingHorizontalXS);\r\n    list-style: none;\r\n}\r\n\r\n.link {\r\n    color: var(--colorNeutralForeground2);\r\n    text-decoration: none;\r\n    border-radius: var(--borderRadiusMedium);\r\n    padding: var(--spacingVerticalXXS) var(--spacingHorizontalXS);\r\n    transition:\r\n        color var(--durationFaster) var(--curveEasyEaseMax),\r\n        background var(--durationFaster) var(--curveEasyEaseMax);\r\n}\r\n\r\n.link:hover {\r\n    color: var(--colorNeutralForeground2Hover);\r\n    background: var(--colorSubtleBackgroundHover);\r\n}\r\n\r\n.link:active {\r\n    color: var(--colorNeutralForeground2Pressed);\r\n    background: var(--colorSubtleBackgroundPressed);\r\n}\r\n\r\n:host([current]) .link {\r\n    color: var(--colorNeutralForeground1);\r\n    font-weight: var(--fontWeightSemibold);\r\n    pointer-events: none;\r\n}\r\n\r\n:host([appearance=\"subtle\"]) .link:hover {\r\n    background: var(--colorSubtleBackgroundHover);\r\n}\r\n\r\n.separator {\r\n    display: flex;\r\n    align-items: center;\r\n    color: var(--colorNeutralForeground3);\r\n    flex-shrink: 0;\r\n}\r\n\r\n.separator-icon {\r\n    inline-size: 12px;\r\n    block-size: 12px;\r\n}\r\n\r\n:host(:first-child) .separator,\r\n:host([data-position=\"first\"]) .separator {\r\n    display: none;\r\n}\r\n\r\n@media (forced-colors: active) {\r\n    .link:hover {\r\n        background: Highlight;\r\n        color: HighlightText;\r\n    }\r\n}\r\n";
 
 class FluentBreadcrumbItem extends FluentElement {
-  static stylesUrl = stylesUrl;
+  static styles = styles;
   static template = `
     <div class="root">
       <li class="item" part="item">

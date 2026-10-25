@@ -1,9 +1,9 @@
 import { FluentElement } from '../../core/fluent-element.js';
 
-const stylesUrl = new URL('./fluent-tree.css', import.meta.url).href;
+const styles = ":host { display: flex; }\r\n\r\n.root {\r\n  display: block;\r\n  outline: none;\r\n  font-size: var(--fontSizeBase300);\r\n  line-height: var(--lineHeightBase300);\r\n}\r\n\r\n.root:focus-visible {\r\n  outline: var(--strokeWidthThick) solid var(--colorStrokeFocus2);\r\n  outline-offset: 2px;\r\n  border-radius: var(--borderRadiusMedium);\r\n}\r\n";
 
 class FluentTree extends FluentElement {
-  static stylesUrl = stylesUrl;
+  static styles = styles;
   static template = `<div class="root"><slot></slot></div>`;
 
   static get observedAttributes() {

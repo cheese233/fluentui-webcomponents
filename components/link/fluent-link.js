@@ -1,9 +1,9 @@
 import { FluentElement } from '../../core/fluent-element.js';
 
-const stylesUrl = new URL('./fluent-link.css', import.meta.url).href;
+const styles = ":host { display: inline; }\r\n\r\n:host([hidden]) .root {\r\n  display: none;\r\n}\r\n\r\n.root {\r\n  display: inline;\r\n  box-sizing: border-box;\r\n  background-color: transparent;\r\n  color: var(--colorBrandForegroundLink);\r\n  cursor: pointer;\r\n  font-family: var(--fontFamilyBase);\r\n  font-size: var(--fontSizeBase300);\r\n  font-weight: var(--fontWeightRegular);\r\n  text-align: start;\r\n  text-decoration: none;\r\n  text-decoration-thickness: var(--strokeWidthThin);\r\n  user-select: text;\r\n}\r\n\r\n.root:is(:hover, :focus-visible) {\r\n  outline: none;\r\n  text-decoration-line: underline;\r\n}\r\n\r\n@media (hover: hover) {\r\n  .root:hover {\r\n    color: var(--colorBrandForegroundLinkHover);\r\n  }\r\n\r\n  .root:active {\r\n    color: var(--colorBrandForegroundLinkPressed);\r\n  }\r\n\r\n  :host([appearance='subtle']) .root:hover {\r\n    color: var(--colorNeutralForeground2LinkHover);\r\n  }\r\n\r\n  :host([appearance='subtle']) .root:active {\r\n    color: var(--colorNeutralForeground2LinkPressed);\r\n  }\r\n}\r\n\r\n:host([appearance='subtle']) .root {\r\n  color: var(--colorNeutralForeground2Link);\r\n}\r\n\r\n:host-context(:is(h1, h2, h3, h4, h5, h6, p, fluent-text)),\r\n:host([inline]) .root {\r\n  font: inherit;\r\n  text-decoration: underline;\r\n}\r\n\r\n:host(:not([href])) .root {\r\n  color: inherit;\r\n  text-decoration: none;\r\n  pointer-events: none;\r\n}\r\n\r\n:host([disabled]) .root {\r\n  color: var(--colorNeutralForegroundDisabled);\r\n  text-decoration: none;\r\n}\r\n\r\n@media (forced-colors: active) {\r\n  .root {\r\n    color: LinkText;\r\n  }\r\n}\r\n";
 
 class FluentLink extends FluentElement {
-  static stylesUrl = stylesUrl;
+  static styles = styles;
   static template = `<a class="root"><slot></slot></a>`;
 
   static get observedAttributes() {

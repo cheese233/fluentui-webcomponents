@@ -1,5 +1,7 @@
+import { tokens } from "./tokens.js";
+
 class FluentElement extends HTMLElement {
-  static stylesUrl = "";
+  static styles = "";
   static template = "";
 
   constructor() {
@@ -8,11 +10,10 @@ class FluentElement extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.constructor.stylesUrl) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = this.constructor.stylesUrl;
-      this._root.appendChild(link);
+    if (this.constructor.styles) {
+      const style = document.createElement("style");
+      style.textContent = tokens + this.constructor.styles;
+      this._root.appendChild(style);
     }
 
     const tmpl = document.createElement("template");
