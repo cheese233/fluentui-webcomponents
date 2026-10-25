@@ -6,15 +6,13 @@ Vanilla Custom Elements rewrite of `@fluentui/web-components` — zero runtime d
 ## Quick Start
 
 ```html
-<script type="module" src="core/fluent-element.js"></script>
-<script type="module" src="components/button/fluent-button.js"></script>
-<script type="module" src="components/badge/fluent-badge.js"></script>
+<script type="module" src="gallery.bundle.js"></script>
 
 <fluent-button appearance="primary">Click me</fluent-button>
 <fluent-badge color="danger">New</fluent-badge>
 ```
 
-CSS design tokens are defined in `tokens.css`. Components import their stylesheet with a standard default CSS import; configure your bundler to load `.css` as text (Rolldown: `moduleTypes: { ".css": "text" }`). `FluentElement` imports `tokens.css` itself and injects tokens plus the component styles into the shadow root.
+CSS design tokens are defined in `tokens.css`. Components import their stylesheet with a standard default CSS import; configure your bundler to load `.css` as text (Rolldown: `moduleTypes: { ".css": "text" }`). `FluentElement` imports `tokens.css` itself and injects tokens plus the component styles into the shadow root. `gallery.bundle.js` is the prebuilt bundle for direct browser use; run `npm run build:gallery` after changing component sources.
 
 ## Gallery
 
