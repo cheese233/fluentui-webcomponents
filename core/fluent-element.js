@@ -1,4 +1,4 @@
-import { tokens } from "./tokens.js";
+import tokens from "../tokens.css";
 
 class FluentElement extends HTMLElement {
   static styles = "";

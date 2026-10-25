@@ -1,5 +1,3 @@
-@import url('../../tokens.css');
-
 :host {
   --dialog-backdrop: rgba(0, 0, 0, 0.4);
   --dialog-starting-scale: 0.85;

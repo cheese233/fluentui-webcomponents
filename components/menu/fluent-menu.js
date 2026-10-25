@@ -1,6 +1,6 @@
 import { FluentElement } from '../../core/fluent-element.js';
 
-const styles = ":host { display: inline-flex; }\r\n\r\n.root {\r\n  display: inline-block;\r\n}\r\n\r\n::slotted([slot='trigger']) {\r\n  anchor-name: --menu-trigger;\r\n}\r\n\r\n::slotted([popover]) {\r\n  margin: 0;\r\n  max-height: var(--menu-max-height, auto);\r\n  position-anchor: --menu-trigger;\r\n  position-area: block-end span-inline-end;\r\n  position-try-fallbacks: flip-block;\r\n  position: absolute;\r\n  z-index: 1;\r\n}\r\n\r\n:host([split]) ::slotted([popover]) {\r\n  position-area: block-end span-inline-start;\r\n}\r\n\r\n::slotted([popover]:popover-open) {\r\n  inset: unset;\r\n}\r\n\r\n::slotted([popover]:not(:popover-open)) {\r\n  display: none;\r\n}\r\n\r\n:host([split]) .root {\r\n  display: inline-flex;\r\n}\r\n\r\n:host([split]) ::slotted([slot='primary-action']) {\r\n  border-inline-end: var(--strokeWidthThin) solid var(--colorNeutralStroke1);\r\n  border-start-end-radius: 0;\r\n  border-end-end-radius: 0;\r\n}\r\n\r\n:host([split]) ::slotted([slot='primary-action']:focus-visible) {\r\n  z-index: 1;\r\n}\r\n\r\n:host([split]) ::slotted([slot='primary-action'][appearance='primary']) {\r\n  border-inline-end: var(--strokeWidthThin) solid white;\r\n}\r\n\r\n:host([split]) ::slotted([slot='trigger']) {\r\n  border-inline-start: 0;\r\n  border-start-start-radius: 0;\r\n  border-end-start-radius: 0;\r\n}\r\n";
+import styles from "./fluent-menu.css";
 
 class FluentMenu extends FluentElement {
   static styles = styles;
